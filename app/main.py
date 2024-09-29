@@ -32,3 +32,7 @@ app.include_router(Pago_router)
 app.include_router(Transaccion_router) 
 
 
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000) ##manin cuando termines las bases de datos me avisas para construir el modelo y empezar a hacer las rutas etc....
