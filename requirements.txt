@@ -1,9 +1,2 @@
 fastapi
 uvicorn
-uvicorn main:app --reload
-
-Get-ExecutionPolicy
-
-Set-ExecutionPolicy Unrestricted
-
-Get-ExecutionPolicy
