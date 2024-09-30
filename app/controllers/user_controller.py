@@ -23,41 +23,36 @@ class UserController:
     def get_user(self, user_id: int):
         conn = None
         try:
-            
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM usuario WHERE id = %s", (user_id,))
             result = cursor.fetchone()
-            payload = []
-            content = {} 
-            
-            content={
-                    'id':int(result[0]),
-                    'usuario':result[1],
-                    'password':result[2],
-                    'nombre':result[3],
-                    'apellido':result[4],
-                    'documento':result[5],
-                    'telefono':result[6],
-                    'id_rol':int(result[7]),
-                    'estado':bool(result[8]),
-            }
-            payload.append(content)
-            
-            json_data = jsonable_encoder(content)            
-            if result:
-               return  json_data
-            else:
-                raise HTTPException(status_code=404, detail="User not found")  
-                
+
+            if result:  # Verifica si hay un resultado
+                content = {
+                    'id': int(result[0]),
+                    'usuario': result[1],
+                    'password': result[2],
+                    'nombre': result[3],
+                    'apellido': result[4],
+                    'documento': result[5],
+                    'telefono': result[6],
+                    'id_rol': int(result[7]),
+                    'estado': bool(result[8]),
+                }
+                return jsonable_encoder(content)  # Retorna el contenido directamente
+
+            raise HTTPException(status_code=404, detail="User not found")
+
         except mysql.connector.Error as err:
-            if conn:  # Solo hace rollback si conn está inicializado
-             conn.rollback()
-            raise HTTPException(status_code=500, detail=str(err))  # Lanza la excepción
-        
+            if conn:
+                conn.rollback()
+            raise HTTPException(status_code=500, detail=str(err))
+
         finally:
-            if conn:  # Solo cierra si conn está inicializado
-             conn.close()
+            if conn:
+                conn.close()
+
        
 
     def get_users(self):
