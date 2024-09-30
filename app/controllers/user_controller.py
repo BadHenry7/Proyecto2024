@@ -51,9 +51,13 @@ class UserController:
                 raise HTTPException(status_code=404, detail="User not found")  
                 
         except mysql.connector.Error as err:
-            conn.rollback()
+            if conn:  # Solo hace rollback si conn está inicializado
+             conn.rollback()
+            raise HTTPException(status_code=500, detail=str(err))  # Lanza la excepción
+        
         finally:
-            conn.close()
+            if conn:  # Solo cierra si conn está inicializado
+             conn.close()
        
 
     def get_users(self):
