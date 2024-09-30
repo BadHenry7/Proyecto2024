@@ -21,7 +21,9 @@ class UserController:
         
 
     def get_user(self, user_id: int):
+        conn = None
         try:
+            
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM usuario WHERE id = %s", (user_id,))
