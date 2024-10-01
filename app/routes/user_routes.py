@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.controllers.user_controller import *
 from app.models.user_model import User
 
+
 router = APIRouter()
 
 nuevo_usuario = UserController()
@@ -36,3 +37,10 @@ async def delete_user(user_id: int):
     rpta = nuevo_usuario.delete_user(user_id)
     
     return rpta 
+
+
+
+@router.post("/create_users")
+async def create_users(user: User):
+    rpta = nuevo_usuario.create_users(user)
+    return rpta

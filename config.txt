@@ -30,3 +30,7 @@ pip install mysql-connector-python
 --> instalar fast api(dentro del cd app)
 pip install "fastapi[standard]"
 
+
+
+pip install pandas
+pip install openpyxl
