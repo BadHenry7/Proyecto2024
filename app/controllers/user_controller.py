@@ -130,23 +130,7 @@ class UserController:
         finally:
             conn.close()
 
-    def create_users(self, users: List[User]):
-        try:
-            conn = get_db_connection()
-            cursor = conn.cursor()
-        
-            for user in users:
-                cursor.execute("INSERT INTO usuario (usuario, password, nombre, apellido, documento, telefono, id_rol, estado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
-                           (user.usuario, user.password, user.nombre, user.apellido, user.documento, user.telefono, user.id_rol, user.estado))
-        
-            conn.commit()
-            conn.close()
-            return {"resultado": f"{len(users)} usuarios creados"}
-        except mysql.connector.Error as err:
-            conn.rollback()
-            raise err
-        finally:
-            conn.close()
+
 
 
             
