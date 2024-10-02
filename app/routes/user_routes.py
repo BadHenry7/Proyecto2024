@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from app.controllers.user_controller import *
 from app.models.user_model import User
 
@@ -43,4 +43,9 @@ async def delete_user(user_id: int):
 @router.post("/create_users")
 async def create_users(user: User):
     rpta = nuevo_usuario.create_users(user)
+    return rpta
+
+@router.post("/create_atributo_masivo")
+async def create_user_masivo(file: UploadFile = File(...)):
+    rpta = nuevo_usuario.create_user_masivo(file)  # Esto está bien
     return rpta

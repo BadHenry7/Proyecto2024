@@ -1,9 +1,10 @@
 import mysql.connector
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
 from app.config.db_config import get_db_connection
 from app.models.user_model import User
 from fastapi.encoders import jsonable_encoder
 from typing import List
+import pandas as pd
 
 class UserController:
         
@@ -21,7 +22,43 @@ class UserController:
             conn.rollback()
         finally:
             conn.close()
-        
+    
+    def create_atributo_user(self, file: UploadFile):
+        conn = None
+        try:
+            # Leer el archivo Excel
+            df = pd.read_excel(file.file, engine='openpyxl')
+
+            required_columns = ['nombre', 'descripcion', 'estado']
+            for col in required_columns:
+                if col not in df.columns:
+                    return {"error": f"Falta la columna: {col}"}
+            
+            # Conectar a la base de datos
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            for index, row in df.iterrows():
+                cursor.execute(
+                    "INSERT INTO atributo (nombre, descripcion, estado) VALUES (%s, %s, %s)",
+                    (row['nombre'], row['descripcion'], row['estado'])
+                )
+            
+            conn.commit()  # Hacer commit después de todas las inserciones
+            return {"resultado": "Atributos creados exitosamente"}
+        except mysql.connector.Error as err:
+            if conn:
+                conn.rollback()  # Asegúrate de que conn esté definido
+            return {"error": str(err)}
+        except Exception as e:
+            if conn:
+                conn.rollback()
+            return {"error": f"Un error inesperado ocurrió: {str(e)}"}
+        finally:
+            if conn:
+                conn.close()
+
+    
 
     def get_user(self, user_id: int):
         
