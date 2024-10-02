@@ -23,13 +23,13 @@ class UserController:
         finally:
             conn.close()
     
-    def create_atributo_user(self, file: UploadFile):
+    def create_user_masivo(self, file: UploadFile):
         conn = None
         try:
             # Leer el archivo Excel
             df = pd.read_excel(file.file, engine='openpyxl')
 
-            required_columns = ['nombre', 'descripcion', 'estado']
+            required_columns = ['usuario', 'password', 'nombre', 'apellido', 'documento', 'telefono', 'id_rol', 'estado']
             for col in required_columns:
                 if col not in df.columns:
                     return {"error": f"Falta la columna: {col}"}
@@ -40,12 +40,12 @@ class UserController:
 
             for index, row in df.iterrows():
                 cursor.execute(
-                    "INSERT INTO atributo (nombre, descripcion, estado) VALUES (%s, %s, %s)",
-                    (row['nombre'], row['descripcion'], row['estado'])
+                    "INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+                    (row['usuario'], row['password'], row['nombre'], row['apellido'], row['documento'], row['telefono'], row['id_rol'], row['estado'])
                 )
             
             conn.commit()  # Hacer commit después de todas las inserciones
-            return {"resultado": "Atributos creados exitosamente"}
+            return {"resultado": "Users creados exitosamente"}
         except mysql.connector.Error as err:
             if conn:
                 conn.rollback()  # Asegúrate de que conn esté definido
