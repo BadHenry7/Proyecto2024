@@ -1,16 +1,16 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.pago_model import Pago
+from app.models.pago_detalle_model import Pago_detalle
 from fastapi.encoders import jsonable_encoder
 
-class payController:
+class pay_detail_Controller:
         
-    def create_pay(self, pago: Pago):   
+    def create_pay_detalle(self, pago_detalle: Pago_detalle):   
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO pago (id_usuario,monto,fecha_pago,estado) VALUES (%s,%s,%s,%s)", (pago.id_usuario, pago.monto, pago.fecha_pago,pago.estado,))
+            cursor.execute("INSERT INTO pago_detalle (id_pago,tipo_pago,monto,fecha_pago,estado) VALUES (%s,%s,%s,%s,%s)", (pago_detalle.id_pago,pago_detalle.tipo_pago,pago_detalle.monto, pago_detalle.fecha_pago,pago_detalle.estado,))
             conn.commit()
             conn.close()
             return {"resultado": "Pago añadido correctamente"}
@@ -20,22 +20,22 @@ class payController:
             conn.close()
         
 
-    def get_pay(self, pago_id: int):
+    def get_pay_detalle(self, pago_detalle_id: int):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM pago WHERE id = %s", (pago_id,))
+            cursor.execute("SELECT * FROM pago_detalle WHERE id = %s", (pago_detalle_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
             
             content={
                     'id':int(result[0]),
-                    'id_usuario':int(result[1]),
-                    'monto':float(result[2]),
-                    'fecha_pago':str(result[3]),
-                    'estado':bool(result[4])
-                  
+                    'id_pago':int(result[1]),
+                    'tipo_pago':str(result[2]),
+                    'monto':float(result[3]),
+                    'fecha_pago':str(result[4]),
+                    'estado':bool(result[5]),
             }
             payload.append(content)
             
@@ -49,22 +49,24 @@ class payController:
             conn.rollback()
         finally:
             conn.close()
+
        
-    def get_pays(self):
+    def get_pays_detalles(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM pago")
+            cursor.execute("SELECT * FROM pago_detalle")
             result = cursor.fetchall()
             payload = []
             content = {} 
             for data in result:
                 content={
                     'id':data[0],
-                    'id_usuario':data[1],
-                    'monto':data[2],
-                    'fecha_pago':data[3],
-                    'estado':data[4],
+                    'id_pago':data[1],
+                    'tipo_pago':data[2],
+                    'monto':data[3],
+                    'fecha_pago':data[4],
+                    'estado':data[5],
                 }
                 payload.append(content)
                 content = {}
@@ -80,18 +82,19 @@ class payController:
             conn.close()
 
 
-    def update_pay(self, pago_id: int, pago: Pago):
+    def update_pay_detalle(self, pago_detalle_id: int, pago_detalle: Pago_detalle):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""
-            UPDATE pago
-            SET id_usuario = %s,
+            UPDATE pago_detalle
+            SET id_pago = %s,
+            tipo_pago = %s,
             monto = %s,
             fecha_pago = %s,
             estado = %s 
             WHERE id = %s
-            """,(pago.id_usuario, pago.monto, pago.fecha_pago, pago.estado,pago_id,))
+            """,(pago_detalle.id_pago, pago_detalle.tipo_pago, pago_detalle.monto, pago_detalle.fecha_pago, pago_detalle.estado,pago_detalle_id,))
             conn.commit()
            
             return {"resultado": "Pago actualizado correctamente"} 
@@ -100,12 +103,13 @@ class payController:
             conn.rollback()
         finally:
             conn.close()   
+
        
-    def delete_pay(self, pago_id: int):
+    def delete_pay_detalle(self, pago_detalle_id: int):
         try: 
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM pago WHERE id = %s',(pago_id,))
+            cursor.execute('DELETE FROM pago_detalle WHERE id = %s',(pago_detalle_id,))
             conn.commit()           
             return {"resultado": "pago eliminado correctamente"} 
                 

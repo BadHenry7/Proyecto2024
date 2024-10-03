@@ -5,6 +5,9 @@ from app.routes.atributo_routes import router as atributo_router
 from app.routes.atributoxusuario_routes import router as atrixuser_router
 from app.routes.pago_routes import router as Pago_router
 from app.routes.Transacciones_routes import router as Transaccion_router
+from app.routes.pago_detalle_routes import router as pago_detalle_router
+from app.routes.deuda_routes import router as deuda_router
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -30,7 +33,8 @@ app.include_router(atributo_router)
 app.include_router(atrixuser_router)  
 app.include_router(Pago_router)  
 app.include_router(Transaccion_router) 
-
+app.include_router(pago_detalle_router) 
+app.include_router(deuda_router) 
 
 
 
