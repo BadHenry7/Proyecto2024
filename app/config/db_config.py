@@ -9,13 +9,13 @@ def get_db_connection():
         password="4SPvFuFqzZtr7KeWgCxv",
         database="bfrrsop1jsm0voqgbgao"
     )
-
-"""def get_db_connection():
+"""
+def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
         user="root",
         password="",
         database="proyecto"
-    )"""
+    )
     ##importara a xampp
-    
+    """

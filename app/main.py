@@ -4,9 +4,9 @@ from app.routes.rol_routes import router as Rol_router
 from app.routes.atributo_routes import router as atributo_router
 from app.routes.atributoxusuario_routes import router as atrixuser_router
 from app.routes.pago_routes import router as Pago_router
-from app.routes.Transacciones_routes import router as Transaccion_router
-from app.routes.pago_detalle_routes import router as pago_detalle_router
-from app.routes.deuda_routes import router as deuda_router
+from app.routes.diagnosticos_routes import router as Diagnosticos_router
+from app.routes.historial_routes import router as historial_router
+from app.routes.sintomas_routes import router as sintomas_router
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -32,9 +32,9 @@ app.include_router(Rol_router)
 app.include_router(atributo_router)  
 app.include_router(atrixuser_router)  
 app.include_router(Pago_router)  
-app.include_router(Transaccion_router) 
-app.include_router(pago_detalle_router) 
-app.include_router(deuda_router) 
+app.include_router(Diagnosticos_router) 
+app.include_router(historial_router) 
+app.include_router(sintomas_router) 
 
 
 

@@ -1,41 +1,40 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.transacciones_model import Transacciones
+from app.models.historial_model import Historial
 from fastapi.encoders import jsonable_encoder
 
-class TravesanoController:
+class historial_Controller:
         
-    def create_transaccion(self, transacciones: Transacciones):   
+    def create_historial(self, historial: Historial):   
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO transacciones (id_pago,tipo_pago,fecha_pago,estado) VALUES (%s,%s,%s,%s)", (transacciones.id_pago, transacciones.tipo_pago, transacciones.fecha_pago,transacciones.estado,))
+            cursor.execute("INSERT INTO historial (id_usuario,id_sintoma,fecha,estado) VALUES (%s,%s,%s,%s)", (historial.id_usuario,historial.id_sintoma,historial.fecha, historial.estado,))
             conn.commit()
             conn.close()
-            return {"resultado": "Transaccion añadida correctamente"}
+            return {"resultado": "historial añadido correctamente"}
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
             conn.close()
         
 
-    def get_transaccion(self, transaccion_id: int):
+    def get_historial(self, historial_id: int):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM transacciones WHERE id = %s", (transaccion_id,))
+            cursor.execute("SELECT * FROM historial WHERE id = %s", (historial_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
             
             content={
                     'id':int(result[0]),
-                    'id_pago':int(result[1]),
-                    'tipo_pago':result[2],
-                    'fecha_pago':str(result[3]),
+                    'id_usuario':int(result[1]),
+                    'id_sintoma':int(result[2]),
+                    'fecha':str(result[3]),
                     'estado':bool(result[4]),
-                  
             }
             payload.append(content)
             
@@ -43,27 +42,28 @@ class TravesanoController:
             if result:
                return  json_data
             else:
-                raise HTTPException(status_code=404, detail="Transaccion not find")  
+                raise HTTPException(status_code=404, detail="historial not find")  
                 
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
             conn.close()
+
        
-    def get_transacciones(self):
+    def get_historiales(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM transacciones")
+            cursor.execute("SELECT * FROM historial")
             result = cursor.fetchall()
             payload = []
             content = {} 
             for data in result:
                 content={
                     'id':data[0],
-                    'id_pago':data[1],
-                    'tipo_pago':data[2],
-                    'fecha_pago':data[3],
+                    'id_usuario':data[1],
+                    'id_sintoma':data[2],
+                    'fecha':data[3],
                     'estado':data[4],
                 }
                 payload.append(content)
@@ -72,7 +72,7 @@ class TravesanoController:
             if result:
                return {"resultado": json_data}
             else:
-                raise HTTPException(status_code=404, detail="Transaccion not found")  
+                raise HTTPException(status_code=404, detail="historiales not found")  
                 
         except mysql.connector.Error as err:
             conn.rollback()
@@ -80,34 +80,35 @@ class TravesanoController:
             conn.close()
 
 
-    def update_transacciones(self, transacciones_id: int, transacciones: Transacciones):
+    def update_historial(self, historial_id: int, historial: Historial):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""
-            UPDATE transacciones
-            SET id_pago = %s,
-            tipo_pago = %s,
-            fecha_pago = %s,
-            estado = %s 
+            UPDATE historial
+            SET id_usuario = %s,
+            id_sintoma = %s,
+            fecha = %s,
+            estado = %s
             WHERE id = %s
-            """,(transacciones.id_pago, transacciones.tipo_pago, transacciones.fecha_pago,transacciones.estado,transacciones_id,))
+            """,(historial.id_usuario, historial.id_sintoma, historial.fecha, historial.estado,historial_id,))
             conn.commit()
            
-            return {"resultado": "Transaccion actualizada correctamente"} 
+            return {"resultado": "historial actualizado correctamente"} 
                 
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
             conn.close()   
+
        
-    def delete_transacciones(self, transacciones_id: int):
+    def delete_historial(self, historial_id: int):
         try: 
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM transacciones WHERE id = %s',(transacciones_id,))
+            cursor.execute('DELETE FROM historial WHERE id = %s',(historial_id,))
             conn.commit()           
-            return {"resultado": "Transaccion eliminada correctamente"} 
+            return {"resultado": "historial eliminado correctamente"} 
                 
         except mysql.connector.Error as err:
             conn.rollback()

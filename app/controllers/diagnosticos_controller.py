@@ -1,31 +1,30 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.deuda_model import Deuda
+from app.models.diagnosticos_model import Diagnosticos
 from fastapi.encoders import jsonable_encoder
 
-class debtController:
+class diagnosticoController:
         
-    def create_debt(self, deuda: Deuda):   #
-
+    def create_diagnosticos(self, diagnosticos: Diagnosticos):   
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO deuda (id_usuario,monto_total,monto_pagado,saldo_restante,descripcion,fecha_deuda,estado) VALUES (%s,%s,%s,%s,%s,%s,%s)", (deuda.id_usuario, deuda.monto_total, deuda.monto_pagado,deuda.saldo_restante,deuda.descripcion,deuda.fecha_deuda,deuda.estado,))
+            cursor.execute("INSERT INTO diagnosticos (id_usuario,resultado,fecha_diagnostico,estado) VALUES (%s,%s,%s,%s)", (diagnosticos.id_usuario, diagnosticos.resultado, diagnosticos.fecha_diagnostico,diagnosticos.estado,))
             conn.commit()
             conn.close()
-            return {"resultado": "deuda generada correctamente"}
+            return {"resultado": "diagnosticos añadida correctamente"}
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
             conn.close()
         
 
-    def get_debt(self, deuda_id: int):
+    def get_diagnostico(self, diagnosticos_id: int):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM deuda WHERE id = %s", (deuda_id,))
+            cursor.execute("SELECT * FROM diagnosticos WHERE id = %s", (diagnosticos_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -33,12 +32,10 @@ class debtController:
             content={
                     'id':int(result[0]),
                     'id_usuario':int(result[1]),
-                    'monto_total':float(result[2]),
-                    'monto_pagado':float(result[3]),
-                    'saldo_restante':float(result[4]),
-                    'descripcion':str(result[5]),
-                    'fecha_deuda':str(result[6]),
-                    'estado':bool(result[7])
+                    'resultado':str(result[2]),
+                    'fecha_diagnostico':str(result[3]),
+                    'estado':bool(result[4]),
+                  
             }
             payload.append(content)
             
@@ -46,18 +43,18 @@ class debtController:
             if result:
                return  json_data
             else:
-                raise HTTPException(status_code=404, detail="deuda not found")  
+                raise HTTPException(status_code=404, detail="diagnostico not find")  
                 
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
             conn.close()
        
-    def get_debts(self):
+    def get_diagnosticos(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM deuda")
+            cursor.execute("SELECT * FROM diagnosticos")
             result = cursor.fetchall()
             payload = []
             content = {} 
@@ -65,12 +62,9 @@ class debtController:
                 content={
                     'id':data[0],
                     'id_usuario':data[1],
-                    'monto_total':data[2],
-                    'monto_pagado':data[3],
-                    'saldo_restante':data[4],
-                    'descripcion':data[5],
-                    'fecha_deuda':data[6],
-                    'estado':data[7],
+                    'resultado':data[2],
+                    'fecha_diagnostico':data[3],
+                    'estado':data[4],
                 }
                 payload.append(content)
                 content = {}
@@ -78,7 +72,7 @@ class debtController:
             if result:
                return {"resultado": json_data}
             else:
-                raise HTTPException(status_code=404, detail="deudas not found")  
+                raise HTTPException(status_code=404, detail="diagnosticos not found")  
                 
         except mysql.connector.Error as err:
             conn.rollback()
@@ -86,37 +80,34 @@ class debtController:
             conn.close()
 
 
-    def update_debts(self, deuda_id: int, deuda: Deuda):
+    def update_diagnosticos(self, diagnosticos_id: int, diagnosticos: Diagnosticos):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""
-            UPDATE deuda
+            UPDATE diagnosticos
             SET id_usuario = %s,
-            monto_total = %s,
-            monto_pagado = %s,
-            saldo_restante = %s,
-            descripcion = %s ,
-            fecha_deuda = %s,
-            estado = %s
+            resultado = %s,
+            fecha_diagnostico = %s,
+            estado = %s 
             WHERE id = %s
-            """,(deuda.id_usuario, deuda.monto_total, deuda.monto_pagado, deuda.saldo_restante,deuda.descripcion,deuda.fecha_deuda,deuda.estado,deuda_id,))
+            """,(diagnosticos.id_usuario, diagnosticos.resultado, diagnosticos.fecha_diagnostico,diagnosticos.estado,diagnosticos_id,))
             conn.commit()
            
-            return {"resultado": "Deuda actualizada correctamente"} 
+            return {"resultado": "Diagnosticos actualizado correctamente"} 
                 
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
             conn.close()   
        
-    def delete_debts(self, deuda_id: int):
+    def delete_diagnosticos(self, diagnosticos_id: int):
         try: 
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM deuda WHERE id = %s',(deuda_id,))
+            cursor.execute('DELETE FROM diagnosticos WHERE id = %s',(diagnosticos_id,))
             conn.commit()           
-            return {"resultado": "Deuda eliminada correctamente"} 
+            return {"resultado": "Diagnosticos eliminado correctamente"} 
                 
         except mysql.connector.Error as err:
             conn.rollback()
