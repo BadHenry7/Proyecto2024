@@ -45,3 +45,13 @@ async def delete_user(user_id: int):
 async def create_user_masivo(file: UploadFile = File(...)):
     rpta = nuevo_usuario.create_user_masivo(file)  # Esto está bien
     return rpta
+
+
+
+@router.post("/login")
+async def login(user: Login):
+    rpta = nuevo_usuario.login(user)
+    return rpta
+
+
+#v_usuario   

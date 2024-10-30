@@ -20,8 +20,9 @@ origins = [
 ]
 
 app.add_middleware(
+    # allow_origins=["http://localhost:5000"],  # Cambia al puerto donde corre Svelte
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

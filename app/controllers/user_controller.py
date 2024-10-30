@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException, UploadFile
 from app.config.db_config import get_db_connection
-from app.models.user_model import User
+from app.models.user_model import User, Login
 from fastapi.encoders import jsonable_encoder
 from typing import List
 import pandas as pd
@@ -167,6 +167,32 @@ class UserController:
         finally:
             conn.close()
 
+
+
+    def login(self, user: Login):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usuario where  usuario = %s AND password = %s",(user.usuario, user.password,))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'usuario':data[0],
+                    'password':data[1]
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+            else:
+                raise HTTPException(status_code=404, detail="User not found")  
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
 
 
 

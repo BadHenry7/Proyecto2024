@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 
 class User(BaseModel):
-    
-    id: int= None
+       
     usuario: str
-    password: str
+    password: str 
+    id: int= None
     nombre: str
     apellido: str
     documento: str
@@ -12,3 +12,6 @@ class User(BaseModel):
     id_rol: int
     estado:bool
     
+class Login(BaseModel):
+    usuario: str
+    password: str 

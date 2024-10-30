@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-
+"""
 def get_db_connection():
     return mysql.connector.connect(
         host="bfrrsop1jsm0voqgbgao-mysql.services.clever-cloud.com",
@@ -9,7 +9,7 @@ def get_db_connection():
         password="4SPvFuFqzZtr7KeWgCxv",
         database="bfrrsop1jsm0voqgbgao"
     )
-"""
+ """
 def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
@@ -18,4 +18,4 @@ def get_db_connection():
         database="proyecto"
     )
     ##importara a xampp
-    """
+   
