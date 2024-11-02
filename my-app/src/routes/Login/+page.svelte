@@ -51,7 +51,7 @@
                 let name = data.resultado[0].nombre;
                 let id = data.resultado[0].id;
 
-                let encontrado = { name,id };
+                let encontrado = { name, id };
 
                 let miStorage = window.localStorage;
                 miStorage.setItem("usuario", JSON.stringify(encontrado));
@@ -77,79 +77,41 @@
         loginModal.hide();
     }
 </script>
+<div style="background-image: url('image8.png');background-size: cover; background-position: center;height: 100vh; width: 100vw;">
+    <div class="col-sm-2 col-md-3 col-xl-3 col-lg-3 col-2">
+        <a href="/" class="btn btn-dark mx-5"  style="margin-top:5%;" >Volver</a> 
+    </div>
+    <div class="container" style="margin-top: 10%;">
+        <div style="text-align: center; margin-top: 20px; " class="fs-3">
+            <b>Inicio de sesión</b>
+        </div>
+        <div class="row justify-content-center g-2">
+            <div class="col-md-4 mb-3">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Correo"
+                    bind:value={v_usuario}
+                />
+            </div>
 
-<div class="col-sm-2 col-md-3 col-xl-3 col-lg-3 col-2" style="margin-top: 2%;">
-    <a href="/" class="btn btn-outline-dark mt-1 mx-2">Volver</a>
-</div>
-<div class="container" style="margin-top: 10%;">
-<div style="text-align: center; margin-top: 20px; " class="fs-3">
-    <b>Inicio de sesión</b>
-</div>
-    <div class="row justify-content-center g-2">
-        <div class="col-md-4 mb-3">
-            <input
-                type="text"
-                class="form-control"
-                placeholder="Correo"
-                bind:value={v_usuario}
-            />
+            <div class="col-md-4 mb-3">
+                <input
+                    class="form-control"
+                    type="password"
+                    placeholder="Contraseña"
+                    bind:value={v_password}
+                />
+            </div>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <input
-                class="form-control"
-                type="password"
-                placeholder="Contraseña"
-                bind:value={v_password}
-            />
+        <div class="text-center">
+            <button type="button" class="btn btn-primary mt-3" on:click={Login}
+                >Ingresar
+            </button>
         </div>
     </div>
-
-    <div class="text-center">
-        <button
-            type="button"
-            class="btn btn-primary mt-3"
-            on:click={Login}>Ingresar
-        </button>
-    </div>
 </div>
-
-<style>
-    .container {
-        max-width: 600px; /* Limita el ancho del contenedor */
-        margin: auto; /* Centra el contenedor horizontalmente */
-        padding: 20px; /* Agrega padding interno */
-        border-radius: 10px; /* Bordes redondeados */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
-        background-color: #f9f9f9; /* Color de fondo claro */
-    }
-
-    .form-control {
-        border-radius: 5px; /* Bordes redondeados para los inputs */
-        border: 1px solid #ced4da; /* Borde gris claro */
-    }
-
-    .form-control:focus {
-        border-color: #80bdff; /* Color del borde al enfocar */
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra al enfocar */
-    }
-
-    .btn-primary {
-        background-color: #007bff; /* Color de fondo del botón */
-        border: none; /* Sin borde */
-        padding: 10px 20px; /* Padding interno */
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3; /* Color de fondo al pasar el mouse */
-    }
-
-    @media (max-width: 768px) {
-        .col-md-4 {
-            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeñas */
-        }
-    }
-</style>
 
 
 <div
@@ -189,7 +151,6 @@
     </div>
 </div>
 
-
 <!--  <div class="modal show">
         <div class="modal-content">
             <h2>Selecciona tu rol</h2>
@@ -198,3 +159,40 @@
         </div>
     </div>
 -->
+
+<style>
+    .container {
+        max-width: 600px; /* Limita el ancho del contenedor */
+        margin: auto; /* Centra el contenedor horizontalmente */
+        padding: 20px; /* Agrega padding interno */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+        background-color: #f9f9f9; /* Color de fondo claro */
+    }
+
+    .form-control {
+        border-radius: 5px; /* Bordes redondeados para los inputs */
+        border: 1px solid #ced4da; /* Borde gris claro */
+    }
+
+    .form-control:focus {
+        border-color: #80bdff; /* Color del borde al enfocar */
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra al enfocar */
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Color de fondo del botón */
+        border: none; /* Sin borde */
+        padding: 10px 20px; /* Padding interno */
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Color de fondo al pasar el mouse */
+    }
+
+    @media (max-width: 768px) {
+        .col-md-4 {
+            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeñas */
+        }
+    }
+</style>

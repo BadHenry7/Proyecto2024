@@ -162,10 +162,6 @@ import Navbaradmin from "../../../../lib/Navbaradmin.svelte"
     
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6  py-2">
     
-                        <input type="checkbox" id="terminos" required />
-                        <label><a href="#" data-bs-toggle="modal" data-bs-target="#TerminosCondiciones"> Acepto los
-                                términos y
-                                condiciones</a></label>
     
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 ">

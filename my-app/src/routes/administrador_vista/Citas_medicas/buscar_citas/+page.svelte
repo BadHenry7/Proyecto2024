@@ -52,8 +52,8 @@
                     <tbody>
                         {#each todos as todo}
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{todo.medico}</td>
-                                <td class="px-4 py-2 border">{todo.paciente}</td
+                                <td class="px-4 py-2 border">{todo.paciente}</td>
+                                <td class="px-4 py-2 border">{todo.medico}</td
                                 >
                                 <td class="px-4 py-2 border">{todo.fecha}</td>
                                 <td class="px-4 py-2 border">{todo.hora}</td>
