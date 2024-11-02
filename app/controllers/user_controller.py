@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException, UploadFile
 from app.config.db_config import get_db_connection
-from app.models.user_model import User, Login
+from app.models.user_model import User, Login, Estado, Buscar ,Actualizar
 from fastapi.encoders import jsonable_encoder
 from typing import List
 import pandas as pd
@@ -14,10 +14,21 @@ class UserController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,user.password,user.nombre,user.apellido,user.documento,user.telefono,user.id_rol,user.estado))
-            conn.commit()
-            conn.close()
-            return {"resultado": "Usuario creado"}
+            cursor.execute("SELECT * FROM usuario WHERE usuario= %s  ||  documento= %s", (user.usuario,user.documento))
+            result = cursor.fetchall()
+
+            if result:
+               
+                content = {}    
+                content={"Informacion":"Ya_existe"}
+              
+                return jsonable_encoder(content)
+            else:   
+                cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,user.password,user.nombre,user.apellido,user.documento,user.telefono,user.id_rol,user.estado))
+                conn.commit()
+                conn.close()
+                return {"resultado": "Usuario creado"}
+
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
@@ -60,13 +71,13 @@ class UserController:
 
     
 
-    def get_user(self, user_id: int):
+    def get_user(self, user: Buscar):
         
         try:
             
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM usuario WHERE id = %s", (user_id,))
+            cursor.execute("SELECT * FROM usuario WHERE id = %s ", (user.id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -128,23 +139,89 @@ class UserController:
             conn.rollback()
         finally:
             conn.close()
-  
-    
-    def update_user(self, user_id: int, user: User):
+
+
+    def get_paciente(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usuario where id_rol=2")
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'id':data[0],
+                    'usuario':data[1],
+                    'password':data[2],
+                    'nombre':data[3],
+                    'apellido':data[4],
+                    'documento':data[5],
+                    'telefono':data[6],
+                    'id_rol':data[7],
+                    'estado':data[8]
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+            else:
+                raise HTTPException(status_code=404, detail="User not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+    def get_medico(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usuario where id_rol=3")
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'id':data[0],
+                    'usuario':data[1],
+                    'password':data[2],
+                    'nombre':data[3],
+                    'apellido':data[4],
+                    'documento':data[5],
+                    'telefono':data[6],
+                    'id_rol':data[7],
+                    'estado':data[8]
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+            else:
+                raise HTTPException(status_code=404, detail="User not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+       
+    def update_user(self, user: Actualizar):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""
             UPDATE usuario
             SET usuario = %s,
-            password = %s,
             nombre=%s,
             apellido = %s,
             documento=%s,
-            telefono=%s,    
-            estado= %s                 
+            telefono=%s ,
+            estado =%s 
             WHERE id = %s
-            """,(user.usuario,user.password,user.nombre,user.apellido,user.documento,user.telefono,user.estado,user_id,))
+            """,(user.usuario,user.nombre,user.apellido,user.documento,user.telefono,user.estado,user.id,))
             conn.commit()
            
             return {"resultado": "Usuario actualizado correctamente"} 
@@ -153,6 +230,12 @@ class UserController:
             conn.rollback()
         finally:
             conn.close()    
+
+    
+    
+    """ 
+    
+    """
        
     def delete_user(self, user_id: int):
         try: 
@@ -167,8 +250,6 @@ class UserController:
         finally:
             conn.close()
 
-
-
     def login(self, user: Login):
         try:
             conn = get_db_connection()
@@ -179,8 +260,11 @@ class UserController:
             content = {} 
             for data in result:
                 content={
-                    'usuario':data[0],
-                    'password':data[1]
+                    'usuario':data[1],
+                    'password':data[2],
+                    'nombre':data[3],
+                    'id':data[0],
+
                 }
                 payload.append(content)
                 content = {}
@@ -194,7 +278,24 @@ class UserController:
         finally:
             conn.close()
 
-
+    def estado_user(self, user: Estado):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+            UPDATE usuario
+            SET
+            estado =  %s                
+            WHERE id = %s
+            """,(user.estado,user.id,))
+            conn.commit()
+           
+            return {"resultado": "Usuario desactivado correctamente :c"} 
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()    
 
             
 ##user_controller = UserController()

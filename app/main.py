@@ -3,7 +3,7 @@ from app.routes.user_routes import router as user_router
 from app.routes.rol_routes import router as Rol_router
 from app.routes.atributo_routes import router as atributo_router
 from app.routes.atributoxusuario_routes import router as atrixuser_router
-from app.routes.pago_routes import router as Pago_router
+from app.routes.cita_medica_routes import router as Cita_router
 from app.routes.diagnosticos_routes import router as Diagnosticos_router
 from app.routes.historial_routes import router as historial_router
 from app.routes.sintomas_routes import router as sintomas_router
@@ -32,7 +32,7 @@ app.include_router(user_router)
 app.include_router(Rol_router)
 app.include_router(atributo_router)  
 app.include_router(atrixuser_router)  
-app.include_router(Pago_router)  
+app.include_router(Cita_router)  
 app.include_router(Diagnosticos_router) 
 app.include_router(historial_router) 
 app.include_router(sintomas_router) 
