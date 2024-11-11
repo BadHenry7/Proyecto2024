@@ -233,11 +233,17 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
 </script>
 
 <Navbaradmin></Navbaradmin>
-<div id="Mostrarusuario">
+
+<div id="Mostrarusuario" >
   <div class="container py-4">
     <h2 class="mb-4">Lista de usuarios</h2>
     {#if loading}
-      <p class="text-center">Cargando datos...</p>
+    <!----><div class="row g-2 justify-content-center">
+      <p class="text-center col-lg-2 col-md-2 col-sm-2 col-12 col-xl-2">Cargando datos...</p>
+      <div class="spinner-border col-lg-4 col-md-4 col-sm-4 col-12 col-xl-4" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     {:else if error}
       <p class="text-red-500">Error: {error}</p>
     {:else}

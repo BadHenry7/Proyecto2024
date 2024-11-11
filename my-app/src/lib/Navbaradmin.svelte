@@ -32,7 +32,6 @@ console.log(n)
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="/administrador_vista/Usuario/Crear_usuario">Registrar usuario</a></li>
               <li><a class="dropdown-item" href="/administrador_vista/Usuario/Buscar_usuario">Buscar usuario</a></li>
-              <li><a class="dropdown-item" href="">Desactivar usuario</a></li>
             </ul>
             <!--Aca empieza otro-->
           </li>
@@ -80,7 +79,7 @@ console.log(n)
 
         
         <form class="d-flex   nav-item nav-link ms-auto">
-          <a class="btn  nav-item" href="/">Cerrar sesion</a>
+          <a class="btn btn-outline-dark  nav-item" href="/">Cerrar sesion</a>
         </form>
        
       </div>

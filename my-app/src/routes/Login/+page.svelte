@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
 
     let todos = {};
-    let loading = true;
+    let loading = false;
     let error = null;
     let v_usuario = "";
     let v_password = "";
@@ -30,8 +30,12 @@
     });
 
     async function Login() {
+
+        loading = true;
+
+        
         try {
-            const response = await fetch("http://127.0.0.1:8000/login", {
+            const response = await fetch(" http://127.0.0.1:8000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,15 +59,17 @@
 
                 let miStorage = window.localStorage;
                 miStorage.setItem("usuario", JSON.stringify(encontrado));
-                alert("Inicio de sesión exitoso. Bienvenido " + name);
+                alert("Inicio de sesion exitoso. Bienvenido " + name);
                 //document.getElementById("loginex").style.display = "flex";
                 showModal();
             } else {
-                alert("Error de autenticación");
+                alert("Error de autenticacion");
             }
         } catch (e) {
             error = e.message;
             alert("Error en la solicitud: " + error);
+        } finally {
+            loading = false;
         }
     }
 
@@ -77,16 +83,16 @@
         loginModal.hide();
     }
 </script>
-<div style="background-image: url('image8.png');background-size: cover; background-position: center;height: 100vh; width: 100vw;">
+<div style="background-image: url('/img_login.jpg');background-size: cover; background-position: center;height: 100vh; width: 100vw;">
     <div class="col-sm-2 col-md-3 col-xl-3 col-lg-3 col-2">
         <a href="/" class="btn btn-dark mx-5"  style="margin-top:5%;" >Volver</a> 
     </div>
-    <div class="container" style="margin-top: 10%;">
-        <div style="text-align: center; margin-top: 20px; " class="fs-3">
-            <b>Inicio de sesión</b>
+    <div class="container" style="margin-top: 7%;">
+        <div style="text-align: center; margin-top: 4%; margin-bottom: 3%; " class="fs-3">
+            <b>Inicio de sesion</b>
         </div>
         <div class="row justify-content-center g-2">
-            <div class="col-md-4 mb-3">
+            <div class=" mx-5 col-md-6 mb-3">
                 <input
                     type="text"
                     class="form-control"
@@ -95,7 +101,7 @@
                 />
             </div>
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <input
                     class="form-control"
                     type="password"
@@ -106,12 +112,23 @@
         </div>
 
         <div class="text-center">
-            <button type="button" class="btn btn-primary mt-3" on:click={Login}
-                >Ingresar
-            </button>
+            
+                <button type="button" class="btn btn-primary mt-3" on:click={Login}>
+                    Ingresar
+                </button>
+     
         </div>
     </div>
 </div>
+
+{#if loading}
+<div class="overlay">
+    <div class="spinner-grow text-light" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+</div>
+{/if}
+
 
 
 <div
@@ -119,8 +136,8 @@
     id="loginex"
     tabindex="-1"
     aria-labelledby="rModalLabel"
-    aria-hidden="true"
->
+    aria-hidden="true">
+    
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -169,6 +186,19 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
         background-color: #f9f9f9; /* Color de fondo claro */
     }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); /* Oscurecimiento del fondo */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050; /* Asegurarse de que estÃ© sobre el contenido */
+    }
 
     .form-control {
         border-radius: 5px; /* Bordes redondeados para los inputs */
@@ -181,18 +211,18 @@
     }
 
     .btn-primary {
-        background-color: #007bff; /* Color de fondo del botón */
+        background-color: #008b8b; /* Color de fondo del botÃ³n */
         border: none; /* Sin borde */
         padding: 10px 20px; /* Padding interno */
     }
 
     .btn-primary:hover {
-        background-color: #0056b3; /* Color de fondo al pasar el mouse */
+        background-color: #1bd1d1; /* Color de fondo al pasar el mouse */
     }
 
     @media (max-width: 768px) {
         .col-md-4 {
-            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeñas */
+            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeÃ±as */
         }
     }
 </style>

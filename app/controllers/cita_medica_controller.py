@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.citas_medicas_model import Citasm,Buscar
+from app.models.citas_medicas_model import Citasm,Buscar,Reportesss
 from fastapi.encoders import jsonable_encoder
 from datetime import timedelta
 class citaController:
@@ -194,3 +194,76 @@ class citaController:
         finally:
             conn.close()
     
+
+    
+    def reportes_citas(self, cita: Reportesss):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                           
+            SELECT cita.fecha, cita.hora, usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente     
+            FROM cita
+            INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id 
+            INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id 
+            WHERE cita.fecha BETWEEN %s AND %s
+                           """,(cita.fecha, cita.fecha2))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'fecha':data[0],
+                    'hora':str(data[1]),
+                    'medico':data[2],
+                    'paciente':data[3]
+                
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+    def estadisticas_citas(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                           
+          SELECT COUNT(c.id_paciente) AS "citas", u.nombre AS "doctor"
+            FROM cita c
+            JOIN usuario u ON c.id_usuario = u.id
+            GROUP BY u.nombre;
+
+                           """,)
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'citas':data[0], 
+                    'doctor':data[1], 
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()       

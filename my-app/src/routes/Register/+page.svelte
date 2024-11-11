@@ -10,7 +10,7 @@ import { onMount } from "svelte";
     let v_usuario = "";
     let v_password = "";
     let v_nombre = "";
-    let v_apellido = "";
+    let v_apellido = ""; //por que mano anda mucha gente aca haciendo bulla entonces no puedo entrar a teams
     let v_documento = "";
     let v_telefono = "";
     let v_rol = 2;
@@ -88,7 +88,7 @@ import { onMount } from "svelte";
             <!-- border-danger -->
             <div class="row mt-5 mx-5 ">
 
-                <div class="col-lg-6   col-md-6 col-sm-6 col-12 col-xl-6 ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 ">
 
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="name" placeholder="Escriba el nombre completo"

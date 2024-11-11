@@ -20,12 +20,14 @@ origins = [
 ]
 
 app.add_middleware(
-    # allow_origins=["http://localhost:5000"],  # Cambia al puerto donde corre Svelte
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",  # URL local de Svelte en desarrollo
+        "https://1ab2-161-10-131-76.ngrok-free.app","https://4b81-161-10-131-76.ngrok-free.app",   # URL de ngrok
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permite todos los encabezados
 )
 
 app.include_router(user_router) 

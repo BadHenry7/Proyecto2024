@@ -37,3 +37,15 @@ async def update_cita(cita_id: int ,cita: Citasm,):
 async def delete_cita(cita_id: int):
     rpta = nueva_cita.delete_cita(cita_id)
     return rpta 
+
+
+@router.post("/reportes_citas/")
+async def reportes_citas(cita: Reportesss):
+    rpta = nueva_cita.reportes_citas(cita)
+    return rpta
+
+@router.get("/estadisticas_citas")
+async def estadisticas_citas():
+    rpta = nueva_cita.estadisticas_citas()
+    return rpta
+

@@ -11,3 +11,9 @@ class Citasm(BaseModel):
 
 class Buscar(BaseModel):
     id_paciente:int
+
+
+class Reportesss(BaseModel):
+    fecha: str
+    fecha2: str
+        
