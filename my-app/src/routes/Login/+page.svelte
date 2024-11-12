@@ -30,10 +30,8 @@
     });
 
     async function Login() {
-
         loading = true;
 
-        
         try {
             const response = await fetch(" http://127.0.0.1:8000/login", {
                 method: "POST",
@@ -46,24 +44,64 @@
                 }),
             });
 
-            const data = await response.json();
-            console.log(data);
-
             if (response.ok) {
-                //
+                const data = await response.json();
+                todos = data.resultado;
+                let rol_v = todos[0].rol;
+                console.log(rol_v);
 
-                let name = data.resultado[0].nombre;
-                let id = data.resultado[0].id;
+                console.log(todos);
+                if (rol_v == 1) {
+                    let name = data.resultado[0].nombre;
+                    let id = data.resultado[0].id;
 
-                let encontrado = { name, id };
+                    let encontrado = { name, id };
 
-                let miStorage = window.localStorage;
-                miStorage.setItem("usuario", JSON.stringify(encontrado));
-                alert("Inicio de sesion exitoso. Bienvenido " + name);
-                //document.getElementById("loginex").style.display = "flex";
-                showModal();
+                    let miStorage = window.localStorage;
+                    miStorage.setItem("usuario", JSON.stringify(encontrado));
+                    //alert("Inicio de sesion exitoso. Bienvenido  Administrador " +  name,);
+                    Swal.fire({
+                        //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                        position: "top",
+                        icon: "success",
+                        title: "Inicio de sesion exitoso, bienvenido "+name,
+                        showConfirmButton: false,
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = "/administrador_vista";
+                    }, 2000);
+                } else {
+                    let name = data.resultado[0].nombre;
+                    let id = data.resultado[0].id;
+
+                    let encontrado = { name, id };
+
+                    let miStorage = window.localStorage;
+                    miStorage.setItem("usuario", JSON.stringify(encontrado));
+                  //  alert(                        "Inicio de sesion exitoso2. Bienvenido Usuario " + name,);
+                    //document.getElementById("loginex").style.display = "flex";
+                    Swal.fire({
+                        //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                        position: "top",
+                        icon: "success",
+                        title: "Inicio de sesion exitoso, bienvenido "+name,
+                        showConfirmButton: false,
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = "/usuario";
+                    }, 2000);
+
+                   
+                }
             } else {
-                alert("Error de autenticacion");
+                Swal.fire({
+                    title: "Error!",
+                    text: "Usuario/clave incorrecto",
+                    icon: "error",
+                    confirmButtonText: "Cool",
+                });
             }
         } catch (e) {
             error = e.message;
@@ -83,12 +121,18 @@
         loginModal.hide();
     }
 </script>
-<div style="background-image: url('/img_login.jpg');background-size: cover; background-position: center;height: 100vh; width: 100vw;">
+
+<div
+    style="background-image: url('/img_login.jpg');background-size: cover; background-position: center;height: 100vh; width: 100vw;"
+>
     <div class="col-sm-2 col-md-3 col-xl-3 col-lg-3 col-2">
-        <a href="/" class="btn btn-dark mx-5"  style="margin-top:5%;" >Volver</a> 
+        <a href="/" class="btn btn-dark mx-5" style="margin-top:5%;">Volver</a>
     </div>
     <div class="container" style="margin-top: 7%;">
-        <div style="text-align: center; margin-top: 4%; margin-bottom: 3%; " class="fs-3">
+        <div
+            style="text-align: center; margin-top: 4%; margin-bottom: 3%; "
+            class="fs-3"
+        >
             <b>Inicio de sesion</b>
         </div>
         <div class="row justify-content-center g-2">
@@ -112,32 +156,28 @@
         </div>
 
         <div class="text-center">
-            
-                <button type="button" class="btn btn-primary mt-3" on:click={Login}>
-                    Ingresar
-                </button>
-     
+            <button type="button" class="btn btn-primary mt-3" on:click={Login}>
+                Ingresar
+            </button>
         </div>
     </div>
 </div>
 
 {#if loading}
-<div class="overlay">
-    <div class="spinner-grow text-light" role="status">
-        <span class="visually-hidden">Cargando...</span>
+    <div class="overlay">
+        <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
     </div>
-</div>
 {/if}
-
-
 
 <div
     class="modal fade"
     id="loginex"
     tabindex="-1"
     aria-labelledby="rModalLabel"
-    aria-hidden="true">
-    
+    aria-hidden="true"
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -186,7 +226,7 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
         background-color: #f9f9f9; /* Color de fondo claro */
     }
-    
+
     .overlay {
         position: fixed;
         top: 0;

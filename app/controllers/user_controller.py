@@ -264,6 +264,8 @@ class UserController:
                     'password':data[2],
                     'nombre':data[3],
                     'id':data[0],
+                    'rol':data[7],
+
 
                 }
                 payload.append(content)

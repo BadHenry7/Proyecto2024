@@ -97,6 +97,25 @@
                 doc.autoTable(columns, body, { margin: { top: 70 } });
 
                 doc.save("Cita_dia.pdf");
+    //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                const Toast = Swal.mixin({
+  toast: true,
+  position: "bottom-start",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "success",
+  title: "Reporte generado"
+});
+
+
+
             } //fin de la opcion 1
             else if (opcion == 2) {
                 alert("opcion2");
