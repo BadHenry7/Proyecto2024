@@ -42,3 +42,11 @@ Para cargar el svelte:
 cd my-app
  npm run dev -- --open
    
+
+
+  
+---->Para red neuronal
+pip install keras
+pip install tensorflow
+pip install scikit-learn
+pip install matplotlib 
