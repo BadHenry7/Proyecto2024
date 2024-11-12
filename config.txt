@@ -38,6 +38,14 @@ pip install python-multipart
 
 
 
+Para importar svelte
+1.npx sv create my-app​    
+2. SvelteKit minimal (barebones scaffolding for your new app)
+3. No
+4.None
+5.npm
+
+
 Para cargar el svelte: 
 cd my-app
  npm run dev -- --open
