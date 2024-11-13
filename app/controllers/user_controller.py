@@ -254,7 +254,7 @@ class UserController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM usuario where  usuario = %s AND password = %s",(user.usuario, user.password,))
+            cursor.execute("SELECT * FROM usuario where estado!=0 AND usuario = %s AND password = %s",(user.usuario, user.password,))
             result = cursor.fetchall()
             payload = []
             content = {} 
