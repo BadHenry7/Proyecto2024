@@ -28,21 +28,20 @@
   var id = 1;
 
   var a = "";
-  
-async function Ocultar() {
-  const v_editar = document.getElementById("nav-listado");
-  v_editar.setAttribute("class","fade");
 
-  let mostrar = document.getElementById("Mostrarusuario");
-  mostrar.removeAttribute("class");
+  async function Ocultar() {
+    const v_editar = document.getElementById("nav-listado");
+    v_editar.setAttribute("class", "fade");
 
-  location.reload();
+    let mostrar = document.getElementById("Mostrarusuario");
+    mostrar.removeAttribute("class");
 
+    location.reload();
+  }
 
-}
-var vid=1
+  var vid = 1;
   async function editar(id, a) {
-    alert("Editando a " + a);
+    console.log("Editando a " + a);
     const v_editar = document.getElementById("nav-listado");
     v_editar.removeAttribute("class");
     console.log(v_editar);
@@ -83,7 +82,6 @@ var vid=1
       document.getElementById("telefono").value = data.telefono;
       document.getElementById("correo").value = data.usuario;
 
-     
       const v_edit_nombre = document.getElementById("nombres");
       v_edit_nombre.removeAttribute("readonly");
       v_edit_nombre.focus();
@@ -110,17 +108,17 @@ var vid=1
   }
 
   async function actualizar() {
-alert(vid)
-    let vnombre = document.getElementById('nombres').value;
-    let vapellidos = document.getElementById('apellidos').value;
-    let vdocumento = document.getElementById('documento').value;
-    let vtelefono = document.getElementById('telefono').value;
-    let vcorreo = document.getElementById('correo').value;
-    let vestado = document.getElementById('estado').value;
+    console.log(vid);
+    let vnombre = document.getElementById("nombres").value;
+    let vapellidos = document.getElementById("apellidos").value;
+    let vdocumento = document.getElementById("documento").value;
+    let vtelefono = document.getElementById("telefono").value;
+    let vcorreo = document.getElementById("correo").value;
+    let vestado = document.getElementById("estado").value;
     //let vestado = document.getElementById('estado').value;
 
-alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
-    
+    console.log("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES " + vestado);
+
     try {
       console.log("Entra al try de actualzar");
 
@@ -132,39 +130,64 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
         body: JSON.stringify({
           id: vid,
           usuario: vcorreo,
-          nombre:vnombre,
-          apellido:vapellidos,
+          nombre: vnombre,
+          apellido: vapellidos,
           documento: vdocumento,
           telefono: vtelefono,
           estado: vestado,
-
         }),
       });
-      alert("Actualizado")
-      const v_editar = document.getElementById('nav-listado');
+      console.log("Actualizado");
+
+
+      const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          iconColor: "white",
+          color: "white",
+          background: "#00bdff",
+          title: "usuario actualizado con exito",
+        });
+
+        setTimeout(() => {
+          const v_editar = document.getElementById("nav-listado");
       v_editar.setAttribute("class", "fade");
 
-      let ocultar = document.getElementById('Mostrarusuario')
-        ocultar.removeAttribute('class')
+      let ocultar = document.getElementById("Mostrarusuario");
+      ocultar.removeAttribute("class");
 
-        const cambiar = v_editar.parentElement;
-        cambiar.insertBefore(ocultar, v_editar);
-
-        location.reload();
-
+      const cambiar = v_editar.parentElement;
+      cambiar.insertBefore(ocultar, v_editar);
+          location.reload();
+        }, 3000);
+      
+      
+      
     } catch (e) {
       error = e.message;
     } finally {
       loading = false;
     }
-
-
   }
 
-  async function desactivar(id, nombre) {
+  const serviceID = "service_acpug5r";
+  const templateID = "template_bloqueouser";
+  const apikey = "3bmpPn1S0SLhgotWj";
+
+  async function desactivar(id, nombre, usuario) {
     let vestado = 0;
-    let vid=id
-   
+    let vid = id;
+    console.log("Correo" + usuario);
     try {
       const response = await fetch("http://127.0.0.1:8000/estado_user", {
         method: "PUT",
@@ -172,20 +195,51 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id:vid,
+          id: vid,
           estado: vestado,
         }),
-
       });
 
       const data = await response.json();
-
       if (response.ok) {
-        alert(`Usuario ${nombre} desactivado`);
-        location.reload();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "error",
+          iconColor: "white",
+          color: "white",
+          background: "#ff4e4e",
+          title: "usuario desactivado con exito",
+        });
+        //sendEmail()
 
+        function sendEmail() {
+          emailjs.init(apikey);
+          emailjs
+            .send(serviceID, templateID, {
+              nombre: nombre,
+              email: usuario,
+            })
+            .then((result) => {
+              console.log("Corro enviado con exito");
+            })
+            .catch((error) => {
+              console.log("Error al enviar el correo:", error.text);
+            });
+        }
 
-        
+        setTimeout(() => {
+          location.reload();
+        }, 3500);
       } else {
         alert("Error al desactivar: " + data.message || "Error desconocido");
       }
@@ -194,12 +248,10 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
     }
   }
 
-
-
   async function activar(id, nombre) {
     let vestado = 1;
-    let vid=id
-  
+    let vid = id;
+
     try {
       const response = await fetch("http://127.0.0.1:8000/estado_user", {
         method: "PUT",
@@ -207,20 +259,38 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id:vid,
+          id: vid,
           estado: vestado,
         }),
-
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert(`Usuario ${nombre} Activado`);
-        location.reload();
-
-
+        console.log(`Usuario ${nombre} Activado`);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          iconColor: "#000000",
+          color: "black",
+          background: "#76fa78",
+          title: "usuario activado con exito",
+        });
         
+        setTimeout(() => {
+          location.reload();
+        }, 3500);//en milisegundos
+
       } else {
         alert("Error al Activar: " + data.message || "Error desconocido");
       }
@@ -228,22 +298,26 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
       alert("Error en la solicitud: " + e.message);
     }
   }
-
-  
 </script>
 
 <Navbaradmin></Navbaradmin>
 
-<div id="Mostrarusuario" >
+<div id="Mostrarusuario">
   <div class="container py-4">
     <h2 class="mb-4">Lista de usuarios</h2>
     {#if loading}
-    <!----><div class="row g-2 justify-content-center">
-      <p class="text-center col-lg-2 col-md-2 col-sm-2 col-12 col-xl-2">Cargando datos...</p>
-      <div class="spinner-border col-lg-4 col-md-4 col-sm-4 col-12 col-xl-4" role="status">
-        <span class="visually-hidden">Loading...</span>
+      <!---->
+      <div class="row g-2 justify-content-center">
+        <p class="text-center col-lg-2 col-md-2 col-sm-2 col-12 col-xl-2">
+          Cargando datos...
+        </p>
+        <div
+          class="spinner-border col-lg-4 col-md-4 col-sm-4 col-12 col-xl-4"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
-    </div>
     {:else if error}
       <p class="text-red-500">Error: {error}</p>
     {:else}
@@ -275,18 +349,25 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
                   </span>
                 </td>
                 <td class="px-4 py-2 border">
-                  <button class="btn btn-info" on:click={() => editar(todo.id, todo.nombre)}>
-                    Editar</button
-                  >
-                  {#if todo.estado} <!-- Mostrar botón "Desactivar" si el usuario está activo -->
-                  <button class="btn btn-danger" on:click={() => desactivar(todo.id, todo.nombre)}>
-                    Desactivar
-                  </button>
-                {:else} <!-- Mostrar botón "Activar" si el usuario está desactivado -->
-                  <button class="btn btn-success" on:click={() => activar(todo.id, todo.nombre)}>
-                    Activar
-                  </button>
-                {/if}
+                  <button class="btn btn-info" on:click={() => editar(todo.id, todo.nombre)}>Editar</button>
+                  {#if todo.estado}
+                    <!-- Mostrar botón "Desactivar" si el usuario está activo -->
+                    <button
+                      class="btn btn-danger"
+                      on:click={() =>
+                        desactivar(todo.id, todo.nombre, todo.usuario)}
+                    >
+                      Desactivar
+                    </button>
+                  {:else}
+                    <!-- Mostrar botón "Activar" si el usuario está desactivado -->
+                    <button
+                      class="btn btn-success"
+                      on:click={() => activar(todo.id, todo.nombre)}
+                    >
+                      Activar
+                    </button>
+                  {/if}
                 </td>
               </tr>
             {/each}
@@ -306,10 +387,11 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
     <p class="text-orange"></p>
   </div>
   <div class="card border-dark shadow" style="width: 60%; margin-left: 20%;">
-  <div class="card-header row g-2">
-  <h5 class="card-title col-lg-11"><b>Editando Usuario</b></h5>
-  <button class="btn btn-close col-lg-1" on:click={() => Ocultar()}></button>
-  </div>
+    <div class="card-header row g-2">
+      <h5 class="card-title col-lg-11"><b>Editando Usuario</b></h5>
+      <button class="btn btn-close col-lg-1" on:click={() => Ocultar()}
+      ></button>
+    </div>
     <div class="card-body" style="margin-left: 10%;">
       <div class="row">
         <div class="col-lg-2">
@@ -400,16 +482,17 @@ alert("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES "+vestado)
             <option value="0">Desactivar</option>
           </select>
         </div>
-    </div>
-       
- 
+      </div>
+
       <div class="row" style="margin-top: 4%;">
         <div class="col-lg-9">
           ¡Al terminar de editar, darle click en actualizar para guardar los
           cambios!
         </div>
         <div class="col-lg-3 text-end">
-          <button on:click={actualizar}  class="btn btn-outline-info"><b>Actualizar</b></button>
+          <button on:click={actualizar} class="btn btn-outline-info"
+            ><b>Actualizar</b></button
+          >
         </div>
         <div id="estado" class="col-lg-10"></div>
       </div>

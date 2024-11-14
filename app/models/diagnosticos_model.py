@@ -7,3 +7,9 @@ class Diagnosticos(BaseModel):
     resultado: str
     fecha_diagnostico: str
     estado: bool
+
+
+
+class Reportesss(BaseModel):
+    fecha: str
+    fecha2: str

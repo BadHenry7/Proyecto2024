@@ -34,3 +34,9 @@ async def delete_historial(historial_id: int):
     rpta = nuevo_historial.delete_historial(historial_id)
     
     return rpta 
+
+
+@router.post("/reportes_historial/")
+async def reportes_historial(historial: Reportesss):
+    rpta = nuevo_historial.reportes_historial(historial)
+    return rpta

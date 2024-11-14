@@ -7,3 +7,6 @@ class Historial(BaseModel):
     fecha:str
     estado:bool
     
+class Reportesss(BaseModel):
+    fecha: str
+    fecha2: str  

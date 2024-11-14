@@ -33,7 +33,7 @@
         loading = true;
 
         try {
-            const response = await fetch("https://10df-161-10-131-76.ngrok-free.app/login", {
+            const response = await fetch("http://127.0.0.1:8000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

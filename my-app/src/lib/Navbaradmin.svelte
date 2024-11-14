@@ -40,10 +40,8 @@ console.log(n)
               Citas medicas
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="/administrador_vista/Citas_medicas/crear_citas">Asignar cita </a></li>
-              <li><a class="dropdown-item" href="/administrador_vista/Citas_medicas/buscar_citas">Buscar cita</a></li>
-              <li><a class="dropdown-item" href="/administrador_vista/Citas_medicas/actualizar_citas">Modificar cita</a></li>
-              <li><a class="dropdown-item" href="/administrador_vista/Citas_medicas/cancelar_citas">Cancelar cita</a></li>
+              <li><a class="dropdown-item" href="/administrador_vista/Citas_medicas/crear_citas">Asignar citas</a></li>
+              <li><a class="dropdown-item" href="/administrador_vista/Citas_medicas/buscar_citas">Gestionar citas</a></li>
             </ul>
 <!--Aca empieza otro-->
             <li class="nav-item dropdown">

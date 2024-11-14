@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.citas_medicas_model import Citasm,Buscar,Reportesss
+from app.models.citas_medicas_model import Citasm,Buscar,Reportesss, EditarCita
 from fastapi.encoders import jsonable_encoder
 from datetime import timedelta
 class citaController:
@@ -51,44 +51,53 @@ class citaController:
         finally:
             conn.close()
   #SELECT  nombre  FROM cita INNER JOIN usuario ON cita.id_usuario = usuario.id     
-    """def get_citas(self):
+  
+    def editar_cita(self, cita: EditarCita):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM cita")
+            cursor.execute("""
+                           
+                          SELECT cita.fecha,  cita.hora, usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente, cita.id   
+            FROM cita
+            INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
+            INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id 
+            WHERE cita.id=%s """, (cita.id,))
             result = cursor.fetchall()
             payload = []
             content = {} 
             for data in result:
                 content={
-                    'id':data[0],
-                    'fecha':data[1],
-                    'hora':data[2],
-                    'estado':data[3],
-                    'id_usuario':data[4],
-                    'id_paciente':data[5],
+                    'fecha':data[0],
+                    'hora':str(data[1]),
+                    'medico':data[2],
+                    'paciente':data[3],
+                    'id':data[4]
+
+                
                 }
                 payload.append(content)
                 content = {}
             json_data = jsonable_encoder(payload)        
             if result:
-               return {"resultado": json_data}
+                return {"resultado": json_data}
+               
             else:
                 raise HTTPException(status_code=404, detail="citas not found")  
                 
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
-            conn.close()"""
+            conn.close()
     
 
-    def get_citas(self):
+    def get_cita_admin(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""
                            
-                          SELECT cita.fecha,  cita.hora,  usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente     
+                          SELECT cita.fecha,  cita.hora, usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente, cita.id   
             FROM cita
             INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
             INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id
@@ -103,14 +112,16 @@ class citaController:
                     'fecha':data[0],
                     'hora':str(data[1]),
                     'medico':data[2],
-                    'paciente':data[3]
+                    'paciente':data[3],
+                    'id':data[4]
+
                 
                 }
                 payload.append(content)
                 content = {}
             json_data = jsonable_encoder(payload)        
             if result:
-               return {"resultado": json_data}
+                return {"resultado": json_data}
                
             else:
                 raise HTTPException(status_code=404, detail="citas not found")  

@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.historial_model import Historial
+from app.models.historial_model import Historial,Reportesss
 from fastapi.encoders import jsonable_encoder
 
 class historial_Controller:
@@ -114,4 +114,41 @@ class historial_Controller:
             conn.rollback()
         finally:
             conn.close()
+
+    
+    def reportes_historial(self, historial: Reportesss):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+            SELECT usuario.nombre as Nombre, COUNT(historial.id_usuario) AS numero_citas, MAX(historial.fecha) AS Ultimodiagnostio
+        FROM usuario
+        INNER JOIN historial as historial on historial.id_usuario=usuario.id
+        WHERE historial.fecha BETWEEN %s AND %s
+        GROUP BY historial.id_usuario;
+                           """,(historial.fecha, historial.fecha2))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'nombre':data[0],
+                    'numero_citas':str(data[1]),
+                    'Ultimodiagnostio':data[2],
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+    
+
     

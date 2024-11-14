@@ -84,7 +84,7 @@
                 }
                 doc.setFontSize(35);
                 doc.setFont("helvetica");
-                doc.text(76, 20, "Hostipal.");
+                doc.text(76, 20, "Hostipal");
                 const docWidth = doc.internal.pageSize.getWidth();
                 doc.line(0, 30, docWidth, 30);
                 doc.setFontSize(18);
@@ -97,30 +97,170 @@
                 doc.autoTable(columns, body, { margin: { top: 70 } });
 
                 doc.save("Cita_dia.pdf");
-    //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
                 const Toast = Swal.mixin({
-  toast: true,
-  position: "bottom-start",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
-Toast.fire({
-  icon: "success",
-  title: "Reporte generado"
-});
-
-
-
+                    toast: true,
+                    position: "bottom-start",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    },
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Reporte generado",
+                });
             } //fin de la opcion 1
             else if (opcion == 2) {
-                alert("opcion2");
+                let fecha_de = document.getElementById("desde_citas").value;
+                let fecha_hasta = document.getElementById("hasta_citas").value;
+                console.log("----Comprando el generar 2------");
+                console.log(fecha_de);
+                console.log(fecha_hasta);
+                const response = await fetch(
+                    "http://127.0.0.1:8000/reportes_diagnosticos/",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            fecha: fecha_de,
+                            fecha2: fecha_hasta,
+                        }),
+                    },
+                );
+                if (!response.ok) throw new Error("Error al cargar los datos");
+                const data = await response.json();
+
+                todos = data.resultado;
+                console.log(todos);
+                setTimeout(() => {
+                    globalThis.$("#myTable").DataTable(); // Para convertrlo en datatable :D
+                });
+                const { jsPDF } = window.jspdf; // Accede a jsPDF desde el objeto global
+                const doc = new jsPDF();
+                console.log("´probando el response.length");
+                console.log(todos.length);
+                var body2 = [];
+                for (let i = 0; i < todos.length; i++) {
+                    console.log("´probando el for ");
+                    console.log(todos[i].fecha_diagnostico);
+                    body2.push([
+                        todos[i].nombre_paciente,
+                        todos[i].resultado,
+                        todos[i].fecha_diagnostico,
+                    ]);
+                    console.log("´probando el for 2");
+                }
+                doc.setFontSize(35);
+                doc.setFont("helvetica");
+                doc.text(76, 20, "Hostipal");
+                const docWidth = doc.internal.pageSize.getWidth();
+                doc.line(0, 30, docWidth, 30);
+                doc.setFontSize(18);
+                doc.text(
+                    12,
+                    40,
+                    "Informacion de los entrenadores con mas usuarios para entrenar",
+                );
+                var columns2 = ["nombre del paciente", "resultado", "fecha del diagnostico",];
+                doc.autoTable(columns2, body2, { margin: { top: 70 } });
+
+                doc.save("diagnostico.pdf");
+                //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "bottom-start",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    },
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Reporte de diagnostico generado",
+                });
+              
             } else {
-                alert("opcion3");
+                let fecha_de = document.getElementById("desde_citas").value;
+                let fecha_hasta = document.getElementById("hasta_citas").value;
+                console.log("----Comprando el generar 3------");
+                console.log(fecha_de);
+                console.log(fecha_hasta);
+                const response = await fetch(
+                    "http://127.0.0.1:8000/reportes_historial/",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            fecha: fecha_de,
+                            fecha2: fecha_hasta,
+                        }),
+                    },
+                );
+                if (!response.ok) throw new Error("Error al cargar los datos");
+                const data = await response.json();
+
+                todos = data.resultado;
+                console.log(todos);
+                setTimeout(() => {
+                    globalThis.$("#myTable").DataTable(); // Para convertrlo en datatable :D
+                });
+                const { jsPDF } = window.jspdf; // Accede a jsPDF desde el objeto global
+                const doc = new jsPDF();
+                console.log("´probando el response.length");
+                console.log(todos.length);
+                var body3 = [];
+                for (let i = 0; i < todos.length; i++) {
+                    console.log("´probando el for ");
+                    console.log(todos[i].Ultimodiagnostio);
+                    body3.push([
+                        todos[i].nombre,
+                        todos[i].numero_citas,
+                        todos[i].Ultimodiagnostio,
+                    ]);
+                    console.log("´probando el for 2");
+                }
+                doc.setFontSize(35);
+                doc.setFont("helvetica");
+                doc.text(76, 20, "Hostipal");
+                const docWidth = doc.internal.pageSize.getWidth();
+                doc.line(0, 30, docWidth, 30);
+                doc.setFontSize(18);
+                doc.text(
+                    12,
+                    40,
+                    "Informacion de todas las citas que han tenido los usuarios",
+                );
+                var columns3 = ["nombre del paciente", "numero de citas", "fecha del ultimo diagnostico",];
+                doc.autoTable(columns3, body3, { margin: { top: 70 } });
+
+                doc.save("Historial_citas.pdf");
+                //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "bottom-start",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    },
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Reporte de historial de usuario generado",
+                });
             }
         } catch (e) {
             error = e.message;
@@ -133,38 +273,38 @@ Toast.fire({
 
 <Navbaradmin></Navbaradmin>
 
-    <div class="container" style="margin-top: 5%;">
-        <div class="text-center pt-1 fs-3">
-            <p>Reportes</p>
-        </div>
-        <div class="row g-2">
-            <div class="col-xl-1"></div>
-            <div class=" col-xl-10 text-center fs-3 py-5">
-                <select class="form-select" id="opcion" style="" required>
-                    <option value="1">Citas registradas</option>
-                    <option value="2">Diagnosticos</option>
-                    <option value="3">Usuarios que han tenido citas</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xl-6 text-end">
-                Desde:
-                <input type="date" name="citas" id="desde_citas" />
-            </div>
-            <div class="col-xl-6">
-                Hasta:
-                <input type="date" name="citas" id="hasta_citas" />
-            </div>
-        </div>
-
-        <div class="row">
-            <button type="button" class="btn btn-dark" on:click={generar}
-                >Generar</button
-            >
+<div class="container" style="margin-top: 5%;">
+    <div class="text-center pt-1 fs-3">
+        <p>Reportes</p>
+    </div>
+    <div class="row g-2">
+        <div class="col-xl-1"></div>
+        <div class=" col-xl-10 text-center fs-3 py-5">
+            <select class="form-select" id="opcion" style="" required>
+                <option value="1">Citas registradas</option>
+                <option value="2">Diagnosticos de usuarios</option>
+                <option value="3">Usuarios que han tenido citas</option>
+            </select>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xl-6 text-end">
+            Desde:
+            <input type="date" name="citas" id="desde_citas" />
+        </div>
+        <div class="col-xl-6">
+            Hasta:
+            <input type="date" name="citas" id="hasta_citas" />
+        </div>
+    </div>
+
+    <div class="row">
+        <button type="button" class="btn btn-dark mt-4" on:click={generar}
+            >Generar</button
+        >
+    </div>
+</div>
 
 <div
     class="modal fade"

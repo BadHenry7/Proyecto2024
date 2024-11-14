@@ -34,3 +34,9 @@ async def update_diagnosticos(diagnosticos_id: int,diagnosticos: Diagnosticos,):
 async def delete_diagnosticos(diagnosticos_id: int):
     rpta = nuevo_diagnostico.delete_diagnosticos(diagnosticos_id)
     return rpta 
+
+
+@router.post("/reportes_diagnosticos/")
+async def reportes_diagnosticos(diagnosticos: Reportesss):
+    rpta = nuevo_diagnostico.reportes_diagnosticos(diagnosticos)
+    return rpta

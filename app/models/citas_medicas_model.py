@@ -16,4 +16,8 @@ class Buscar(BaseModel):
 class Reportesss(BaseModel):
     fecha: str
     fecha2: str
+
+
+class EditarCita(BaseModel):
+    id:int  = None  
         
