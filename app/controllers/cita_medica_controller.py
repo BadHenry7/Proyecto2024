@@ -67,15 +67,19 @@ class citaController:
             payload = []
             content = {} 
             for data in result:
+                hora_v = str(data[1])
+                if len(hora_v) == 7:  # Verificar si la hora tene el formato "H:mm:ss"
+                     hora_v = "0" + hora_v 
                 content={
                     'fecha':data[0],
-                    'hora':str(data[1]),
+                    'hora':hora_v,
                     'medico':data[2],
                     'paciente':data[3],
                     'id':data[4]
 
                 
                 }
+                print(data[1])
                 payload.append(content)
                 content = {}
             json_data = jsonable_encoder(payload)        

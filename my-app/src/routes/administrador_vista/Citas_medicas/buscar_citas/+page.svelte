@@ -139,6 +139,10 @@
   function actualizar() {
 
   }
+
+  function Eliminar(){
+    
+  }
    
 </script>
 

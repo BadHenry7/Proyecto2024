@@ -64,7 +64,7 @@ console.log(n)
             <a class="nav-link" href="/administrador_vista/Dashboard">Dashboard</a><!---->
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Perfil</a>
+            <a class="nav-link" href="/administrador_vista/perfil_adm">Perfil</a>
           </li>
 
           <li class="nav-item">

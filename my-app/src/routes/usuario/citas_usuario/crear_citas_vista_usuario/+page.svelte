@@ -35,6 +35,23 @@
         }
     });
 
+    function ConfirmarAgendar() {
+    Swal.fire({
+                title: "¿Confirmas que quieres agendar esta cita?",
+                text: "",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, añadir cita",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Agendar()
+                }
+            });
+}
+
+
     async function Agendar() {
         let miStorage = window.localStorage;
         let vid = JSON.parse(miStorage.getItem("usuario"));
@@ -73,8 +90,12 @@
                     }),
                 },
             );
+            Swal.fire({
+                        title: "Cita añadida",
+                        text: "Tu cita fue añadida con exito",
+                        icon: "success",
+                    });
 
-            alert("Usuario registrado");
             document.getElementById("medico").value = "";
             document.getElementById("c_m_d").value = "";
             document.getElementById("c_m_h").value = "";
@@ -133,7 +154,7 @@
         </div>
 
         <div class="mb-3">
-            <button class="btn btn-success" on:click={Agendar}>
+            <button class="btn btn-success" on:click={ConfirmarAgendar}>
                 Agendar
             </button>
             <button class="btn btn-outline-danger"> volver </button>
