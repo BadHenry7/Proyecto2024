@@ -91,7 +91,7 @@
                 doc.text(
                     12,
                     40,
-                    "Informacion de los entrenadores con mas usuarios para entrenar",
+                    "Informacion de las citas registradas en el sistema",
                 );
                 var columns = ["fecha", "hora", "medico", "paciente"];
                 doc.autoTable(columns, body, { margin: { top: 70 } });
@@ -165,7 +165,7 @@
                 doc.text(
                     12,
                     40,
-                    "Informacion de los entrenadores con mas usuarios para entrenar",
+                    "Informacion de los diagnosticos ",
                 );
                 var columns2 = ["nombre del paciente", "resultado", "fecha del diagnostico",];
                 doc.autoTable(columns2, body2, { margin: { top: 70 } });

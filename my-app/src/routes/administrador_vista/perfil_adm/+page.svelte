@@ -96,8 +96,33 @@
                     id: v_id
                 }),
             });
-            console.log("entra aca a actualizar")
+            console.log("actualizado")
         henry=true
+        
+      const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          iconColor: "white",
+          color: "white",
+          background: "#00bdff",
+          title: "datos actualizado con exito",
+        });
+
+
+        
+        setTimeout(() => {
+          location.reload();
+          }, 1000);
     }catch(e){
     error=e.message
     console.log(error)
