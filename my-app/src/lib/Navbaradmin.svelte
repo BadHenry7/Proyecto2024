@@ -12,6 +12,23 @@ console.log(n)
     document.getElementById('name').text = n;
     });
 
+    function confirmacion() {
+        Swal.fire({
+      title: "¿Estas seguro?",
+      text: "Se perdera lo que no hayas guardado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, cerrar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/";
+      }
+    });
+    
+  }
+
     
 </script>
 
@@ -77,7 +94,7 @@ console.log(n)
 
         
         <form class="d-flex   nav-item nav-link ms-auto">
-          <a class="btn btn-outline-dark  nav-item" href="/">Cerrar sesion</a>
+          <a class="btn btn-outline-dark  nav-item" on:click={confirmacion} href="#">Cerrar sesion</a>
         </form>
        
       </div>

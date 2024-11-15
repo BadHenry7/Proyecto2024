@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException, UploadFile
 from app.config.db_config import get_db_connection
-from app.models.user_model import User, Login, Estado, Buscar ,Actualizar
+from app.models.user_model import User, Login, Estado, Buscar ,Actualizar,ActualizarAdm
 from fastapi.encoders import jsonable_encoder
 from typing import List
 import pandas as pd
@@ -232,10 +232,31 @@ class UserController:
             conn.close()    
 
     
-    
-    """ 
-    
-    """
+           
+    def update_adm(self, adm: ActualizarAdm):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+            UPDATE usuario
+            SET usuario = %s,
+            nombre=%s,
+            apellido = %s,
+            documento=%s,
+            password=%s,                           
+            telefono=%s
+            WHERE id = %s
+            """,(adm.usuario,adm.nombre,adm.apellido,adm.documento,adm.password,adm.telefono,adm.id,))
+            conn.commit()
+           
+            return {"resultado": "Usuario actualizado correctamente"} 
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()    
+
+   
        
     def delete_user(self, user_id: int):
         try: 

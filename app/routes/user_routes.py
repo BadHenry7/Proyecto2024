@@ -14,7 +14,6 @@ async def create_user(user: User):
     return rpta
 
 
-
 @router.post("/get_user")
 async def get_user(user: Buscar):
     rpta = nuevo_usuario.get_user(user)
@@ -25,6 +24,7 @@ async def get_user(user: Buscar):
 async def get_users():
     rpta = nuevo_usuario.get_users()
     return rpta
+
 
 @router.get("/getpaciente")
 async def get_paciente():
@@ -37,15 +37,22 @@ async def get_medico():
     rpta = nuevo_usuario.get_medico()
     return rpta
 
+
 @router.put("/actualizaruser")
 async def update_user(user :Actualizar):
     rpta = nuevo_usuario.update_user(user)
     return rpta 
 
+
+@router.put("/update_adm")
+async def update_adm(adm :ActualizarAdm):
+    rpta = nuevo_usuario.update_adm(adm)
+    return rpta 
+
+
 @router.delete("/eliminarusuario/{user_id}")
 async def delete_user(user_id: int):
     rpta = nuevo_usuario.delete_user(user_id)
-    
     return rpta 
 
 
@@ -55,11 +62,11 @@ async def create_user_masivo(file: UploadFile = File(...)):
     return rpta
 
 
-
 @router.post("/login")
 async def login(user: Login):
     rpta = nuevo_usuario.login(user)
     return rpta
+
 
 @router.put("/estado_user")
 async def estado_user(user: Estado):

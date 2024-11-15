@@ -120,6 +120,22 @@
     function Ocultar() {
         loginModal.hide();
     }
+
+    function siguiente(event, contrasena) { 
+    if (event.key === "Enter") {
+            event.
+            
+    preventDefault(); // Evita que el formulario se envíe
+            document.getElementById(contrasena).focus(); // Cambia el enfoque al campo especificado
+        }
+    }
+
+    function enterlog() {
+        if (event.key === "Enter") {
+            Login();
+        }
+    }
+
 </script>
 
 <div
@@ -138,6 +154,7 @@
         <div class="row justify-content-center g-2">
             <div class=" mx-5 col-md-6 mb-3">
                 <input
+                    on:keydown={(event) => siguiente(event, 'contrasena')}
                     type="text"
                     class="form-control"
                     placeholder="Correo"
@@ -147,6 +164,8 @@
 
             <div class="col-md-6 mb-3">
                 <input
+                    on:keydown={enterlog}
+                    id="contrasena"
                     class="form-control"
                     type="password"
                     placeholder="Contraseña"

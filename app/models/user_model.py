@@ -33,6 +33,17 @@ class Actualizar(BaseModel):
 
 
 
+class ActualizarAdm(BaseModel):
+    usuario: str
+    id: int= None
+    nombre: str
+    apellido: str
+    documento: str
+    password:str
+    telefono:str
+
+
+
 class Estado(BaseModel):
     id: int= None
     estado:bool

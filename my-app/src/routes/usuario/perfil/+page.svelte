@@ -9,11 +9,7 @@
         let v_id = JSON.parse(miStorage.getItem("usuario"));
         v_id = v_id.id;
         console.log(v_id);
-        let correo = document.getElementById("correo").value;
-        let nombre = document.getElementById("nombre").value;
-        let apellido = document.getElementById("apellido").value;
-        let documento = document.getElementById("documento").value;
-        let telefono = document.getElementById("telefono").value;
+       
         try {
             const response = await fetch("http://127.0.0.1:8000/get_user", {
                 method: "POST",

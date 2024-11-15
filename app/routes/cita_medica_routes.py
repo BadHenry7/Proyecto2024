@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.controllers.cita_medica_controller import *
-from app.models.citas_medicas_model import Citasm,Buscar, EditarCita
+from app.models.citas_medicas_model import Citasm,Buscar, EditarCita,Chaocita,Upditon
 
 router = APIRouter()
 
@@ -39,14 +39,14 @@ async def get_cita_admin():
     return rpta
     
 
-@router.put("/update_cita/{cita_id}")
-async def update_cita(cita_id: int ,cita: Citasm,):
-    rpta = nueva_cita.update_cita(cita_id, cita)
+@router.put("/update_cita")
+async def update_cita(cita: Upditon,):
+    rpta = nueva_cita.update_cita(cita)
     return rpta 
 
-@router.delete("/eliminarcita/{cita_id}")
-async def delete_cita(cita_id: int):
-    rpta = nueva_cita.delete_cita(cita_id)
+@router.delete("/eliminar_cita")
+async def delete_cita(cita: Chaocita):
+    rpta = nueva_cita.delete_cita(cita)
     return rpta 
 
 

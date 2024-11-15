@@ -45,7 +45,7 @@
     vid = id;
     console.log(Number.isInteger(vid));
 
-    console.log(vid);
+    console.log("la id cita es esta"+vid);
     let ocultar = document.getElementById("Mostrarcitas");
     ocultar.setAttribute("class", "fade");
     console.log(ocultar);
@@ -70,18 +70,15 @@
       });
       console.log("Sale del try de buscar");
       const data = await response.json();
-      console.log(data);
-      console.log("_____________________");
+      console.log("____________________________");
       /*   
                     'fecha':data[0],
                     'hora':str(data[1]),
                     'medico':data[2],
                     'paciente':data[3],
                     'id':data[4]
-*/
+      */
       todos = data.resultado;
-      console.log(todos[0].paciente);
-      console.log(todos[0].hora);
       console.log("Buscando la cita seleccionada");
 
      
@@ -96,8 +93,6 @@
       v_edit_hora_cita.removeAttribute("readonly");
 
       try {
-        console.log("entra al try de /getmedico");
-
         //    const v_edit_Doctor_cita = document.getElementById("Doctor_cita");
         // v_edit_Doctor_cita.removeAttribute("readonly");
         //v_edit_Doctor_cita.focus();
@@ -105,17 +100,11 @@
         if (!response.ok) throw new Error("Error al cargar los datos");
         const data = await response.json();
         medico = data.resultado;
-        
-        console.log(medico);
-        console.log("todos.usuario");
 
         const Selectdoctor = document.getElementById("Doctor_cita");
         for (let i = 0; i < data.resultado.length; i++) {
-          console.log("entra al for de /getmedico ")
-          console.log(data.resultado.length)
-          const user = data.resultado[i];
-          console.log(data.resultado[i])      
-          
+  
+          const user = data.resultado[i];   
           const option = document.createElement("option");
           option.value = user.id;
 
@@ -136,14 +125,127 @@
     }
   }
 
-  function actualizar() {
+  async function actualizar() {
+    let vfecha_cita = document.getElementById("Fecha_cita").value;
+    let vhora_cita = document.getElementById("hora_cita").value;
+    let vdoctor = document.getElementById("Doctor_cita").value;
+    console.log("la id que esta aca en la fn actualzar es"+vid)
+    console.log("la id que esta aca en la fn actualzar es"+vhora_cita)
 
+    try {
+
+      const response = await fetch("http://127.0.0.1:8000/update_cita", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fecha: vfecha_cita,
+          hora: vhora_cita,
+          id_usuario: vdoctor,
+          id: vid
+
+        }),
+      });
+      console.log("Actualizado");
+
+      const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          iconColor: "white",
+          color: "white",
+          background: "#00bdff",
+          title: "usuario actualizado con exito",
+        });
+     
+        setTimeout(() => {
+          const v_editar = document.getElementById("nav-listado");
+          v_editar.setAttribute("class", "fade");
+
+          let ocultar = document.getElementById("Mostrarcitas");
+          ocultar.removeAttribute("class");
+          const cambiar = v_editar.parentElement;
+          cambiar.insertBefore(ocultar, v_editar);
+          location.reload();
+          }, 3000);
+
+    } catch (e) {
+      error = e.message;
+    } finally {
+      loading = false;
+    }
+  }
+  function Confirmar_eliminar(id){
+    Swal.fire({
+                title: "De verdad quieres eliminar esta cita?",
+                text: "Esto no se puede deshacer",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, cancelar cita",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Eliminar(id)
+                }
+            });
   }
 
-  function Eliminar(){
-    
+
+  async function Eliminar(id){
+    vid = id;   
+    console.log("entra al eliminar de la cita numero "+vid)
+    try {
+    const response = await fetch("http://127.0.0.1:8000/eliminar_cita", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json", // Asegúrate de especificar que envías JSON
+      },
+      body: JSON.stringify({
+         id: vid 
+        }), 
+    }); const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "error",
+          iconColor: "white",
+          color: "white",
+          background: "#e70202",
+          title: "cita eliminada con exito",
+        });
+        
+        setTimeout(() => {
+          location.reload();
+          }, 3000);
+          
+    console.log("entra aca")
+      } catch (e) {
+          error = e.message;
+          console.log(error)
+      }finally {
+          loading = false;
+      }
   }
-   
+  
 </script>
 
 <Navbaradmin></Navbaradmin>
@@ -188,7 +290,7 @@
                   <button class="btn btn-info" on:click={() => editar(todo.id)}
                     >Editar</button
                   >
-                  <button class="btn btn-danger" on:click={() => Eliminar()}
+                  <button class="btn btn-danger" on:click={() => Confirmar_eliminar(todo.id)}
                     >Cancelar</button
                   >
                 </td>

@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.citas_medicas_model import Citasm,Buscar,Reportesss, EditarCita
+from app.models.citas_medicas_model import Citasm,Buscar,Reportesss, EditarCita,Chaocita,Upditon
 from fastapi.encoders import jsonable_encoder
 from datetime import timedelta
 class citaController:
@@ -174,7 +174,7 @@ class citaController:
             conn.close()        
 
 
-    def update_cita(self, cita: Citasm):
+    def update_cita(self, cita: Upditon):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
@@ -182,11 +182,9 @@ class citaController:
             UPDATE cita
             SET fecha = %s,
             hora = %s,
-            estado = %s,
-            id_usuario = %s,
-            id_paciente=%s
+            id_usuario = %s
             WHERE id = %s
-            """,(cita.fecha,cita.hora,cita.estado,cita.id_usuario,cita.id_paciente,))
+            """,(cita.fecha,cita.hora,cita.id_usuario,cita.id,))
             conn.commit()
            
             return {"resultado": "cita actualizada correctamente"} 
@@ -196,11 +194,11 @@ class citaController:
         finally:
             conn.close()   
        
-    def delete_cita(self, cita_id: int):
+    def delete_cita(self, cita: Chaocita):
         try: 
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM cita WHERE id = %s',(cita_id,))
+            cursor.execute('DELETE FROM cita WHERE id = %s',(cita.id,))
             conn.commit()           
             return {"resultado": "cita eliminada correctamente"} 
                 
