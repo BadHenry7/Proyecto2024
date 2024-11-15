@@ -6,6 +6,11 @@ router = APIRouter()
 
 nuevo_rol = RolController() #definido donde
 
+@router.route('/')
+def home():
+    return ('app.html')
+
+
 @router.post("/create_rol")
 async def create_rol(rol: Rol):
     rpta = nuevo_rol.create_rol(rol)
@@ -35,3 +40,4 @@ async def delete_rol(rol_id: int):
     rpta = nuevo_rol.delete_rol(rol_id)
     
     return rpta 
+
