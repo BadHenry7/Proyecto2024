@@ -153,7 +153,7 @@ function ConfirmarAgendar() {
         <div>
             <div class="col-md-3">
                 <div>
-                    <label>Elija un Doctor</label>
+                    <label for="">Elija un Doctor</label>
                 </div>
                 <select class="form-select" id="medico" required>
                     <option selected>Seleccione</option>
@@ -164,7 +164,7 @@ function ConfirmarAgendar() {
         <div>
             <div class="col-md-3">
                 <div>
-                    <label>Elija un Paciente</label>
+                    <label for="">Elija un Paciente</label>
                 </div>
                 <select class="form-select" id="paciente" required>
                     <option selected>Seleccione</option>
@@ -175,7 +175,7 @@ function ConfirmarAgendar() {
         <div class="">
             <div class="col-md-3" style="margin-right: 9%;">
                 <div>
-                    <label>Elija una fecha</label>
+                    <label for="">Elija una fecha</label>
                 </div>
                 <input
                     type="date"
@@ -192,7 +192,7 @@ function ConfirmarAgendar() {
         <div class="">
             <div style="margin-right: 9%;">
                 <div>
-                    <label>Elija una Hora</label>
+                    <label for="">Elija una Hora</label>
                 </div>
                 <input
                     style="width: 28%;"

@@ -35,7 +35,7 @@ console.log(n)
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/administrador_vista" id="name"></a>
+      <a class="navbar-brand" href="/administrador_vista" id="name">.</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="Menu-usuarios" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -43,7 +43,7 @@ console.log(n)
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
             <!--Aca empieza otro-->
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Usuarios
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -53,7 +53,7 @@ console.log(n)
             <!--Aca empieza otro-->
           </li>
            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Citas medicas
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -62,15 +62,15 @@ console.log(n)
             </ul>
 <!--Aca empieza otro-->
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Medicos
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="/administrador_vista/Crear_usuario">Registrar medico</a></li>
                 <li><a class="dropdown-item" href="/administrador_vista/Buscar_usuario">Buscar medico</a></li>
-                <li><a class="dropdown-item" href="">Actualizar medico</a></li>
-                <li><a class="dropdown-item" href="">Desactivar medico</a></li>
-              </ul>
+              <!--  <li><a class="dropdown-item" >Actualizar medico</a></li>
+                <li><a class="dropdown-item" >Desactivar medico</a></li>
+              </ul>-->
 
           </li>
           <!--Aca empieza otro-->
@@ -85,7 +85,7 @@ console.log(n)
           </li>
 
           <li class="nav-item">
-            <a class="nav-link disabled" href="">Botci :D</a>
+            <a class="nav-link disabled" href="#">Botci :D</a>
           </li>
 
         </ul>

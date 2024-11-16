@@ -207,7 +207,7 @@ class citaController:
         finally:
             conn.close()
     
-
+#-------------------------------------------------------Para abajo los reportes--------------------------------------------
     
     def reportes_citas(self, cita: Reportesss):
         try:
@@ -245,6 +245,7 @@ class citaController:
             conn.rollback()
         finally:
             conn.close()
+#-------------------------------------------------------Para abajo las estadisticas--------------------------------------------
 
     def estadisticas_citas(self):
         try:
@@ -280,3 +281,108 @@ class citaController:
             conn.rollback()
         finally:
             conn.close()       
+
+    def estadisticas2_citas(self):#Estadisticas para saber cuantas citas hay por dia
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""                       
+         SELECT  fecha  AS fecha, COUNT(*) AS citas_por_dia
+         FROM cita
+        GROUP BY fecha  
+        ORDER BY fecha 
+                           """,)
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'Fecha':data[0], 
+                    'citas_dia':data[1], 
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()    
+
+    def estadisticas3_citas(self):#Estadisticas para saber cuantas citas hay por dia
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SET lc_time_names = 'es_ES'")
+            cursor.execute("""                       
+    SELECT 
+    MONTHNAME(fecha) AS mes, 
+    COUNT(*) AS citas_por_mes
+    FROM cita
+    GROUP BY mes
+    ORDER BY fecha
+                           """,)
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'Fecha':data[0], 
+                    'citas_mes':data[1], 
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()        
+
+
+    def estadisticas4_citas(self):#Estadisticas para saber cuantas citas hay por dia
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""                       
+        SELECT 
+         YEAR(fecha) AS year,
+         COUNT(*) AS citas_por_mes
+        FROM cita
+        GROUP BY  year
+        ORDER BY  year
+                           """,)
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'Fecha':data[0], 
+                    'citas_year':data[1], 
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()           

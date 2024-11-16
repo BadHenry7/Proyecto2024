@@ -58,3 +58,25 @@ pip install keras
 pip install tensorflow
 pip install scikit-learn
 pip install matplotlib 
+
+
+
+------>Para grafico dinamico
+SELECT 
+   fecha  AS fecha,
+    COUNT(*) AS citas_por_dia
+FROM cita
+GROUP BY fecha  
+ORDER BY fecha 
+
+fecha Descendente  citas_por_dia
+2024-11-04          2
+
+
+SELECT 
+    YEAR(fecha) AS año,
+    MONTH(fecha) AS mes,
+    COUNT(*) AS citas_por_mes
+FROM cita
+GROUP BY año, mes
+ORDER BY año, mes;

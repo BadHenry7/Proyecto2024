@@ -60,3 +60,18 @@ async def estadisticas_citas():
     rpta = nueva_cita.estadisticas_citas()
     return rpta
 
+
+@router.get("/estadisticas2_citas")
+async def estadisticas2_citas():
+    rpta = nueva_cita.estadisticas2_citas()
+    return rpta
+
+@router.get("/estadisticas3_citas")
+async def estadisticas3_citas():
+    rpta = nueva_cita.estadisticas3_citas()
+    return rpta
+
+@router.get("/estadisticas4_citas")
+async def estadisticas4_citas():
+    rpta = nueva_cita.estadisticas4_citas()
+    return rpta

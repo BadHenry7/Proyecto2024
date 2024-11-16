@@ -6,9 +6,9 @@ router = APIRouter()
 
 nuevo_rol = RolController() #definido donde
 
-@router.route('/')
+@router.get('/')
 def home():
-    return ('app.html')
+    return ('+page.svelte')
 
 
 @router.post("/create_rol")

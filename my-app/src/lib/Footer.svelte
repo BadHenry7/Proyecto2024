@@ -13,6 +13,7 @@
                     style="margin-top: 10%;"
                 >
                     HOSTIPAL
+                    <br><a href="/ubicaciones">Sedes</a>
                 </div>
                 <!--<div class="pt-4"><a href="contactenos.html" class="text-decoration-none text-white">Pongase en contacto
                     con
@@ -38,10 +39,10 @@
                 <p>Redes sociales</p>
                 <div class="d-flex">
                     <a target="_blank" href="https://www.facebook.com/"><img src="facebook.png" id="facebook"
-                            width="33" height="33">
+                            width="33" height="33" alt="Facebook icon">
                     </a>
                     <a target="_blank" href="https://www.instagram.com/"><img src="instagram.png" id="instagram"
-                            width="55" height="33">
+                            width="55" height="33" alt="Instagram icon">
                     </a>
                 </div>
             </div>
