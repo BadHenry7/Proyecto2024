@@ -21,7 +21,7 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
 
 # Usamos panda para cargar el dataset para estudiarlo
-data = pd.read_csv('Final_Augmented_dataset_Diseases_and_Symptoms.csv', sep=';')
+data = pd.read_csv('dataset2.csv', sep=';')
 data.head()
 
 data.info()
