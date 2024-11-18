@@ -1,5 +1,5 @@
 <script>
-    import Footer from "../../lib/Footer.svelte";
+    import Footer from "../../../../lib/Footer.svelte";
     import { onMount } from "svelte";
   
 
@@ -88,7 +88,7 @@
 </script>
 
 <div class="container pt-3">
-    <div class="text-center fs-1"><b> REGISTRO USUARIO </b></div>
+    <div class="text-center fs-1"><b> REGISTRO MEDICO </b></div>
     <div class="mb-5 px-2">
         <a href="/" class="btn btn-outline-info">Volver</a>
     </div>
@@ -184,6 +184,23 @@
                         bind:value={v_password}
                     />
                 </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                <select name="" id="especialidad" placeholder="Seleccione">
+                    <option value="">medicina general</option>
+                    <option value="">enfermero</option>
+                    <option value=""></option>
+
+                </select>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Escriba la contraseña"
+                    required
+                    class="form-control rounded-pill"
+                    bind:value={v_password}
+                />
             </div>
 
             <div class="row mt-4 mx-5">

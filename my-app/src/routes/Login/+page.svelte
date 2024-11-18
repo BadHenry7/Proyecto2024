@@ -71,7 +71,7 @@
                     setTimeout(() => {
                         window.location.href = "/administrador_vista";
                     }, 2000);
-                } else {
+                } else if(rol_v==2){
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
 
@@ -94,6 +94,27 @@
                     }, 2000);
 
                    
+                }else{
+                    let name = data.resultado[0].nombre;
+                    let id = data.resultado[0].id;
+
+                    let encontrado = { name, id };
+
+                    let miStorage = window.localStorage;
+                    miStorage.setItem("usuario", JSON.stringify(encontrado));
+                  //  alert(                        "Inicio de sesion exitoso2. Bienvenido Usuario " + name,);
+                    //document.getElementById("loginex").style.display = "flex";
+                    Swal.fire({
+                        //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                        position: "top",
+                        icon: "success",
+                        title: "Inicio de sesion exitoso, bienvenido "+name,
+                        showConfirmButton: false,
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = "/medico_vista";
+                    }, 2000);
                 }
             } else {
                 Swal.fire({
