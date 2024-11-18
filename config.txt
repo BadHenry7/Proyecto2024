@@ -46,9 +46,18 @@ Para importar svelte
 5.npm
 
 
+
 Para cargar el svelte: 
 cd my-app
  npm run dev -- --open
+
+
+
+Para compartir la terminar y trabajar desde la nube:
+ngrok http 8000   (8000 es el de la api)
+ngrok http 5173   (5173 es el de svelte)
+
+
    
 
 

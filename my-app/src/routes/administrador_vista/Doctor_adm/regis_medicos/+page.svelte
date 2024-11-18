@@ -1,5 +1,6 @@
 <script>
-    import Footer from "../../../../lib/Footer.svelte";
+    import Navbadmin from "$lib/Navbaradmin.svelte";
+import Footer from "../../../../lib/Footer.svelte";
     import { onMount } from "svelte";
   
 
@@ -86,12 +87,10 @@
         }
     }
 </script>
-
+<Navbadmin></Navbadmin>
 <div class="container pt-3">
     <div class="text-center fs-1"><b> 🚑Registro de medico 🚑</b></div>
-    <div class="mb-5 px-2">
-        <a href="/" class="btn btn-outline-info">Volver</a>
-    </div>
+    
     <!--<div class="text-end fs-3  text-a-secondary ">
         ¿Ya tienes una cuenta?<a href="/Login" class="text-secondary">Click aqui</a>
     </div>

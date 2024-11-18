@@ -139,40 +139,36 @@
       });
       console.log("Actualizado");
 
-
       const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          iconColor: "white",
-          color: "white",
-          background: "#00bdff",
-          title: "usuario actualizado con exito",
-        });
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        iconColor: "white",
+        color: "white",
+        background: "#00bdff",
+        title: "usuario actualizado con exito",
+      });
 
-        setTimeout(() => {
-          const v_editar = document.getElementById("nav-listado");
-      v_editar.setAttribute("class", "fade");
+      setTimeout(() => {
+        const v_editar = document.getElementById("nav-listado");
+        v_editar.setAttribute("class", "fade");
 
-      let ocultar = document.getElementById("Mostrarusuario");
-      ocultar.removeAttribute("class");
+        let ocultar = document.getElementById("Mostrarusuario");
+        ocultar.removeAttribute("class");
 
-      const cambiar = v_editar.parentElement;
-      cambiar.insertBefore(ocultar, v_editar);
-          location.reload();
-        }, 3000);
-      
-      
-      
+        const cambiar = v_editar.parentElement;
+        cambiar.insertBefore(ocultar, v_editar);
+        location.reload();
+      }, 3000);
     } catch (e) {
       error = e.message;
     } finally {
@@ -286,11 +282,10 @@
           background: "#76fa78",
           title: "usuario activado con exito",
         });
-        
+
         setTimeout(() => {
           location.reload();
-        }, 3500);//en milisegundos
-
+        }, 3500); //en milisegundos
       } else {
         alert("Error al Activar: " + data.message || "Error desconocido");
       }
@@ -349,7 +344,10 @@
                   </span>
                 </td>
                 <td class="px-4 py-2 border">
-                  <button class="btn btn-info" on:click={() => editar(todo.id, todo.nombre)}>Editar</button>
+                  <button
+                    class="btn btn-info"
+                    on:click={() => editar(todo.id, todo.nombre)}>Editar</button
+                  >
                   {#if todo.estado}
                     <!-- Mostrar botón "Desactivar" si el usuario está activo -->
                     <button
