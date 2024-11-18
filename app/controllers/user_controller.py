@@ -111,7 +111,40 @@ class UserController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM usuario")
+            cursor.execute("SELECT * FROM usuario WHERE id_rol=2")
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'id':data[0],
+                    'usuario':data[1],
+                    'password':data[2],
+                    'nombre':data[3],
+                    'apellido':data[4],
+                    'documento':data[5],
+                    'telefono':data[6],
+                    'id_rol':data[7],
+                    'estado':data[8]
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+            else:
+                raise HTTPException(status_code=404, detail="User not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+    def get_medicos(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usuario WHERE id_rol=3")
             result = cursor.fetchall()
             payload = []
             content = {} 
@@ -318,7 +351,9 @@ class UserController:
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
-            conn.close()    
+            conn.close() 
+
+       
 
             
 ##user_controller = UserController()

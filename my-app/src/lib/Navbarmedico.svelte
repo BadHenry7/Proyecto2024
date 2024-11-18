@@ -34,32 +34,25 @@
   
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/medico_vista" id="name"></a>
+        <a class="navbar-brand mx-4" href="/medico_vista" id="name"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="Menu-usuarios" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Gestion de citas
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="/usuario/citas_usuario/crear_citas_vista_usuario">Agendar citas</a></li>
-                <li><a class="dropdown-item" href="/usuario/citas_usuario/revisar_citas_vista_usuario">Ver citas programadas</a></li>
-                <li><a class="dropdown-item" href="">Cancelar citas</a></li>
-              </ul>
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="">Agenda</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/usuario/Reportes">Reportes</a>
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="">Paciente</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-4">
               <a class="nav-link" href="">Certificados</a><!---->
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/usuario/perfil">Perfil</a>
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="">Botci</a>
             </li>
-            <li class="nav-item dropdown">
+            <!--<li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Servicios
               </a>
@@ -68,7 +61,7 @@
                 <li><a class="dropdown-item" href="">Another action</a></li>
                 <li><a class="dropdown-item" href="">Something else here</a></li>
               </ul>
-            </li>
+            </li>-->
           </ul>
   
           <form class="d-flex   nav-item nav-link ms-auto">

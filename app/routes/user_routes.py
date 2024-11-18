@@ -20,9 +20,16 @@ async def get_user(user: Buscar):
     return rpta
 
 
-@router.get("/get_users/")
+@router.get("/get_users")
 async def get_users():
     rpta = nuevo_usuario.get_users()
+    return rpta
+
+
+
+@router.get("/get_medicos")
+async def get_medicos():
+    rpta = nuevo_usuario.get_medicos()
     return rpta
 
 

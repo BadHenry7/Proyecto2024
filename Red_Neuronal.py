@@ -103,7 +103,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Entrenar el modelo
 print("Comenzando a entrenamiento....")
 historial = model.fit(X_train, y_train, epochs=100, batch_size=128, validation_split=0.2)
-# Pusimos el batch size para que, joa mejor lo pongo en otro cuadro increible tus comentarios
+# Pusimos el batch size para que, joa mejor lo pongo en otro cuadro 
 print("Modelo entrenado ;3 ponlo aprueba")
 
 """El batch size es de 128 porque actualizara 120 veces los pesos de manera simultanea, hize una simulacion con chatgpt y para mi equipo es un punto intermedio, aunque como estamos en google colab depronto podramos aumentar el tamaño del batch ?, no se que opinen,

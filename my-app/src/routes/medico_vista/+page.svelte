@@ -1,15 +1,9 @@
 <script>
     import Navbarmedico from "$lib/Navbarmedico.svelte";
-
-
-
-
 </script>
 
 
-
 <Navbarmedico></Navbarmedico>
-
 
 
 <div class="container">

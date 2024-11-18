@@ -77,7 +77,7 @@ import Footer from "../../../../lib/Footer.svelte";
                 document.getElementById("telefono").value = "";
                 document.getElementById("usuario").value = "";
                 document.getElementById("password").value = "";
-                sendEmail()
+                //sendEmail()
             } else {
                 alert("Usuario ya registrado");
             }
@@ -184,25 +184,17 @@ import Footer from "../../../../lib/Footer.svelte";
                     />
                 </div>
             </div>
-
-            <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
-                <select name="" id="especialidad" placeholder="Seleccione">
-                    <option value="">medicina general</option>
-                    <option value="">enfermero</option>
-                    <option value=""></option>
-
-                </select>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Escriba la contraseña"
-                    required
-                    class="form-control rounded-pill"
-                    bind:value={v_password}
-                />
-            </div>
-
             <div class="row mt-4 mx-5">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
+                    <label for="">Ocupacion</label>
+                    <select name="" id="especialidad" placeholder=" Especialidad?" class="form-control rounded-pill">
+                        <option value="">Medicina general</option>
+                        <option value="">Enfermero</option>
+                        <option value="">Especialista</option>
+                    </select>                
+                </div>
+            </div>
+            <div class="row mt-3 mx-5">
                 <div class="row mt-4 mx-5">
                     <div
                         class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2"
