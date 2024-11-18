@@ -66,8 +66,8 @@ console.log(n)
                 Medicos
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="/administrador_vista/regis_medicos">Registrar medico</a></li>
-                <li><a class="dropdown-item" href="/administrador_vista/Buscar_usuario">Buscar medico</a></li>
+                <li><a class="dropdown-item" href="/administrador_vista/Doctor_adm/regis_medicos">Registrar medico</a></li>
+                <li><a class="dropdown-item" href="/administrador_vista/Doctor_adm/Buscar_usuario">Buscar medico</a></li>
               <!--  <li><a class="dropdown-item" >Actualizar medico</a></li>
                 <li><a class="dropdown-item" >Desactivar medico</a></li>
               </ul>-->

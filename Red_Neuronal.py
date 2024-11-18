@@ -134,7 +134,7 @@ print(f'Loss: {loss}, Accuracy: {accuracy}')
 
 from math import e
 
-data = pd.read_csv('Final_Augmented_dataset_Diseases_and_Symptoms.csv', sep=';')
+data = pd.read_csv('dataset2.csv', sep=';')
 
 
 # Lista de todos los síntomas, usando el drop data para tomar los necesarios

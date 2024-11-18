@@ -88,7 +88,7 @@
 </script>
 
 <div class="container pt-3">
-    <div class="text-center fs-1"><b> REGISTRO MEDICO </b></div>
+    <div class="text-center fs-1"><b> 🚑Registro de medico 🚑</b></div>
     <div class="mb-5 px-2">
         <a href="/" class="btn btn-outline-info">Volver</a>
     </div>
