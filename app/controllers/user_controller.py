@@ -27,7 +27,8 @@ class UserController:
                 cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,user.password,user.nombre,user.apellido,user.documento,user.telefono,user.id_rol,user.estado))
                 conn.commit()
                 conn.close()
-                return {"resultado": "Usuario creado"}
+                id=cursor.lastrowid
+                return {id}#aja
 
         except mysql.connector.Error as err:
             conn.rollback()

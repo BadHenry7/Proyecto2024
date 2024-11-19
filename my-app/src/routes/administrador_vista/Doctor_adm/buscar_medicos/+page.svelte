@@ -6,7 +6,7 @@
     let todos2 = {};
     let loading = true;
     let error = null;
-
+    var v_id = 1;
     onMount(async () => {
         try {
             const response = await fetch("http://127.0.0.1:8000/get_medicos");
@@ -48,7 +48,7 @@
     }
 
     async function editar(id, nombre) {
-        let v_id = id;
+        v_id = id;
         const v_editar = document.getElementById("nav-listado");
         v_editar.removeAttribute("class");
 
@@ -71,24 +71,24 @@
             });
 
             if (response) {
-                
-
-                const result = await fetch("http://127.0.0.1:8000/get_atributoxusuario", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
+                const result = await fetch(
+                    "http://127.0.0.1:8000/get_atributoxusuario",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            id_usuario: v_id,
+                        }),
                     },
-                    body: JSON.stringify({
-                        id_usuario: v_id,
-                    }),
-                });
-            console.log("Entro al editar")
+                );
+                console.log("Entro al editar");
                 const data = await response.json();
                 console.log(data);
 
                 const datos = await result.json();
-                console.log(datos)
-
+                console.log(datos);
 
                 document.getElementById("nombres").value = data.nombre;
                 document.getElementById("apellidos").value = data.apellido;
@@ -106,9 +106,8 @@
     }
 
     async function activar(id, nombre) {
-       
         let v_estado = 1;
-        let v_id = id;
+        v_id = id;
 
         try {
             const response = await fetch("http://127.0.0.1:8000/estado_user", {
@@ -156,7 +155,7 @@
 
     async function desactivar(id, nombre, usuario) {
         let v_estado = 0;
-        let v_id = id;
+        v_id = id;
 
         try {
             const response = await fetch("http://127.0.0.1:8000/estado_user", {
@@ -200,9 +199,96 @@
     }
 
     async function actualizar() {
+        let vnombre = document.getElementById("nombres").value;
+        let vapellidos = document.getElementById("apellidos").value;
+        let vdocumento = document.getElementById("documento").value;
+        let vtelefono = document.getElementById("telefono").value;
+        let vespecialidad = document.getElementById("especialidad").value;
+    
+        let vcorreo = document.getElementById("correo").value;
+        let vestado = document.getElementById("estado").value;
 
+        try {
+            console.log("Entra al try de actualzar");
 
+            const response = await fetch(
+                "http://127.0.0.1:8000/actualizaruser",
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: v_id,
+                        usuario: vcorreo,
+                        nombre: vnombre,
+                        apellido: vapellidos,
+                        documento: vdocumento,
+                        telefono: vtelefono,
+                        estado: vestado,
+                    }),
+                },
+            );
 
+            try {
+                console.log(v_id)
+                console.log("entra al update atributoxusuario")
+                console.log(vespecialidad)
+                const result = await fetch(
+                    "http://127.0.0.1:8000/updateatributoxusuario",
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            valor: vespecialidad,
+                            descripcion: vespecialidad,
+                            id_usuario: v_id,
+                        }),
+                    },
+                );
+            } catch (e) {
+                error = e.menssage;
+                console.log(error);
+            }
+
+            console.log("Actualizado");
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+            });
+            Toast.fire({
+                icon: "success",
+                iconColor: "white",
+                color: "white",
+                background: "#00bdff",
+                title: "usuario actualizado con exito",
+            });
+
+            setTimeout(() => {
+                const v_editar = document.getElementById("nav-listado");
+                v_editar.setAttribute("class", "fade");
+
+                let ocultar = document.getElementById("Mostrardoctores");
+                ocultar.removeAttribute("class");
+
+                const cambiar = v_editar.parentElement;
+                cambiar.insertBefore(ocultar, v_editar);
+                location.reload();
+            }, 3000);
+        } catch (e) {
+            error = e.message;
+            console.log(error);
+        }
     }
 </script>
 
@@ -337,7 +423,6 @@
                         id="nombres"
                         maxlength="100"
                         style="border: none; width: 55%;"
-                        readonly
                     />
                 </div>
             </div>
@@ -353,7 +438,6 @@
                         placeholder="Apellidos"
                         id="apellidos"
                         style="border: none; width: 55%;"
-                        readonly
                     />
                 </div>
             </div>
@@ -368,7 +452,6 @@
                         id="documento"
                         placeholder="Documento de identidad"
                         style="border: none; width: 55%;"
-                        readonly
                     />
                 </div>
             </div>
@@ -384,7 +467,6 @@
                         placeholder="Telefono"
                         maxlength="20"
                         style="border: none; width: 55%;"
-                        readonly
                     />
                 </div>
             </div>
@@ -399,7 +481,6 @@
                         placeholder="Correo electronico"
                         id="correo"
                         style="border: none; width: 55%;"
-                        readonly
                     />
                 </div>
             </div>
@@ -430,7 +511,9 @@
                         name="opciones"
                         style="border: none; width: 55%;"
                     >
-                        <option value="Medicina general">Medicina general</option>
+                        <option value="Medicina general"
+                            >Medicina general</option
+                        >
                         <option value="Enfermero">Enfermero</option>
                         <option value="Especialista">Especialista</option>
                     </select>

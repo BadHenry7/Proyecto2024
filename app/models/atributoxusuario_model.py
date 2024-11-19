@@ -10,3 +10,8 @@ class Atributoxusuario(BaseModel):
 
 class BuscarAtributoxusuario(BaseModel):
     id_usuario: int
+
+class UpdateAtributoxusuario(BaseModel):
+    id_usuario: int
+    valor: str
+    descripcion: str

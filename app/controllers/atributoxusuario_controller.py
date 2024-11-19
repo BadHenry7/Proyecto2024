@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.atributoxusuario_model import Atributoxusuario, BuscarAtributoxusuario
+from app.models.atributoxusuario_model import Atributoxusuario, BuscarAtributoxusuario,UpdateAtributoxusuario
 from fastapi.encoders import jsonable_encoder
 
 class AtributoxusuarioController:
@@ -117,5 +117,22 @@ class AtributoxusuarioController:
         finally:
             conn.close()
        
-
+    def updateatributoxusuario(self, atributoxusuario: UpdateAtributoxusuario):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+            UPDATE atrixusuario
+            SET valor = %s,
+            descripcion=%s
+            WHERE id_usuario = %s
+            """,(atributoxusuario.valor, atributoxusuario.descripcion, atributoxusuario.id_usuario,))
+            conn.commit()
+           
+            return {"resultado": "Usuario actualizado correctamente"} 
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()  
 ##atributexusuario_controller = AtributoController()

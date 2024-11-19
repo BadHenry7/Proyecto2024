@@ -65,20 +65,34 @@
                 }),
             });
 
-            const data = await response.json();
-            console.log(data);
-            console.log(data.Informacion);
+            const data = await response.json(); 
 
+            let id_atributo_v=1
+            let estado_v=1
+
+            console.log(data);
+            todos= data
+            console.log(todos);
+            
+            let v_id=todos[0];
+            console.log("----Este es el v_id")
+
+            console.log(v_id)
+            let v_especialidad= document.getElementById("especialidad").value;
+            console.log("Este es el valor que tiene v_esoecialidad")
+            console.log(v_especialidad)
             if (data.Informacion != "Ya_existe") {
-                //uy ok ok ok ok ok ok, me vas avisando si necesitas algo
-                //Aca pones la ruta de atributo por usuario
-                const response = await fetch("http://127.0.0.1:8000/", {
+                const response = await fetch("http://127.0.0.1:8000/create_atributoxusuario", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    especialidad: v_especialidad
+                    valor: v_especialidad,
+                    descripcion: v_especialidad,
+                    id_usuario: v_id,
+                    id_atributo: id_atributo_v,
+                    estado: estado_v
                 }),
             });
 
@@ -217,18 +231,18 @@
                         placeholder=" Especialidad?"
                         class="form-control rounded-pill"
                     >
-                        <option value="">Medicina general</option>
-                        <option value="">Enfermero</option>
-                        <option value="">Especialista</option>
+                        <option value="Medicina general">Medicina general</option>
+                        <option value="Enfermero">Enfermero</option>
+                        <option value="Especialista">Especialista</option>
                     </select>
                 </div>
             </div>
             <div class="row mt-3 mx-5">
                 <div class="row mt-4 mx-5">
                     <div
-                        class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2"
+                        class="col-lg-5 col-md-5 col-sm-5 col-12 col-xl-5 py-2"
                     >
-                        <input type="checkbox" id="terminos" required />
+                        <!--<input type="checkbox" id="terminos" required />
                         <label
                             ><a
                                 href="#"
@@ -237,7 +251,7 @@
                             >
                                 Acepto los términos y condiciones</a
                             ></label
-                        >
+                        >-->
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
                         <input
@@ -254,7 +268,7 @@
     <div><br /></div>
 </div>
 
-<div
+<!--<div
     class="modal fade"
     id="TerminosCondiciones"
     tabindex="-1"
@@ -355,6 +369,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <Footer></Footer>
