@@ -1,8 +1,7 @@
 <script>
     import Navbadmin from "$lib/Navbaradmin.svelte";
-import Footer from "../../../../lib/Footer.svelte";
+    import Footer from "../../../../lib/Footer.svelte";
     import { onMount } from "svelte";
-  
 
     let todos = {};
     let loading = true;
@@ -28,22 +27,23 @@ import Footer from "../../../../lib/Footer.svelte";
         }
     });
 
-    const serviceID = 'service_acpug5r'
-    const templateID = 'template_0hvvaww'
-    const apikey = '3bmpPn1S0SLhgotWj'
+    const serviceID = "service_acpug5r";
+    const templateID = "template_0hvvaww";
+    const apikey = "3bmpPn1S0SLhgotWj";
 
     function sendEmail() {
-        emailjs.init(apikey); 
-        emailjs.send(serviceID, templateID, {
-            nombre: v_nombre,
-            email: v_usuario, 
-        })
-        .then(result => {
-            alert('Correo enviado con éxito!');
-        })
-        .catch(error => {
-            console.log('Error al enviar el correo:', error.text);
-        });
+        emailjs.init(apikey);
+        emailjs
+            .send(serviceID, templateID, {
+                nombre: v_nombre,
+                email: v_usuario,
+            })
+            .then((result) => {
+                alert("Correo enviado con éxito!");
+            })
+            .catch((error) => {
+                console.log("Error al enviar el correo:", error.text);
+            });
     }
 
     async function Register() {
@@ -70,6 +70,24 @@ import Footer from "../../../../lib/Footer.svelte";
             console.log(data.Informacion);
 
             if (data.Informacion != "Ya_existe") {
+                //uy ok ok ok ok ok ok, me vas avisando si necesitas algo
+                //Aca pones la ruta de atributo por usuario
+                const response = await fetch("http://127.0.0.1:8000/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    especialidad: v_especialidad
+                }),
+            });
+
+
+
+
+
+
+
                 alert("Usuario registrado");
                 document.getElementById("nombre").value = "";
                 document.getElementById("apellido").value = "";
@@ -87,17 +105,23 @@ import Footer from "../../../../lib/Footer.svelte";
         }
     }
 </script>
+
 <Navbadmin></Navbadmin>
 <div class="container pt-3">
     <div class="text-center fs-1"><b> 🚑Registro de medico 🚑</b></div>
-    
+
     <!--<div class="text-end fs-3  text-a-secondary ">
         ¿Ya tienes una cuenta?<a href="/Login" class="text-secondary">Click aqui</a>
     </div>
     
     <border ; rounded-pill; para redondearlo-->
 
-    <form name="formulario" id="formulario" class="container" on:submit={Register}>
+    <form
+        name="formulario"
+        id="formulario"
+        class="container"
+        on:submit={Register}
+    >
         <div class="container py-5 ps-4 px-5 mt-5 border border-info">
             <!-- border-danger -->
             <div class="row mt-5 mx-5">
@@ -187,11 +211,16 @@ import Footer from "../../../../lib/Footer.svelte";
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
                     <label for="">Ocupacion</label>
-                    <select name="" id="especialidad" placeholder=" Especialidad?" class="form-control rounded-pill">
+                    <select
+                        name=""
+                        id="especialidad"
+                        placeholder=" Especialidad?"
+                        class="form-control rounded-pill"
+                    >
                         <option value="">Medicina general</option>
                         <option value="">Enfermero</option>
                         <option value="">Especialista</option>
-                    </select>                
+                    </select>
                 </div>
             </div>
             <div class="row mt-3 mx-5">
@@ -220,7 +249,6 @@ import Footer from "../../../../lib/Footer.svelte";
                 </div>
             </div>
         </div>
-
     </form>
 
     <div><br /></div>

@@ -7,3 +7,6 @@ class Atributoxusuario(BaseModel):
     valor: str
     descripcion: str
     estado: bool
+
+class BuscarAtributoxusuario(BaseModel):
+    id_usuario: int

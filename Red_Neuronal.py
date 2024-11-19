@@ -19,7 +19,7 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
 
 # Usamos panda para cargar el dataset para estudiarlo
-data = pd.read_csv('dataset2.csv', sep=';')
+data = pd.read_csv('dataset.csv', sep=';')
 data.head()
 
 data.info()

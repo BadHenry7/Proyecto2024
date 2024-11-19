@@ -85,7 +85,7 @@ console.log(n)
           </li>
 
           <li class="nav-item">
-            <a class="nav-link disabled" href="#">Botci :D</a>
+            <a class="nav-link" href="/botci">Botci :D</a>
           </li>
 
         </ul>

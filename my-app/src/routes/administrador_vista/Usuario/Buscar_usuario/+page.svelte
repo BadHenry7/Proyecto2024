@@ -81,6 +81,10 @@
       document.getElementById("documento").value = data.documento;
       document.getElementById("telefono").value = data.telefono;
       document.getElementById("correo").value = data.usuario;
+      console.log("verificando el estado"+data.estado)
+      const estado_v = data.estado ? "1" : "0";//condicion ? valorSiVerdadero : valorSiFalso
+      document.getElementById("estado").value = estado_v;
+
 
       const v_edit_nombre = document.getElementById("nombres");
       v_edit_nombre.removeAttribute("readonly");

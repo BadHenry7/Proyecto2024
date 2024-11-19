@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.controllers.atributoxusuario_controller import *
-from app.models.atributoxusuario_model import Atributoxusuario
+from app.models.atributoxusuario_model import Atributoxusuario, BuscarAtributoxusuario
 
 router = APIRouter()
 
@@ -11,12 +11,18 @@ async def create_atributoxusuario(atributoxusuario: Atributoxusuario):
     rpta = nuevo_atributo.create_atributoxusuario(atributoxusuario)
     return rpta
 
-@router.get("/get_atributoxusuario/{atributoxusuario_id}",response_model=Atributoxusuario)
+"""@router.get("/get_atributoxusuario/{atributoxusuario_id}",response_model=Atributoxusuario)
 async def get_atributoxusuario(atributoxusuario_id: int):
     rpta = nuevo_atributo.get_atributoxusuario(atributoxusuario_id)
     return rpta
+"""
 
-@router.get("/get_atributoxusuarios/")
+@router.post("/get_atributoxusuario")
+async def get_atributoxusuario(atributoxusuario: BuscarAtributoxusuario):
+    rpta = nuevo_atributo.get_atributoxusuario(atributoxusuario)
+    return rpta
+
+@router.get("/get_atributoxusuarios")
 async def get_atributoxusuarios():
     rpta = nuevo_atributo.get_atributoxusuarios()
     return rpta

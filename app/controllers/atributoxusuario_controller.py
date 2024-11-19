@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.atributoxusuario_model import Atributoxusuario
+from app.models.atributoxusuario_model import Atributoxusuario, BuscarAtributoxusuario
 from fastapi.encoders import jsonable_encoder
 
 class AtributoxusuarioController:
@@ -20,11 +20,11 @@ class AtributoxusuarioController:
             conn.close()
         
 
-    def get_atributoxusuario(self, atributoxusuario_id: int):
+    def get_atributoxusuario(self, atributoxusuario: BuscarAtributoxusuario):
         try:
             conn = get_db_connection()
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM atrixusuario WHERE id = %s", (atributoxusuario_id,))
+            cursor = conn.cursor() #mano ya vengo dale
+            cursor.execute("SELECT * FROM atrixusuario WHERE id_usuario = %s", (atributoxusuario.id_usuario,))
             result = cursor.fetchone()
             payload = []
             content = {} 

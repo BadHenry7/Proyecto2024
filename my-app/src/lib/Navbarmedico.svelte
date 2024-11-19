@@ -3,7 +3,7 @@
     import { onMount } from "svelte";
     
     
-    onMount(() => {//no va a funcionar  no no no no no no dale a seguirme
+    onMount(() => {
         let miStorage = window.localStorage;
         let name = JSON.parse(miStorage.getItem('usuario'));
         let n=name.name
@@ -50,7 +50,7 @@
               <a class="nav-link" href="">Certificados</a><!---->
             </li>
             <li class="nav-item mx-4">
-              <a class="nav-link" href="">Botci</a>
+              <a class="nav-link disabled" href="/botci">Botci</a>
             </li>
             <!--<li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
