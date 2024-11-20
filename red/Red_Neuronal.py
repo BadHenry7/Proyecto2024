@@ -19,7 +19,7 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
 
 # Usamos panda para cargar el dataset para estudiarlo
-data = pd.read_csv('dataset.csv', sep=';')
+data = pd.read_csv('dataset2.csv', sep=';')
 data.head()
 
 data.info()
@@ -157,5 +157,9 @@ vector_entrada_dato = np.array(vector_entrada_dato).reshape(1, -1)
 result = model.predict(vector_entrada_dato)
 predicted_class = np.argmax(result)  # Si necesitas la clase predicha
 
+
 print(f"----->: {result}")
 print(f"Su enfermedad es: {enfermedades[predicted_class]}")
+
+model.save('botci.h5')
+

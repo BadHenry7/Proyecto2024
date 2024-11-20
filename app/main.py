@@ -7,6 +7,8 @@ from app.routes.cita_medica_routes import router as Cita_router
 from app.routes.diagnosticos_routes import router as Diagnosticos_router
 from app.routes.historial_routes import router as historial_router
 from app.routes.sintomas_routes import router as sintomas_router
+from red.botsi_routes import router as botci_router
+
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,7 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # URL local de Svelte en desarrollo
-        "https://3e4c-161-10-155-114.ngrok-free.app","https://2133-161-10-155-114.ngrok-free.app",   # URL de ngrok
+        "https://ecc9-161-10-155-114.ngrok-free.app","https://6f5e-161-10-155-114.ngrok-free.app",   # URL de ngrok
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
@@ -38,6 +40,7 @@ app.include_router(Cita_router)
 app.include_router(Diagnosticos_router) 
 app.include_router(historial_router) 
 app.include_router(sintomas_router) 
+app.include_router(botci_router)
 
 
 @app.route('/')
