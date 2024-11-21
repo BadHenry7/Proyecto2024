@@ -4,13 +4,23 @@ import pandas as pd
 import numpy as np
 from pydantic import BaseModel
 from tensorflow.keras.models import load_model
-
+import os
 
 router = APIRouter()
 # Cargar el dataset y el modelo
-data = pd.read_csv("../red/dataset2.csv", sep=";")
+#data = pd.read_csv("../red/dataset2.csv", sep=";")
 
-model = load_model("../red/botci.h5")
+current_dir = os.path.dirname(__file__)  # Directorio del script actual
+dataset_path = os.path.join(current_dir, "../red/dataset2.csv")  # Ajusta si es necesario
+data = pd.read_csv(dataset_path, sep=";")
+
+
+
+#model = load_model("../red/botci.h5")
+
+current_dir = os.path.dirname(__file__)  # Directorio actual del script
+model_path = os.path.join(current_dir, "../red/botci.h5")
+model = load_model(model_path)
 
 # Obtener lista de síntomas y enfermedades
 symptoms = data.drop(columns=["diseases"]).columns.tolist()
