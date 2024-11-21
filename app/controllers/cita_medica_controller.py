@@ -394,15 +394,17 @@ class citaController:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""     
-            SELECT
+             SELECT
             cita.id, diagnosticos.fecha_diagnostico as fecha_diagnostico, 
-            diagnosticos.resultado as sintomas, diagnosticos.descripcion, diagnosticos.observacion as "Observacion/tratamiento"
+            diagnosticos.resultado as diagnosticos, diagnosticos.descripcion, diagnosticos.observacion as "Observacion/tratamiento", sintomas.nombre as sintomas ,sintomas.descripcion as "descripcion_sintomas"
             FROM cita
             JOIN
             diagnosticos ON cita.id = diagnosticos.id_cita
             JOIN 
             usuario ON usuario.id=cita.id_paciente
-            WHERE usuario.id=%s;
+            JOIN 
+            sintomas ON usuario.id= sintomas.id_paciente
+            WHERE usuario.id=%s
                            """,(historia_clinica.id_paciente,))
             result = cursor.fetchall()
             payload = []
@@ -411,9 +413,12 @@ class citaController:
                 content={
                     'id':data[0],
                     'fecha_diagnostico':str(data[1]),
-                    'sintomas':data[2],
+                    'diagnostico':data[2],
                     'descripcion':data[3],
                     'Observaciontratamiento':data[4],
+                    'sintomas':data[5],
+                    'descripcion_sintomas':data[6],
+
                     
 
                 }
