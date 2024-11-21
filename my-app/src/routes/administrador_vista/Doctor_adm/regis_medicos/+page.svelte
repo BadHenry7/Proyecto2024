@@ -12,7 +12,7 @@
     let v_apellido = ""; //por que mano anda mucha gente aca haciendo bulla entonces no puedo entrar a teams
     let v_documento = "";
     let v_telefono = "";
-    let v_rol = 2;
+    let v_rol = 3;
     let v_estado = 1;
 
     onMount(async () => {

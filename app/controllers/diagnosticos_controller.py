@@ -152,3 +152,4 @@ class diagnosticoController:
         finally:
             conn.close()
     
+   

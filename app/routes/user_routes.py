@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from app.controllers.user_controller import *
-from app.models.user_model import User,Estado,Login,Buscar,Actualizar
+from app.models.user_model import User,Estado,Login,Buscar,Actualizar,Buscar_document
 
 
 router = APIRouter()
@@ -17,6 +17,11 @@ async def create_user(user: User):
 @router.post("/get_user")
 async def get_user(user: Buscar):
     rpta = nuevo_usuario.get_user(user)
+    return rpta
+
+@router.post("/get_user_document")
+async def get_user_document(user: Buscar_document):
+    rpta = nuevo_usuario.get_user_document(user)
     return rpta
 
 

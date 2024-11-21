@@ -25,7 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # URL local de Svelte en desarrollo
-        "https://ecc9-161-10-155-114.ngrok-free.app","https://6f5e-161-10-155-114.ngrok-free.app",   # URL de ngrok
+        "https://68d5-161-10-155-114.ngrok-free.app","https://7cd3-161-10-155-114.ngrok-free.app",   # URL de ngrok
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
@@ -45,7 +45,7 @@ app.include_router(botci_router)
 
 @app.route('/')
 def home():
-    return ('app.html')
+    return ('+page.svelte')
 
 """
 if __name__ == "__main__":

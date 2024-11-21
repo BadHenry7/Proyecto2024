@@ -75,3 +75,8 @@ async def estadisticas3_citas():
 async def estadisticas4_citas():
     rpta = nueva_cita.estadisticas4_citas()
     return rpta
+
+@router.post("/historia_clinica")
+async def historia_clinica(historia_clinica: Buscar):
+    rpta = nueva_cita.historia_clinica(historia_clinica)
+    return rpta

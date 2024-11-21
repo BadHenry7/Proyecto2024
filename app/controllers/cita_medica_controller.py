@@ -141,7 +141,7 @@ class citaController:
             cursor = conn.cursor()
             cursor.execute(""" 
                            
-                           SELECT cita.fecha,  cita.hora,  usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente     
+                           SELECT cita.fecha,  cita.hora,  usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente , cita.id AS id_cita
                             FROM cita
                              INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
                              INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id WHERE 
@@ -156,7 +156,8 @@ class citaController:
                     'fecha':data[0],
                     'hora':str(data[1]),
                     'medico':data[2],
-                    'paciente':data[3]
+                    'paciente':data[3],
+                    'id_cita':data[4]
                 
                 }
                 payload.append(content)
@@ -386,3 +387,51 @@ class citaController:
             conn.rollback()
         finally:
             conn.close()           
+
+
+    def historia_clinica(self, historia_clinica: Buscar):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""     
+            SELECT
+            cita.id, diagnosticos.fecha_diagnostico as fecha_diagnostico, 
+            diagnosticos.resultado as sintomas, diagnosticos.descripcion, diagnosticos.observacion as "Observacion/tratamiento"
+            FROM cita
+            JOIN
+            diagnosticos ON cita.id = diagnosticos.id_cita
+            JOIN 
+            usuario ON usuario.id=cita.id_paciente
+            WHERE usuario.id=%s;
+                           """,(historia_clinica.id_paciente,))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'id':data[0],
+                    'fecha_diagnostico':str(data[1]),
+                    'sintomas':data[2],
+                    'descripcion':data[3],
+                    'Observaciontratamiento':data[4],
+                    
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+    
+
+
+
+

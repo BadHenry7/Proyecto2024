@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-xl-6 ">
-            <img src="image5.png" alt="" />
+            <img src="image5.png" alt="" style="height: 600px; width: 750px;"/>
         </div>
     </div>
 </div>

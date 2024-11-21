@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException, UploadFile
 from app.config.db_config import get_db_connection
-from app.models.user_model import User, Login, Estado, Buscar ,Actualizar,ActualizarAdm
+from app.models.user_model import User, Login, Estado, Buscar ,Actualizar,ActualizarAdm,Buscar_document
 from fastapi.encoders import jsonable_encoder
 from typing import List
 import pandas as pd
@@ -79,6 +79,41 @@ class UserController:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM usuario WHERE id = %s ", (user.id,))
+            result = cursor.fetchone()
+            payload = []
+            content = {} 
+            
+            content={
+                    'id':int(result[0]),
+                    'usuario':result[1],
+                    'password':result[2],
+                    'nombre':result[3],
+                    'apellido':result[4],
+                    'documento':result[5],
+                    'telefono':result[6],
+                    'id_rol':int(result[7]),
+                    'estado':bool(result[8]),
+            }
+            payload.append(content)
+            
+            json_data = jsonable_encoder(content)            
+            if result:
+               return  json_data
+            else:
+                raise HTTPException(status_code=404, detail="User not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+    def get_user_document(self, user: Buscar_document):
+        
+        try:
+            
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usuario WHERE documento = %s ", (user.documento,))
             result = cursor.fetchone()
             payload = []
             content = {} 

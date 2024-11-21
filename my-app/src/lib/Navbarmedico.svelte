@@ -44,13 +44,13 @@
               <a class="nav-link" href="">Agenda</a>
             </li>
             <li class="nav-item mx-4">
-              <a class="nav-link" href="">Paciente</a>
+              <a class="nav-link" href="/medico_vista/historial_clinico">Paciente</a>
             </li>
             <li class="nav-item mx-4">
               <a class="nav-link" href="">Certificados</a><!---->
             </li>
             <li class="nav-item mx-4">
-              <a class="nav-link disabled" href="/botci">Botci</a>
+              <a class="nav-link " href="/botci">Botci</a>
             </li>
             <!--<li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
