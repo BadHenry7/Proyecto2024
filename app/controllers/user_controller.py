@@ -71,7 +71,6 @@ class UserController:
                 conn.close()
 
     
-
     def get_user(self, user: Buscar):
         
         try:
@@ -300,8 +299,7 @@ class UserController:
         finally:
             conn.close()    
 
-    
-           
+             
     def update_adm(self, adm: ActualizarAdm):
         try:
             conn = get_db_connection()
@@ -325,8 +323,7 @@ class UserController:
         finally:
             conn.close()    
 
-   
-       
+        
     def delete_user(self, user_id: int):
         try: 
             conn = get_db_connection()

@@ -11,7 +11,7 @@ class sintomasController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO sintomas (nombre,descripcion,estado) VALUES (%s,%s,%s)", (sintomas.nombre, sintomas.descripcion, sintomas.estado,))
+            cursor.execute("INSERT INTO sintomas (nombre,descripcion,estado,id_cita) VALUES (%s,%s,%s,%s)", (sintomas.nombre, sintomas.descripcion, sintomas.estado,sintomas.id_cita))
             conn.commit()
             conn.close()
             return {"resultado": "sintoma generada correctamente"}

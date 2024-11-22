@@ -6,7 +6,7 @@ router = APIRouter()
 
 nueva_sintomas = sintomasController() #definido donde
 
-@router.post("/create_sintomas/")
+@router.post("/create_sintomas")
 async def create_sintomas(sintomas: Sintomas):
     rpta = nueva_sintomas.create_sintomas(sintomas)
     return rpta

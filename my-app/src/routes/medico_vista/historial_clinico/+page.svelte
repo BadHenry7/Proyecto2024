@@ -131,7 +131,9 @@
         let v_id_paciente = todos.id;
         console.log(v_id_paciente);
         try {
-            const response = await fetch("http://127.0.0.1:8000/", {
+            let id_cita_v=document.getElementById('citas').value;
+            console.log("id de la cita", id_cita_v)
+            const response = await fetch("http://127.0.0.1:8000/create_sintomas", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -140,7 +142,7 @@
                     nombre: sintomas_v,
                     descripcion: descripcions_v,
                     estado: estado_v,
-                    id_paciente: v_id_paciente,
+                    id_cita: id_cita_v,
                 }),
             });
         } catch (e) {
@@ -159,19 +161,44 @@
             
             
 
-            const response = await fetch("http://127.0.0.1:8000/", {
+            const response = await fetch("http://127.0.0.1:8000/create_diagnosticos", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    id_cita: id_cita_v,
+                    id_cita: id_cita_v,//mano ya estas ahi?
                     resultado: diagnostico_v,
                     descripcion: descripcions_d,
                     Observacion: Observacion_v,
                     estado: v_estado
                 }),
             });
+
+            const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "error",
+          iconColor: "white",
+          color: "white",
+          background: "#ff4e4e",
+          title: "Historial clinico añadido",
+        });
+
+
+        setTimeout(() => {
+        location.reload();
+      }, 3000);
+
         } catch (e) {
             error = e.message;
             console.log(error);
@@ -320,7 +347,7 @@
                             type="text"
                             placeholder="sintomas del paciente"
                             id="sintomas"
-                            maxlength="100"
+                            
                             style="border: none; width: 55%;"
                             readonly
                         />
@@ -371,7 +398,7 @@
                             type="text"
                             id="descripcion_diagnostico"
                             placeholder="descripcion del diagnostico"
-                            maxlength="20"
+                           
                             style="border: none; width: 55%;"
                             readonly
                         />

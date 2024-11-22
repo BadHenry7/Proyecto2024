@@ -5,8 +5,9 @@
     let todos = {};
     let loading = true;
     let error = null;
-    let v_usuario=todos.usuario;
-    let v_nombre=todos.nombre;
+    const serviceID = 'service_yev294m'
+    const templateID = 'template_i73qkfa'
+    const apikey = 'gVmq9ZyZNWP2_LzXW'
 
     onMount(async () => {
         try {
@@ -14,8 +15,8 @@
             if (!response.ok) throw new Error("Error al cargar los datos");
             const data = await response.json();
             todos = data.resultado;
-            console.log(todos);
-            
+            console.log("eu",todos);
+
             const Selectpaciente = document.getElementById("medico");
             for (let i = 0; i < data.resultado.length; i++) {
                 const user = data.resultado[i];
@@ -36,26 +37,7 @@
         }
     });
 
-    console.log(v_usuario)
-    console.log(v_nombre)
-
-    const serviceID = 'service_yev294m'
-    const templateID = 'template_i73qkfa'
-    const apikey = 'kgkTxz5c5rAP5CT8c'
-
-    /*function sendEmail() {
-        emailjs.init(apikey); 
-        emailjs.send(serviceID, templateID, {
-            email: v_usuario, 
-        })
-        .then(result => {
-            alert('Correo enviado con éxito!');
-        })
-        .catch(error => {
-            console.log('Error al enviar el correo:', error.text);
-        });
-} */
-
+   
     function ConfirmarAgendar() {
     Swal.fire({
                 title: "¿Confirmas que quieres agendar esta cita?",
@@ -76,12 +58,23 @@
     async function Agendar() {
         let miStorage = window.localStorage;
         let vid = JSON.parse(miStorage.getItem("usuario"));
+        console.log("Contenido del localStorage:", vid);
         let n = vid.id;
-        console.log("agendamos cita");
+        let nb = vid.name;
+        let ce = vid.correo;
 
-        console.log(n);
+        console.log("1----------------------------------"+n)
+        console.log("2----------------------------------"+nb)
+        console.log("3----------------------------------"+ce)
+
         const vpaciente = n;
         const vmedico = document.getElementById("medico").value;
+
+        const medico_v = document.getElementById("medico");
+
+        var selectedOption = medico_v.options[medico_v.selectedIndex].text;
+        console.log("name:",selectedOption)
+     
         const vfecha = document.getElementById("c_m_d").value;
         const vhora = document.getElementById("c_m_h").value;
         const vestado = 1;
@@ -94,9 +87,13 @@
                 vmedico,
         );
         console.log("Agendar a la fecha  " + vfecha + " a la hora " + vhora);
+
+
+         
+
         try {
             const response = await fetch(
-                " http://127.0.0.1:8000/create_cita/",
+                "http://127.0.0.1:8000/create_cita/",
                 {
                     method: "POST",
                     headers: {
@@ -116,10 +113,29 @@
                         text: "Tu cita fue añadida con exito",
                         icon: "success",
                     });
+            sendEmail()
 
             document.getElementById("medico").value = "";
             document.getElementById("c_m_d").value = "";
             document.getElementById("c_m_h").value = "";
+
+            function sendEmail() {
+                emailjs.init(apikey); 
+                emailjs.send(serviceID, templateID, {
+                    nombre: nb,
+                    email: ce, 
+                    hora: vhora,
+                    fecha: vfecha,
+                    doctor: selectedOption
+                })
+                .then(result => {
+                        alert('Correo enviado con éxito!');
+                    })
+                    .catch(error => {
+                        console.log('Error al enviar el correo:', error.text);
+                    });
+            }
+
         } catch (e) {
             error = e.message;
             alert("Error en la solicitud: " + error);

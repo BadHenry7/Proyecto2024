@@ -3,10 +3,13 @@ from pydantic import BaseModel
 class Diagnosticos(BaseModel):
     
     id: int= None
-    id_usuario: int
+    id_cita: int
     resultado: str
-    fecha_diagnostico: str
+    descripcion: str
+    Observacion: str
+    fecha_diagnostico: str=None
     estado: bool
+    
 
 
 

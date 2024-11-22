@@ -31,7 +31,6 @@
 
     async function Login() {
         loading = true;
-
         try {
             const response = await fetch("http://127.0.0.1:8000/login", {
                 method: "POST",
@@ -47,15 +46,18 @@
             if (response.ok) {
                 const data = await response.json();
                 todos = data.resultado;
+
                 let rol_v = todos[0].rol;
                 console.log(rol_v);
 
                 console.log(todos);
+                
                 if (rol_v == 1) {
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
+                    let correo = data.resultado[0].usuario;
 
-                    let encontrado = { name, id };
+                    let encontrado = {name,id,correo};
 
                     let miStorage = window.localStorage;
                     miStorage.setItem("usuario", JSON.stringify(encontrado));
@@ -71,14 +73,16 @@
                     setTimeout(() => {
                         window.location.href = "/administrador_vista";
                     }, 2000);
+
                 } else if(rol_v==2){
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
+                    let correo = data.resultado[0].usuario;
 
-                    let encontrado = { name, id };
-
+                    let encontrado = {name,id,correo};
                     let miStorage = window.localStorage;
                     miStorage.setItem("usuario", JSON.stringify(encontrado));
+
                   //  alert(                        "Inicio de sesion exitoso2. Bienvenido Usuario " + name,);
                     //document.getElementById("loginex").style.display = "flex";
                     Swal.fire({
@@ -97,11 +101,12 @@
                 }else{
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
+                    let correo = data.resultado[0].usuario;
 
-                    let encontrado = { name, id };
-
+                    let encontrado = {name, id,correo};
                     let miStorage = window.localStorage;
                     miStorage.setItem("usuario", JSON.stringify(encontrado));
+
                   //  alert(                        "Inicio de sesion exitoso2. Bienvenido Usuario " + name,);
                     //document.getElementById("loginex").style.display = "flex";
                     Swal.fire({

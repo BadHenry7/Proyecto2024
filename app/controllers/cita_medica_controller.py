@@ -441,7 +441,7 @@ class citaController:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""     
-             SELECT
+            SELECT
             cita.id, diagnosticos.fecha_diagnostico as fecha_diagnostico, 
             diagnosticos.resultado as diagnosticos, diagnosticos.descripcion, diagnosticos.observacion as "Observacion/tratamiento", sintomas.nombre as sintomas ,sintomas.descripcion as "descripcion_sintomas"
             FROM cita
@@ -450,7 +450,7 @@ class citaController:
             JOIN 
             usuario ON usuario.id=cita.id_paciente
             JOIN 
-            sintomas ON usuario.id= sintomas.id_paciente
+            sintomas ON cita.id= sintomas.id_cita
             WHERE usuario.id=%s
                            """,(historia_clinica.id_paciente,))
             result = cursor.fetchall()

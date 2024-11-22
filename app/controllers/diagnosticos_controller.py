@@ -10,7 +10,7 @@ class diagnosticoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO diagnosticos (id_usuario,resultado,fecha_diagnostico,estado) VALUES (%s,%s,%s,%s)", (diagnosticos.id_usuario, diagnosticos.resultado, diagnosticos.fecha_diagnostico,diagnosticos.estado,))
+            cursor.execute("INSERT INTO diagnosticos (id_cita,resultado,descripcion,Observacion,estado) VALUES (%s,%s,%s,%s,%s)", (diagnosticos.id_cita, diagnosticos.resultado,diagnosticos.descripcion,diagnosticos.Observacion,diagnosticos.estado,))
             conn.commit()
             conn.close()
             return {"resultado": "diagnosticos añadida correctamente"}

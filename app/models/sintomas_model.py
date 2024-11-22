@@ -4,4 +4,5 @@ class Sintomas(BaseModel):
     id: int= None
     nombre: str
     descripcion: str
-    estado: bool    					
+    estado: bool    	
+    id_cita: int				
