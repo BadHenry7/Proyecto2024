@@ -105,7 +105,7 @@ class citaController:
             FROM cita
             INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
             INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id
-                           
+            WHERE cita.estado=1              
                            
                            """)
             result = cursor.fetchall()
@@ -145,7 +145,7 @@ class citaController:
                             FROM cita
                              INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
                              INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id WHERE 
-                            cita.id_paciente =%s
+                            cita.id_paciente =%s AND cita.estado=1
                            
                            """,(cita.id_paciente,))
             result = cursor.fetchall()
@@ -172,7 +172,49 @@ class citaController:
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
-            conn.close()        
+            conn.close()  
+
+
+
+        
+    def post_citas_doctor(self, cita: Buscar):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(""" 
+                           
+                           SELECT cita.fecha,  cita.hora,  usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente , cita.id AS id_cita
+                            FROM cita
+                             INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
+                             INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id WHERE 
+                            cita.id_usuario =%s AND cita.estado=1
+                           
+                           """,(cita.id_paciente,))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'fecha':data[0],
+                    'hora':str(data[1]),
+                    'medico':data[2],
+                    'paciente':data[3],
+                    'id_cita':data[4]
+                
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()            
 
 
     def update_cita(self, cita: Upditon):
@@ -199,7 +241,7 @@ class citaController:
         try: 
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM cita WHERE id = %s',(cita.id,))
+            cursor.execute('UPDATE cita SET estado=0 WHERE id =%s',(cita.id,))
             conn.commit()           
             return {"resultado": "cita eliminada correctamente"} 
                 

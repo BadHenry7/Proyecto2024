@@ -47,7 +47,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="/usuario/citas_usuario/crear_citas_vista_usuario">Agendar citas</a></li>
               <li><a class="dropdown-item" href="/usuario/citas_usuario/revisar_citas_vista_usuario">Ver citas programadas</a></li>
-              <li><a class="dropdown-item" href="">Cancelar citas</a></li>
+          
             </ul>
           </li>
           <li class="nav-item">
@@ -59,16 +59,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/usuario/perfil">Perfil</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Servicios
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="">Action</a></li>
-              <li><a class="dropdown-item" href="">Another action</a></li>
-              <li><a class="dropdown-item" href="">Something else here</a></li>
-            </ul>
-          </li>
+        
         </ul>
 
         <form class="d-flex   nav-item nav-link ms-auto">

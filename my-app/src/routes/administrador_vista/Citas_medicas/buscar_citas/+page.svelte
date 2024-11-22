@@ -207,7 +207,7 @@
     console.log("entra al eliminar de la cita numero "+vid)
     try {
     const response = await fetch("http://127.0.0.1:8000/eliminar_cita", {
-      method: "DELETE",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json", // Asegúrate de especificar que envías JSON
       },

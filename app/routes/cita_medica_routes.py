@@ -23,6 +23,12 @@ async def post_citas_users(cita: Buscar):
     return rpta
 
 
+@router.post("/post_citas_doctor")
+async def post_citas_doctor(cita: Buscar):
+    rpta = nueva_cita.post_citas_doctor(cita)
+    return rpta
+
+
 @router.post("/editar_cita/")
 async def editar_cita(cita: EditarCita):
     rpta = nueva_cita.editar_cita(cita)
@@ -44,7 +50,7 @@ async def update_cita(cita: Upditon,):
     rpta = nueva_cita.update_cita(cita)
     return rpta 
 
-@router.delete("/eliminar_cita")
+@router.put("/eliminar_cita")
 async def delete_cita(cita: Chaocita):
     rpta = nueva_cita.delete_cita(cita)
     return rpta 

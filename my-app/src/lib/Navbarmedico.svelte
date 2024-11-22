@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item mx-4">
-              <a class="nav-link" href="">Agenda</a>
+              <a class="nav-link" href="/medico_vista/citas_medico">Agenda</a>
             </li>
             <li class="nav-item mx-4">
               <a class="nav-link" href="/medico_vista/historial_clinico">Paciente</a>
