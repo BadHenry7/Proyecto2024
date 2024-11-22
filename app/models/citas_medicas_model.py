@@ -17,6 +17,11 @@ class Reportesss(BaseModel):
     fecha: str
     fecha2: str
 
+class Reportes_medico(BaseModel):
+    fecha: str
+    fecha2: str  
+    id: int  
+
 
 class EditarCita(BaseModel):
     id:int  = None  

@@ -30,6 +30,13 @@
     async function generar() {
         let opcion = document.getElementById("opcion").value;
         console.log(opcion);
+
+        let miStorage = window.localStorage;
+        let v_id = JSON.parse(miStorage.getItem('usuario'));
+        let id_v=v_id.id
+        console.log("El id del medico es", id_v)
+
+
         try {
             if (opcion == 1) {
                 let fecha_de = document.getElementById("desde_citas").value;
@@ -45,7 +52,7 @@
                 console.log(n);
 
                 const response = await fetch(
-                    "http://127.0.0.1:8000/reportes_citas/",
+                    "http://127.0.0.1:8000/reportes_citas_medico",
                     {
                         method: "POST",
                         headers: {
@@ -54,7 +61,7 @@
                         body: JSON.stringify({
                             fecha: fecha_de,
                             fecha2: fecha_hasta,
-                           
+                            id: v_id                           
                         }),
                     },
                 );
@@ -272,7 +279,7 @@
     }
 </script>
 
-<Navbaradmin></Navbaradmin>
+<Navbarmedico></Navbarmedico>
 
 <div class="container" style="margin-top: 5%;">
     <div class="text-center pt-1 fs-3">
@@ -397,8 +404,3 @@
         }
     }
 </style>
-
-
-
-
-

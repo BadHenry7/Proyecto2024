@@ -55,6 +55,11 @@ async def reportes_citas(cita: Reportesss):
     rpta = nueva_cita.reportes_citas(cita)
     return rpta
 
+@router.post("/reportes_citas_medicos")
+async def reportes_citas_medicos(cita:Reportes_medico):
+    rpta = nueva_cita.reportes_citas_medicos(cita)
+    return rpta
+
 @router.get("/estadisticas_citas")
 async def estadisticas_citas():
     rpta = nueva_cita.estadisticas_citas()

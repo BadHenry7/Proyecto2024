@@ -5,16 +5,17 @@
     let todos = {};
     let loading = true;
     let error = null;
+    let v_usuario=todos.usuario;
+    let v_nombre=todos.nombre;
+
     onMount(async () => {
         try {
-            console.log("yes");
             const response = await fetch("http://127.0.0.1:8000/getmedico");
             if (!response.ok) throw new Error("Error al cargar los datos");
             const data = await response.json();
             todos = data.resultado;
             console.log(todos);
-            console.log(todos.usuario);
-
+            
             const Selectpaciente = document.getElementById("medico");
             for (let i = 0; i < data.resultado.length; i++) {
                 const user = data.resultado[i];
@@ -34,6 +35,26 @@
             loading = false;
         }
     });
+
+    console.log(v_usuario)
+    console.log(v_nombre)
+
+    const serviceID = 'service_yev294m'
+    const templateID = 'template_i73qkfa'
+    const apikey = 'kgkTxz5c5rAP5CT8c'
+
+    /*function sendEmail() {
+        emailjs.init(apikey); 
+        emailjs.send(serviceID, templateID, {
+            email: v_usuario, 
+        })
+        .then(result => {
+            alert('Correo enviado con éxito!');
+        })
+        .catch(error => {
+            console.log('Error al enviar el correo:', error.text);
+        });
+} */
 
     function ConfirmarAgendar() {
     Swal.fire({
