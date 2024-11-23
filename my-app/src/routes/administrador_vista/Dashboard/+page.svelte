@@ -13,6 +13,7 @@
 
     onMount(async () => {
         grafica2_citas();
+      grafica3_citas_activas();
 
         try {
             console.log;
@@ -84,9 +85,13 @@
     let myChart3;
     let myChart4;
 
+    let mygrafica_activas;
+    let mygrafica_noactivas;
+
+
     async function grafica2_citas() {
         if (myChart2) {
-            console.log("revisando el mychart2" + myChart2);
+            console.log("revisando el mychart2" , myChart2);
             myChart2.destroy();
         }
         if (myChart3) {
@@ -158,7 +163,7 @@
                         },
                         title: {
                             display: true,
-                            text: "Cantidad de pacientes asignados ",
+                            text: "Cantidad de citas asignados ",
                             position: "top",
                         },
                     },
@@ -231,7 +236,7 @@
                         },
                         title: {
                             display: true,
-                            text: "Cantidad de pacientes asignados ",
+                            text: "Cantidad de citas asignadas ",
                             position: "top",
                         },
                     },
@@ -304,7 +309,7 @@
                         },
                         title: {
                             display: true,
-                            text: "Cantidad de pacientes asignados ",
+                            text: "Cantidad de citas asignadas ",
                             position: "top",
                         },
                     },
@@ -318,6 +323,167 @@
             }
         }
     }
+
+
+    async function grafica3_citas_activas() {
+        console.log("queeeeeeeeeeeeeeeeeeeeeeeeee")
+        if (mygrafica_activas) {
+            console.log("revisando el mychart2" + mygrafica_activas);
+            mygrafica_activas.destroy();
+        }
+        if (mygrafica_noactivas) {
+            console.log("revisando el mychart3" + mygrafica_noactivas);
+            mygrafica_noactivas.destroy();
+        }
+        let opcion2 = document.getElementById("opcion2").value;
+        if (opcion2 == "activo") {
+            console.log("opcion seleccionada aca: " + opcion2);
+            try {
+                console.log;
+                const response = await fetch(
+                    "http://127.0.0.1:8000/estadisticas_citas_activas",
+                );
+                if (!response.ok) throw new Error("Error al cargar los datos");
+                const data = await response.json();
+                todos = data.resultado;
+                console.log("esta es activos",todos);
+
+                const vCantidad = [];
+                const vFecha = []; //
+                for (let i = 0; i < todos.length; i++) {
+                    vCantidad.push(todos[i].citas_mes);
+                    vFecha.push(todos[i].Fecha);
+                }
+                console.log("cantidad de citas", vCantidad);
+                console.log("Fecha de la cita", vFecha);
+
+              var  grafica_activas = document
+                    .getElementById("grafica3")
+                    .getContext("2d");
+                mygrafica_activas = new Chart(grafica_activas, {
+                    type: "bar",
+                    data: {
+                        labels: vFecha,
+                        datasets: [
+                            {
+                                label: "Cantidad de citas",
+                                data: vCantidad, //
+                                fill: true,
+                                backgroundColor: [
+                                    "rgba(85, 226, 251, 0.3)", //diamante
+                                    "rgba(238, 180, 2, 0.3)", //Gold
+                                    "rgba(145,145,145,0.3)", //medium
+                                    "rgba(255,145,255,0.4)",
+                                ], //Plus
+                                borderColor: "rgb(0, 0, 0, 0.3)",
+                                borderWidth: 1,
+                                pointBackgroundColor: "rgb(255, 99, 132)",
+                                pointBorderColor: "#fff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgb(255, 99, 132)",
+                            },
+                        ],
+                    },
+                    options: {
+                        interaction: {
+                            mode: null, // Desactiva completamente cualquier interacción
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: "right",
+                            },
+                        },
+                        title: {
+                            display: true,
+                            text: "Cantidad de citas pendientes por meses ",
+                            position: "top",
+                        },
+                    },
+                    //
+                });
+            } catch (e) {
+                error = e.message;
+                console.log(error);
+            } finally {
+                loading = false;
+            }
+        } else if (opcion2 == "no_activo") {
+            console.log("opcion seleccionada aca: " + opcion2);
+
+            try {
+                console.log;
+                const response = await fetch(
+                    "http://127.0.0.1:8000/estadisticas_citas_desactivado",
+                );
+                if (!response.ok) throw new Error("Error al cargar los datos");
+                const data = await response.json();
+                todos = data.resultado;
+                console.log(todos);
+
+                const vCantidad = [];
+                const vFecha = []; //
+                for (let i = 0; i < todos.length; i++) {
+                    vCantidad.push(todos[i].citas_mes);
+                    vFecha.push("Mes: "+todos[i].Fecha);
+                }
+                console.log("cantidad de citas", vCantidad);
+                console.log("Fecha de la cita", vFecha);
+
+                var grafica_noactivas = document
+                    .getElementById("grafica3")
+                    .getContext("2d");
+                mygrafica_noactivas = new Chart(grafica_noactivas, {
+                    type: "bar",
+                    data: {
+                        labels: vFecha,
+                        datasets: [
+                            {
+                                label: "Cantidad de citas",
+                                data: vCantidad, //
+                                fill: true,
+                                backgroundColor: [
+                                    "rgba(85, 226, 251, 0.3)", //diamante
+                                    "rgba(238, 180, 2, 0.3)", //Gold
+                                    "rgba(145,145,145,0.3)", //medium
+                                    "rgba(255,145,255,0.4)",
+                                ], //Plus
+                                borderColor: "rgb(0, 0, 0, 0.3)",
+                                borderWidth: 1,
+                                pointBackgroundColor: "rgb(255, 99, 132)",
+                                pointBorderColor: "#fff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgb(255, 99, 132)",
+                            },
+                        ],
+                    },
+                    options: {
+                        interaction: {
+                            mode: null, // Desactiva completamente cualquier interacción
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: "right",
+                            },
+                        },
+                        title: {
+                            display: true,
+                            text: "Cantidad de citas realizadas por meses",
+                            position: "top",
+                        },
+                    },
+                    //
+                });
+            } catch (e) {
+                error = e.message;
+                console.log(error);
+            } finally {
+                loading = false;
+            }
+        }
+    }
+
 </script>
 
 <Navbaradmin></Navbaradmin>
@@ -360,6 +526,17 @@
             </div>
 
             <div class="col-lg-6" id="g3">
+                <div style="text-align: center; ">
+                    <label for="">Seleccionar criterio:</label>
+                    <select
+                        id="opcion2"
+                        style="margin-top: 10px;"
+                        on:change={grafica3_citas_activas}
+                    >
+                        <option value="activo">Activas</option>
+                        <option value="no_activo">No activas</option>
+                    </select>
+                </div>
                 <canvas
                     id="grafica3"
                     style="width: 300px; height: 220px;"

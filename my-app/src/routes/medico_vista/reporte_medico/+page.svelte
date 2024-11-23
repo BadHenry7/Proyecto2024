@@ -1,5 +1,5 @@
 <script>
-    import Navbaradmin from "../../../lib/Navbaradmin.svelte";
+    import Navbarmedico from "../../../lib/Navbarmedico.svelte";
     import { onMount } from "svelte";
 
     let todos = {};
@@ -52,7 +52,7 @@
                 console.log(n);
 
                 const response = await fetch(
-                    "http://127.0.0.1:8000/reportes_citas_medico",
+                    "http://127.0.0.1:8000/reportes_citas_medicos",
                     {
                         method: "POST",
                         headers: {
@@ -61,7 +61,7 @@
                         body: JSON.stringify({
                             fecha: fecha_de,
                             fecha2: fecha_hasta,
-                            id: v_id                           
+                            id: id_v                           
                         }),
                     },
                 );

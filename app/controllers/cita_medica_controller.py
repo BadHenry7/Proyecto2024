@@ -478,6 +478,81 @@ class citaController:
             conn.close()           
 
 
+    def estadisticas_citas_activas(self):#Estadisticas para saber cuantas citas hay por dia
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""                       
+       
+            SELECT 
+            MONTHNAME(fecha) AS mes, 
+            COUNT(*) AS citas_por_mes
+            FROM cita
+            WHERE estado=1
+            GROUP BY mes
+            ORDER BY fecha
+                           """,)
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'Fecha':data[0], 
+                    'citas_mes':data[1], 
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()           
+
+
+    def estadisticas_citas_desactivado(self):#Estadisticas para saber cuantas citas hay por dia
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""                       
+       
+            SELECT 
+            MONTHNAME(fecha) AS mes, 
+            COUNT(*) AS citas_por_mes
+            FROM cita
+            WHERE estado=0
+            GROUP BY mes
+            ORDER BY fecha
+                           """,)
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'Fecha':data[0], 
+                    'citas_mes':data[1], 
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()  
+
     def historia_clinica(self, historia_clinica: Buscar):
         try:
             conn = get_db_connection()
@@ -525,7 +600,6 @@ class citaController:
         finally:
             conn.close()
     
-
 
 
 

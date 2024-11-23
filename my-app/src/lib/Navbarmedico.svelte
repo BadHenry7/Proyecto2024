@@ -47,7 +47,7 @@
               <a class="nav-link" href="/medico_vista/historial_clinico">Paciente</a>
             </li>
             <li class="nav-item mx-4">
-              <a class="nav-link" href="">Certificados</a><!---->
+              <a class="nav-link" href="/medico_vista/reporte_medico">Reportes</a><!---->
             </li>
             <li class="nav-item mx-4">
               <a class="nav-link " href="/botci">Botci</a>

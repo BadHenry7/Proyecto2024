@@ -66,6 +66,9 @@ async def reportes_citas_medicos(cita:Reportes_medico):
     rpta = nueva_cita.reportes_citas_medicos(cita)
     return rpta
 
+
+#-------------Estadisticas
+
 @router.get("/estadisticas_citas")
 async def estadisticas_citas():
     rpta = nueva_cita.estadisticas_citas()
@@ -86,6 +89,18 @@ async def estadisticas3_citas():
 async def estadisticas4_citas():
     rpta = nueva_cita.estadisticas4_citas()
     return rpta
+
+@router.get("/estadisticas_citas_activas")
+async def estadisticas_citas_activas():
+    rpta = nueva_cita.estadisticas_citas_activas()
+    return rpta
+
+
+@router.get("/estadisticas_citas_desactivado")
+async def estadisticas_citas_desactivado():
+    rpta = nueva_cita.estadisticas_citas_desactivado()
+    return rpta
+
 
 @router.post("/historia_clinica")
 async def historia_clinica(historia_clinica: Buscar):

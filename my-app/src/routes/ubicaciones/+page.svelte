@@ -10,6 +10,7 @@
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
+
         L.marker([10.960658, -74.801816])
             .addTo(map)
             .bindPopup("A pretty CSS popup.<br> Easily customizable.")
@@ -21,7 +22,19 @@
             fillColor: "#f03",
             fillOpacity: 0.5,
             radius: 50,
-        }).addTo(map);
+        }).addTo(map);   
+
+        
+        var marker2 = L.marker([10.962032, -74.794501]).addTo(map);
+        var circle2 = L.circle([10.962032, -74.794501], {
+            color: "red",
+            fillColor: "#f03",
+            fillOpacity: 0.5,
+            radius: 50,
+        }).addTo(map);   
+
+
+
 
         var polygon = L.polygon([
             [51.509, -0.08],
@@ -41,23 +54,16 @@
 </script>
 
 <div class="container pt-4">
-    <a href="/">volver</a>
+    <a class="btn btn-outline-info" href="/">volver</a>
 
-    <p>Estas son las ubicaciones</p>
+    <p>Estas son las ubicaciones de los hospitales</p>
 
     <div id="map"></div>
 </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+
+<div style="margin-bottom: 200px;"></div>
 
 <Footer></Footer>
 
