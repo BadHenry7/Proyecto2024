@@ -67,3 +67,9 @@ pip install keras
 pip install tensorflow
 pip install scikit-learn
 pip install matplotlib
+
+
+-->Para el token:
+
+pip install jwt
+pip install PyJWT

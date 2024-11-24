@@ -1,43 +1,115 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	%sveltekit.head%
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<!-- Scripts para CHART-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-<!-- link para sweet alert(los mensajes esos como los alert de js)-->
-		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+	<!-- link para sweet alert(los mensajes esos como los alert de js)-->
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css" rel="stylesheet">
 
-<!--Link para el Leafle(Es para mapas)-->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
-
-
- <!-- Script para leaflet (Es para mapas) -->
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-	</head>
+	<!--Link para el Leafle(Es para mapas)-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
 
-	<body data-sveltekit-preload-data="hover background" class="background">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+	<!-- Script para leaflet (Es para mapas) -->
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 
-	<!-- DataTables CSS y JS -->
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script>
+	todos = {}
+	henry = true
+let v_token=""
+	async function revisar_token() {
 
-	<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-	</script>
-	
-	<!-- <style>
+
+
+		let miStorage = window.localStorage;
+		let verificar_tokenv = JSON.parse(miStorage.getItem('usuario'));
+		const pagina_v = window.location.pathname;
+		console.log(pagina_v)
+
+
+		if (verificar_tokenv) {
+			 v_token = verificar_tokenv.todos2
+		}else{
+			 v_token = "Token invalido"
+
+		}
+		
+
+		console.log("revisando ando", v_token)
+
+		const response = await fetch("http://127.0.0.1:8000/verify_token", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				token: v_token
+			}),
+
+		});
+		console.log("asd")
+		//  return {"message": "Token válido"}
+		//  return {"message": "Token inválido"}
+		//  return {"message": "Token expirado"}
+
+		const data = await response.json()
+		todos = data.message
+		console.log("revisando el token", todos)
+
+
+
+		if (todos == "Token expirado" & pagina_v!="/"  & pagina_v!="/Login") {
+			console.log("sssssssssds")
+
+			setTimeout(() => {
+				window.location.href = "/Login";
+
+			}, 3000)
+		}else if(todos=="Token invalido" & pagina_v!="/" & pagina_v!="/Login"){
+			
+			
+				window.location.href = "/Login";
+			
+
+			
+		
+
+		}
+	}
+
+
+
+</script>
+
+<body data-sveltekit-preload-data="hover background" class="background" onload="revisar_token()">
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS y JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<!-- <style>
 		.background {
 		  background-image: url('/image4.png'); /* Cambia la ruta a tu imagen */
 		  background-size: cover; /* Cubre todo el fondo */
@@ -49,19 +121,21 @@
 	  </style>
  -->
 
-	<!-- Scripts para PDFS-->
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-	<script src="https://unpkg.com/jspdf-autotable"></script>
-	
-	<!--<script src="https://unpkg.com/jspdf"></script>-->
+<!-- Scripts para PDFS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/jspdf-autotable"></script>
 
-	<!-- Scripts para sweet alert(los mensajes esos como los alert de js)-->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
-	
-	
+<!--<script src="https://unpkg.com/jspdf"></script>-->
 
-	<!-- Scripts para editar pdf-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Scripts para sweet alert(los mensajes esos como los alert de js)-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+
+
+
+<!-- Scripts para editar pdf-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+	integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 

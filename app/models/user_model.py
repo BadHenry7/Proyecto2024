@@ -50,3 +50,9 @@ class ActualizarAdm(BaseModel):
 class Estado(BaseModel):
     id: int= None
     estado:bool
+
+  
+class Token(BaseModel):
+    token: str
+
+      

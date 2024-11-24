@@ -23,6 +23,7 @@ console.log(n)
       confirmButtonText: "Si, cerrar!"
     }).then((result) => {
       if (result.isConfirmed) {
+        localStorage.clear();
         window.location.href = "/";
       }
     });
