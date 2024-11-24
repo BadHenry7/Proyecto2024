@@ -25,7 +25,7 @@
                 class="col-lg-6 col-5 col-md-6 col-sm-6 py-4 col-xl-6 text-white"
             >
                 <div>WhatsApp: +57 302 2843231</div>
-                <div>Correo Electronico: Hostipal@gmail.com</div>
+                <div>Correo Electronico: hostipalinc.github@gmail.com</div>
                 <div>Telefono: 3173981</div>
                 <div class="py-4">
                     <p>
