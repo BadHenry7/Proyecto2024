@@ -25,7 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # URL local de Svelte en desarrollo
-        "https://c0fc-161-10-155-126.ngrok-free.app","https://aa42-161-10-155-126.ngrok-free.app",   # URL de ngrok
+        "https://cfbe-161-10-155-126.ngrok-free.app","https://295b-161-10-155-126.ngrok-free.app",   # URL de ngrok
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)

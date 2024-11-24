@@ -553,6 +553,51 @@ class citaController:
         finally:
             conn.close()  
 
+    def estadisticas_avg_citas(self, cita: Reportesss):#Estadisticas para el promedio de cita
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""                       
+       
+         SELECT 
+           MONTHNAME(fecha) AS mes, YEAR(fecha) AS years, AVG(total_citas) AS promedio_citas
+        FROM (
+          SELECT fecha, COUNT(*) AS total_citas
+            FROM  cita
+            GROUP BY 
+            fecha 
+        ) AS citas_por_dia
+        WHERE fecha BETWEEN %s AND %s
+        GROUP BY 
+        years, mes 
+        ORDER BY 
+         years, mes
+
+                           """,(cita.fecha, cita.fecha2, ))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'mes':data[0], 
+                    'years':data[1], 
+                    'promedio_citas':data[2]
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()       
+
     def historia_clinica(self, historia_clinica: Buscar):
         try:
             conn = get_db_connection()
@@ -600,6 +645,5 @@ class citaController:
         finally:
             conn.close()
     
-
 
 

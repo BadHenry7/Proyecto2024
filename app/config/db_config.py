@@ -1,6 +1,6 @@
 import mysql.connector
 
-
+"""
 
 def get_db_connection():
     return mysql.connector.connect(
@@ -18,4 +18,3 @@ def get_db_connection():
         database="proyecto"
     )
     ##importara a xampp
-   """

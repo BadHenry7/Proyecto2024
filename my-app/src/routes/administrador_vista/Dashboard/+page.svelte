@@ -1,5 +1,5 @@
 <script>
-    // MONTHNAME() PARA DEVOLVER EL NOMBRE DEL MES
+    // MONTHNAME() PARA DEVOLVER EL NOMBRE DEL MES  y yearname el año
     import Navbaradmin from "../../../lib/Navbaradmin.svelte";
     import { onMount } from "svelte";
 
@@ -13,7 +13,8 @@
 
     onMount(async () => {
         grafica2_citas();
-      grafica3_citas_activas();
+        grafica3_citas_activas();
+        grafica4_promedio_citas();
 
         try {
             console.log;
@@ -88,10 +89,11 @@
     let mygrafica_activas;
     let mygrafica_noactivas;
 
-
+    let my_AVG_citas;
+ 
     async function grafica2_citas() {
         if (myChart2) {
-            console.log("revisando el mychart2" , myChart2);
+            console.log("revisando el mychart2", myChart2);
             myChart2.destroy();
         }
         if (myChart3) {
@@ -192,7 +194,7 @@
                 const vFecha = []; //
                 for (let i = 0; i < todos.length; i++) {
                     vCantidad.push(todos[i].citas_mes);
-                    vFecha.push("Mes: "+todos[i].Fecha);
+                    vFecha.push("Mes: " + todos[i].Fecha);
                 }
                 console.log("cantidad de citas", vCantidad);
                 console.log("Fecha de la cita", vFecha);
@@ -265,7 +267,7 @@
                 const vFecha = []; //
                 for (let i = 0; i < todos.length; i++) {
                     vCantidad.push(todos[i].citas_year);
-                    vFecha.push("año: "+todos[i].Fecha);
+                    vFecha.push("año: " + todos[i].Fecha);
                 }
                 console.log("cantidad de citas", vCantidad);
                 console.log("Fecha de la cita", vFecha);
@@ -324,9 +326,8 @@
         }
     }
 
-
     async function grafica3_citas_activas() {
-        console.log("queeeeeeeeeeeeeeeeeeeeeeeeee")
+        console.log("queeeeeeeeeeeeeeeeeeeeeeeeee");
         if (mygrafica_activas) {
             console.log("revisando el mychart2" + mygrafica_activas);
             mygrafica_activas.destroy();
@@ -346,7 +347,7 @@
                 if (!response.ok) throw new Error("Error al cargar los datos");
                 const data = await response.json();
                 todos = data.resultado;
-                console.log("esta es activos",todos);
+                console.log("esta es activos", todos);
 
                 const vCantidad = [];
                 const vFecha = []; //
@@ -357,7 +358,7 @@
                 console.log("cantidad de citas", vCantidad);
                 console.log("Fecha de la cita", vFecha);
 
-              var  grafica_activas = document
+                var grafica_activas = document
                     .getElementById("grafica3")
                     .getContext("2d");
                 mygrafica_activas = new Chart(grafica_activas, {
@@ -425,7 +426,7 @@
                 const vFecha = []; //
                 for (let i = 0; i < todos.length; i++) {
                     vCantidad.push(todos[i].citas_mes);
-                    vFecha.push("Mes: "+todos[i].Fecha);
+                    vFecha.push("Mes: " + todos[i].Fecha);
                 }
                 console.log("cantidad de citas", vCantidad);
                 console.log("Fecha de la cita", vFecha);
@@ -484,6 +485,111 @@
         }
     }
 
+    async function grafica4_promedio_citas() {
+        if (my_AVG_citas) {
+            console.log(my_AVG_citas);
+            my_AVG_citas.destroy();
+        }
+        console.log("PROMEDIO DE CITAS GRAFICAS1");
+       
+
+         fecha_de=document.getElementById('desde_citas').value;
+         fecha_hasta=document.getElementById('hasta_citas').value;
+        console.log("PROMEDIO DE CITAS GRAFICAS2");
+        if (fecha_de==""){
+            fecha_de = "2024-11-01";
+            console.log(fecha_de)
+            
+        }if (fecha_hasta==""){
+            fecha_hasta = "2024-12-30";
+            console.log(fecha_hasta)
+        }
+        console.log(fecha_de)
+        console.log(fecha_hasta)
+       
+
+        try {
+            console.log;
+            const response = await fetch(
+                "http://127.0.0.1:8000/estadisticas_avg_citas",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        fecha: fecha_de,
+                        fecha2: fecha_hasta,
+                    }),
+                },
+            );
+            if (!response.ok) throw new Error("Error al cargar los datos");
+            const data = await response.json();
+            console.log("AVG", data)
+            todos = data.resultado;
+            console.log("PROMEDIO DE CITAS GRAFICAS",todos);
+
+            const vCantidad = [];
+            const vFecha = []; //
+            for (let i = 0; i < todos.length; i++) {
+                vCantidad.push(todos[i].promedio_citas);
+                vFecha.push(todos[i].mes);
+            }
+            console.log("cantidad de citas", vCantidad);
+            console.log("Fecha de la cita", vFecha);
+
+            var AVG_citas = document
+                .getElementById("grafica4")
+                .getContext("2d");
+                my_AVG_citas = new Chart(AVG_citas, {
+                type: "bar",
+                data: {
+                    labels: vFecha,
+                    datasets: [
+                        {
+                            label: "Cantidad de citas",
+                            data: vCantidad, //
+                            fill: true,
+                            backgroundColor: [
+                                "rgba(85, 226, 251, 0.3)", //diamante
+                                "rgba(238, 180, 2, 0.3)", //Gold
+                                "rgba(145,145,145,0.3)", //medium
+                                "rgba(255,145,255,0.4)",
+                            ], //Plus
+                            borderColor: "rgb(0, 0, 0, 0.3)",
+                            borderWidth: 1,
+                            pointBackgroundColor: "rgb(255, 99, 132)",
+                            pointBorderColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgb(255, 99, 132)",
+                        },
+                    ],
+                },
+                options: {
+                    interaction: {
+                        mode: null, // Desactiva completamente cualquier interacción
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: "right",
+                        },
+                    },
+                    title: {
+                        display: true,
+                        text: "Cantidad de citas pendientes por meses ",
+                        position: "top",
+                    },
+                },
+                //
+            });
+        } catch (e) {
+            error = e.message;
+            console.log(error);
+        } finally {
+            loading = false;
+        }
+    }
 </script>
 
 <Navbaradmin></Navbaradmin>
@@ -525,7 +631,7 @@
                 </canvas>
             </div>
 
-            <div class="col-lg-6" id="g3">
+            <div class="col-lg-6 pt-4" id="g3">
                 <div style="text-align: center; ">
                     <label for="">Seleccionar criterio:</label>
                     <select
@@ -546,7 +652,27 @@
                 ></canvas>
             </div>
 
-            <div class="col-lg-6" id="g4">
+            <div class="col-lg-6 pt-4" id="g4">
+                <div style="text-align: center; ">
+                    <label for="">Seleccionar rango de fecha:</label>
+
+                    Desde:
+                    <input
+                        type="date"
+                        name="citas"
+                        id="desde_citas"
+                        on:change={grafica4_promedio_citas}
+                    />
+
+                    Hasta:
+                    <input
+                        type="date"
+                        name="citas"
+                        id="hasta_citas"
+                        on:change={grafica4_promedio_citas}
+                    />
+                </div>
+
                 <canvas
                     id="grafica4"
                     style="width: 300px; height: 220px;"

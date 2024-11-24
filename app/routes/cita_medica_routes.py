@@ -102,6 +102,12 @@ async def estadisticas_citas_desactivado():
     return rpta
 
 
+@router.post("/estadisticas_avg_citas")
+async def estadisticas_avg_citas(cita: Reportesss):
+    rpta = nueva_cita.estadisticas_avg_citas(cita)
+    return rpta
+
+
 @router.post("/historia_clinica")
 async def historia_clinica(historia_clinica: Buscar):
     rpta = nueva_cita.historia_clinica(historia_clinica)
