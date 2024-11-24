@@ -43,11 +43,11 @@ app.include_router(sintomas_router)
 app.include_router(botci_router)
 app.include_router(token_router)
 
-
+"""
 
 @app.route('/')
 def home():
-    return ('+page.svelte')
+    return ('+page.svelte')"""
 
 """
 if __name__ == "__main__":
