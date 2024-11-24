@@ -8,5 +8,4 @@ tensorflow
 keras
 scikit-learn
 matplotlib
-jwt
 PyJWT
