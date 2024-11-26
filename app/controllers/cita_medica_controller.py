@@ -626,10 +626,7 @@ class citaController:
                     'descripcion':data[3],
                     'Observaciontratamiento':data[4],
                     'sintomas':data[5],
-                    'descripcion_sintomas':data[6],
-
-                    
-
+                    'descripcion_sintomas':data[6],         
                 }
                 payload.append(content)
                 content = {}
@@ -646,4 +643,51 @@ class citaController:
             conn.close()
     
 
+    def historia_clinica_user(self, historia_clinica: Buscar):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""     
+            SELECT
+            cita.id, diagnosticos.fecha_diagnostico as fecha_diagnostico, 
+            diagnosticos.resultado as diagnosticos, diagnosticos.descripcion, diagnosticos.observacion as "Observacion/tratamiento", 
+            sintomas.nombre as sintomas ,sintomas.descripcion as "descripcion_sintomas", doctor.nombre
+            FROM cita
+            JOIN
+            diagnosticos ON cita.id = diagnosticos.id_cita
+            JOIN 
+            usuario ON usuario.id=cita.id_paciente
+            JOIN
+            usuario as doctor ON doctor.id=cita.id_usuario
+            JOIN 
+            sintomas ON cita.id= sintomas.id_cita
+            WHERE usuario.id=%s AND diagnosticos.fecha_diagnostico= ( SELECT MAX(diagnosticos.fecha_diagnostico) FROM diagnosticos);
+                           """,(historia_clinica.id_paciente,))
+            result = cursor.fetchall()
+            payload = []
+            content = {} 
+            for data in result:
+                content={
+                    'id':data[0],
+                    'fecha_diagnostico':str(data[1]),
+                    'diagnostico':data[2],
+                    'descripcion':data[3],
+                    'Observaciontratamiento':data[4],
+                    'sintomas':data[5],
+                    'descripcion_sintomas':data[6],
+                    'doictor':data[7],
 
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)        
+            if result:
+               return {"resultado": json_data}
+               
+            else:
+                raise HTTPException(status_code=404, detail="citas not found")  
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()

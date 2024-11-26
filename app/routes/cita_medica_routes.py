@@ -66,7 +66,6 @@ async def reportes_citas_medicos(cita:Reportes_medico):
     rpta = nueva_cita.reportes_citas_medicos(cita)
     return rpta
 
-
 #-------------Estadisticas
 
 @router.get("/estadisticas_citas")
@@ -111,4 +110,11 @@ async def estadisticas_avg_citas(cita: Reportesss):
 @router.post("/historia_clinica")
 async def historia_clinica(historia_clinica: Buscar):
     rpta = nueva_cita.historia_clinica(historia_clinica)
+    return rpta
+
+
+
+@router.post("/historia_clinica_user")
+async def historia_clinica_user(historia_clinica: Buscar):
+    rpta = nueva_cita.historia_clinica_user(historia_clinica)
     return rpta

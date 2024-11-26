@@ -25,7 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # URL local de Svelte en desarrollo
-        "https://cfbe-161-10-155-126.ngrok-free.app","https://295b-161-10-155-126.ngrok-free.app",   # URL de ngrok
+        "https://fuzzy-crabs-take.loca.lt","https://rude-toes-grin.loca.lt",   # URL de ngrok
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
@@ -53,3 +53,6 @@ def home():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000) """
+
+#...
+#
