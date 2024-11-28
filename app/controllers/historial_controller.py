@@ -121,11 +121,11 @@ class historial_Controller:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""
-            SELECT usuario.nombre as Nombre, COUNT(historial.id_usuario) AS numero_citas, MAX(historial.fecha) AS Ultimodiagnostio
+           SELECT usuario.nombre as Nombre, COUNT(cita.id_paciente) AS numero_citas, MAX(cita.fecha) AS Ultimodiagnostio
         FROM usuario
-        INNER JOIN historial as historial on historial.id_usuario=usuario.id
-        WHERE historial.fecha BETWEEN %s AND %s
-        GROUP BY historial.id_usuario;
+        INNER JOIN cita as cita on cita.id_paciente=usuario.id
+        WHERE cita.fecha BETWEEN %s AND %s
+        GROUP BY cita.id_paciente
                            """,(historial.fecha, historial.fecha2))
             result = cursor.fetchall()
             payload = []

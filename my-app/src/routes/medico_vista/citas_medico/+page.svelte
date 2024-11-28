@@ -69,11 +69,11 @@
             },
         });
         Toast.fire({
-            icon: "error",
-            iconColor: "white",
-            color: "white",
-            background: "#e70202",
-            title: "cita eliminada con exito",
+          icon: "success",
+          iconColor: "white",
+          color: "white",
+          background: "#00bdff",
+          title: "cita actualizada con exito",
         });
 
         setTimeout(() => {

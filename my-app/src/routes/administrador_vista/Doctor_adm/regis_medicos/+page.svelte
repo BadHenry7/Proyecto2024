@@ -102,7 +102,11 @@
 
 
 
-                alert("Usuario registrado");
+            Swal.fire({
+                    title: "Registrado!",
+                    text: "Usuario ha sido registrado",
+                    icon: "success",
+                });
                 document.getElementById("nombre").value = "";
                 document.getElementById("apellido").value = "";
                 document.getElementById("documento").value = "";

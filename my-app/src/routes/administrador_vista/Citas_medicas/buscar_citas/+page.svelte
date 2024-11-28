@@ -165,7 +165,7 @@
           iconColor: "white",
           color: "white",
           background: "#00bdff",
-          title: "usuario actualizado con exito",
+          title: "cita actualizada con exito",
         });
      
         setTimeout(() => {

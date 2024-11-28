@@ -47,10 +47,10 @@
         correov.removeAttribute("readonly");
 
         const nombrev= document.getElementById("nombre");
-        correov.removeAttribute("readonly");
+        nombrev.removeAttribute("readonly");
 
         const apellidov= document.getElementById("apellido");
-        correov.removeAttribute("readonly");
+        apellidov.removeAttribute("readonly");
 
         const passwordv= document.getElementById("password");
         passwordv.removeAttribute("readonly");

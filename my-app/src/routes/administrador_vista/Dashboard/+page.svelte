@@ -547,7 +547,7 @@
                     labels: vFecha,
                     datasets: [
                         {
-                            label: "Cantidad de citas",
+                            label: "Promedio de citas",
                             data: vCantidad, //
                             fill: true,
                             backgroundColor: [
@@ -577,7 +577,7 @@
                     },
                     title: {
                         display: true,
-                        text: "Cantidad de citas pendientes por meses ",
+                        text: "Promedio de citas ",
                         position: "top",
                     },
                 },
