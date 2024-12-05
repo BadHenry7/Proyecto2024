@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-
+import os
 app = FastAPI()
 
 origins = [
