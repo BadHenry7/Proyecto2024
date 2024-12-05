@@ -391,7 +391,7 @@
   <div class="card border-dark shadow" style="width: 60%; margin-left: 20%;">
     <div class="card-header row g-2">
       <h5 class="card-title col-lg-11"><b>Editando Usuario</b></h5>
-      <button class="btn btn-close col-lg-1" on:click={() => Ocultar()}
+      <button class="btn btn-close col-lg-1"  aria-label="Cerrar edición de usuario" on:click={() => Ocultar()}
       ></button>
     </div>
     <div class="card-body" style="margin-left: 10%;">

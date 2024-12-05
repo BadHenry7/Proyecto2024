@@ -154,7 +154,7 @@
     <div class="row g-3" style="margin-top: 1%; margin-left: 38%;">
         <div class="col-md-3">
             <div>
-                <label>Elija un Doctor</label>
+                <label for="medico">Elija un Doctor</label>
             </div>
             <select class="form-select" id="medico" required>
                 <option selected>Seleccione</option>
@@ -164,7 +164,7 @@
         <div>
             <div class="col-md-3" style="margin-right: 9%;">
                 <div>
-                    <label>Elija una fecha</label>
+                    <label for="fech">Elija una fecha</label>
                 </div>
                 <input
                     type="date"
@@ -179,7 +179,7 @@
         <div>
             <div style="margin-right: 9%;">
                 <div>
-                    <label>Elija una hora</label>
+                    <label for="hora">Elija una hora</label>
                 </div>
                 <input
                     style="width: 28%;"

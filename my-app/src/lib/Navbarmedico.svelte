@@ -35,7 +35,7 @@
   
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand mx-4" href="/medico_vista" id="name"></a>
+        <a class="navbar-brand mx-4" href="/medico_vista" id="name" aria-label="Name del medico"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="Menu-usuarios" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -66,7 +66,7 @@
           </ul>
   
           <form class="d-flex   nav-item nav-link ms-auto">
-            <a class="btn btn-outline-dark" on:click={confirmacion} href="#" >Cerrar sesion</a>
+            <button class="btn btn-outline-dark" on:click={confirmacion} href="#" >Cerrar sesion</button>
           </form>
         </div>
       </div>

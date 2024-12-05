@@ -193,12 +193,12 @@
                     >
                         <input type="checkbox" id="terminos" required />
                         <label
-                            ><a
+                            ><button class="btn btn-link p-0"
                                 href="#"
                                 data-bs-toggle="modal"
                                 data-bs-target="#TerminosCondiciones"
                             >
-                                Acepto los términos y condiciones</a
+                                Acepto los términos y condiciones</button
                             ></label
                         >
                     </div>

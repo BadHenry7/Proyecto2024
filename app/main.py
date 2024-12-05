@@ -12,6 +12,9 @@ from app.routes.token_routes import router as token_router
 
 from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
 app = FastAPI()
 
 origins = [
@@ -42,6 +45,15 @@ app.include_router(historial_router)
 app.include_router(sintomas_router) 
 app.include_router(botci_router)
 app.include_router(token_router)
+
+app.mount("/static", StaticFiles(directory="my-app/.svelte-kit/output/client", html=True), name="static")
+
+# Ruta principal para servir el archivo index.html de Svelte
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    with open(os.path.join("my-app/.svelte-kit/output/client", "index.html")) as f:
+        return HTMLResponse(content=f.read())
+
 
 """
 

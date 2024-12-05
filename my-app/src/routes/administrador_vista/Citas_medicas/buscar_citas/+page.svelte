@@ -316,7 +316,7 @@
     <div class="card-header row g-2">
       <h5 class="card-title col-lg-11"><b>Editando Usuario</b></h5>
       <button class="btn btn-close col-lg-1" on:click={() => Ocultar()}
-      ></button>
+        aria-label="Cerrar edición de usuario"></button>
     </div>
     <div class="card-body" style="margin-left: 10%;">
       <div class="row">

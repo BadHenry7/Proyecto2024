@@ -35,14 +35,14 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/usuario" id="name"></a>
+      <a class="navbar-brand" href="/usuario" id="name" aria-label="Name del medico"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="Menu-usuarios" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Gestion de citas
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -55,7 +55,7 @@
             <a class="nav-link" href="/usuario/Reportes">Reportes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Certificados</a><!---->
+            <a class="nav-link" href="/certificados">Certificados</a><!---->
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/usuario/perfil">Perfil</a>
@@ -64,7 +64,7 @@
         </ul>
 
         <form class="d-flex   nav-item nav-link ms-auto">
-          <a class="btn btn-outline-dark" on:click={confirmacion} href="#" >Cerrar sesion</a>
+          <button class="btn btn-outline-dark" on:click={confirmacion}  >Cerrar sesion</button>
         </form>
       </div>
     </div>

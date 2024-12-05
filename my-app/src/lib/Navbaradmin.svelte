@@ -95,7 +95,7 @@ console.log(n)
 
         
         <form class="d-flex   nav-item nav-link ms-auto">
-          <a class="btn btn-outline-dark  nav-item" on:click={confirmacion} href="#">Cerrar sesion</a>
+          <button class="btn btn-outline-dark  nav-item" on:click={confirmacion} href="#" aria-label="Cerrar edición de usuario">Cerrar sesion</button>
         </form>
        
       </div>
