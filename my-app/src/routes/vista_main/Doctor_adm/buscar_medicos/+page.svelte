@@ -1,6 +1,7 @@
 <script>
-    import Navbaradmi from "$lib/Navbaradmin.svelte";
-    import { onMount } from "svelte";
+   import Navbaradmin from "$lib/Navbar.svelte";
+
+    import { onMount } from "Svelte";
 
     let todos = {};
     let todos2 = {};
@@ -514,7 +515,7 @@
                         <option value="Medicina general"
                             >Medicina general</option
                         >
-                        <option value="Enfermero">Enfermeros</option>
+                        <option value="Enfermero">Enfermero</option>
                         <option value="Especialista">Especialista</option>
                     </select>
                 </div>

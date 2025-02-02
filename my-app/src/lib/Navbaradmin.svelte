@@ -78,11 +78,17 @@ console.log(n)
           <li class="nav-item">
             <a class="nav-link" href="/administrador_vista/Reportes">Reportes</a>
           </li>
+
+          
           <li class="nav-item">
             <a class="nav-link" href="/administrador_vista/Dashboard">Dashboard</a><!---->
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/administrador_vista/perfil_adm">Perfil</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/administrador_vista/create_rol">Roles</a>
           </li>
 
           <li class="nav-item">

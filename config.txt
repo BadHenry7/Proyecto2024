@@ -59,6 +59,8 @@ ngrok http 5173   (5173 es el de svelte)
 
 
    
+ngrok http 8000  
+ngrok http 5173   
 
 
   

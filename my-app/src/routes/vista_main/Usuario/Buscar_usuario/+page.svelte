@@ -1,5 +1,6 @@
 <script>
-  import Navbaradmin from "../../../../lib/Navbaradmin.svelte";
+import Navbaradmin from "$lib/Navbar.svelte";
+
   import { onMount } from "svelte";
 
   let todos = {};
@@ -42,7 +43,6 @@
   var vid = 1;
   async function editar(id, a) {
     console.log("Editando a " + a);
-    //
     const v_editar = document.getElementById("nav-listado");
     v_editar.removeAttribute("class");
     console.log(v_editar);
@@ -75,50 +75,17 @@
       const data = await response.json();
       console.log(data);
       console.log("Buscando al usuario seleccionado");
-
+      todos = data.apellido;
+      console.log(todos);
       document.getElementById("nombres").value = data.nombre;
       document.getElementById("apellidos").value = data.apellido;
       document.getElementById("documento").value = data.documento;
       document.getElementById("telefono").value = data.telefono;
       document.getElementById("correo").value = data.usuario;
+      console.log("verificando el estado"+data.estado)
       const estado_v = data.estado ? "1" : "0";//condicion ? valorSiVerdadero : valorSiFalso
       document.getElementById("estado").value = estado_v;
-      
-      console.log("el nombre es ",data.roles_name)
-      console.log("el id del rol es ",data.id_rol)
-      
-      //document.getElementById("roles").value = data.roles_name;
 
-      const selectRol = document.getElementById("roles");
-      selectRol.innerHTML = "";
-
-      const defaultOption = document.createElement("option");
-      defaultOption.value = data.id_rol;
-      defaultOption.textContent = data.roles_name;
-      defaultOption.selected = true;
-      selectRol.appendChild(defaultOption);
-
-
-      const roless = await fetch ("http://127.0.0.1:8000/get_roles",{
-        method:"GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const dataroles = await roless.json();
-      console.log(dataroles);
-      console.log("Roles obtenidos:", dataroles);
-      
-      for (let i = 0; i < dataroles.resultado.length; i++) {
-            const rol = dataroles.resultado[i];
-
-            if (rol.id !== data.id_rol) {  
-                const option = document.createElement("option");
-                option.value = rol.id;
-                option.textContent = rol.nombre;
-                selectRol.appendChild(option);
-            }
-        }
-
-      selectRol.value = data.id_rol;
 
       const v_edit_nombre = document.getElementById("nombres");
       v_edit_nombre.removeAttribute("readonly");
@@ -138,7 +105,6 @@
 
       const v_edit_estado = document.getElementById("estado");
       v_edit_estado.removeAttribute("readonly");
-
     } catch (e) {
       error = e.message;
     } finally {
@@ -153,11 +119,10 @@
     let vdocumento = document.getElementById("documento").value;
     let vtelefono = document.getElementById("telefono").value;
     let vcorreo = document.getElementById("correo").value;
-    let vrol = document.getElementById('roles').value;
     let vestado = document.getElementById("estado").value;
+    //let vestado = document.getElementById('estado').value;
 
-    console.log("IDE DE vrol ENVADO A LA BASE DE DATOS ES " + vrol);
-    
+    console.log("IDE DE ESTADO ENVADO A LA BASE DE DATOS ES " + vestado);
 
     try {
       console.log("Entra al try de actualzar");
@@ -174,7 +139,6 @@
           apellido: vapellidos,
           documento: vdocumento,
           telefono: vtelefono,
-          id_rol: vrol,
           estado: vestado,
         }),
       });
@@ -200,6 +164,14 @@
       });
 
       setTimeout(() => {
+        const v_editar = document.getElementById("nav-listado");
+        v_editar.setAttribute("class", "fade");
+
+        let ocultar = document.getElementById("Mostrarusuario");
+        ocultar.removeAttribute("class");
+
+        const cambiar = v_editar.parentElement;
+        cambiar.insertBefore(ocultar, v_editar);
         location.reload();
       }, 3000);
     } catch (e) {
@@ -358,7 +330,6 @@
               <th class="px-4 py-2 border">Apellido</th>
               <th class="px-4 py-2 border">Documento</th>
               <th class="px-4 py-2 border">Telefono</th>
-              <th class="px-4 py-2 border">Rol</th>
               <th class="px-4 py-2 border">Estado</th>
               <th class="px-4 py-2 border">Opcion</th>
             </tr>
@@ -367,19 +338,17 @@
           <tbody>
             {#each todos as todo}
               <tr class="hover:bg-gray-50">
-                <td class="px-2 py-2 border">{todo.usuario}</td>
-                <td class="px-2 py-2 border">{todo.nombre}</td>
-                <td class="px-2 py-2 border">{todo.apellido}</td>
-                <td class="px-2 py-2 border">{todo.documento}</td>
-                <td class="px-2 py-2 border">{todo.telefono}</td>
-                <td class="px-2 py-2 border">{todo.nombre_rol}</td>
-
-                <td class="px-2 py-2 border">
+                <td class="px-4 py-2 border">{todo.usuario}</td>
+                <td class="px-4 py-2 border">{todo.nombre}</td>
+                <td class="px-4 py-2 border">{todo.apellido}</td>
+                <td class="px-4 py-2 border">{todo.documento}</td>
+                <td class="px-4 py-2 border">{todo.telefono}</td>
+                <td class="px-4 py-2 border">
                   <span class={todo.estado ? "text-green-600" : "text-red-600"}>
                     {todo.estado ? "Activo" : "Desactivado"}
                   </span>
                 </td>
-                <td class="px-5 py-2 border">
+                <td class="px-4 py-2 border">
                   <button
                     class="btn btn-info"
                     on:click={() => editar(todo.id, todo.nombre)}>Editar</button
@@ -439,7 +408,7 @@
             id="nombres"
             maxlength="100"
             style="border: none; width: 55%;"
-            
+            readonly
           />
         </div>
       </div>
@@ -455,7 +424,7 @@
             placeholder="Apellidos"
             id="apellidos"
             style="border: none; width: 55%;"
-            
+            readonly
           />
         </div>
       </div>
@@ -470,7 +439,7 @@
             id="documento"
             placeholder="Documento de identidad"
             style="border: none; width: 55%;"
-            
+            readonly
           />
         </div>
       </div>
@@ -486,7 +455,7 @@
             placeholder="Telefono"
             maxlength="20"
             style="border: none; width: 55%;"
-            
+            readonly
           />
         </div>
       </div>
@@ -501,19 +470,8 @@
             placeholder="Correo electronico"
             id="correo"
             style="border: none; width: 55%;"
-            
+            readonly
           />
-        </div>
-      </div>
-      
-      <div class="row pt-3">
-        <div class="col-lg-2">
-          <p class="card-text"><b>Rol:</b></p>
-        </div>
-        <div class="col-lg-10">
-          <select id="roles" required style="border: none; width: 55%;">
-            <option value="" selected>Seleccione</option>
-        </select>
         </div>
       </div>
 
@@ -544,6 +502,3 @@
     </div>
   </div>
 </div>
-
-
-
