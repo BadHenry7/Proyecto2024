@@ -97,7 +97,7 @@
 <Navbaradmin></Navbaradmin>
 
 <div class="container pt-3">
-    <div class="text-center fs-1"><b> Hostipal🚑</b></div>
+    <div class="text-center fs-1 card"><b>Hostipal🚑</b></div>
     <!--<div class="text-end fs-3  text-a-secondary ">
             ¿Ya tienes una cuenta?<a href="/Login" class="text-secondary">Click aqui</a>
         </div>
@@ -110,7 +110,11 @@
         class="container"
         on:submit={Confirmacion}
     >
-        <div class="container py-5 ps-4 px-5 mt-5 border border-info">
+    
+        <div class="container py-5 ps-4 px-5 mt-5 border border-dark card-header">
+
+            <p class="fs-2 text-center">Registro de usuarios</p>
+
             <!-- border-danger -->
             <div class="row mt-5 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
@@ -121,7 +125,7 @@
                         name="name"
                         placeholder="Escriba el nombre completo"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control"
                         required
                         bind:value={v_nombre}
                     />
@@ -135,7 +139,7 @@
                         name="lastname"
                         placeholder="Escriba su apellido completo"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control"
                         required
                         bind:value={v_apellido}
                     />
@@ -151,7 +155,7 @@
                         name="document"
                         placeholder="Escriba el numero de documento"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control"
                         required
                         bind:value={v_documento}
                     />
@@ -164,7 +168,7 @@
                         name="phone"
                         placeholder="Escriba el numero de telefono o celular"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control"
                         required
                         bind:value={v_telefono}
                     />
@@ -180,7 +184,7 @@
                         name="user"
                         placeholder="Escriba su usuario"
                         required
-                        class="form-control rounded-pill"
+                        class="form-control"
                         bind:value={v_usuario}
                     />
                 </div>
@@ -191,14 +195,22 @@
                         id="password"
                         placeholder="Escriba la contraseña"
                         required
-                        class="form-control rounded-pill"
+                        class="form-control"
                         bind:value={v_password}
                     />
                 </div>
             </div>
 
             <div class="row mt-4 mx-5">
-                <div class="row mt-4 mx-5">
+                <input type="submit" value="Enviar " class="btn text-black btn-info "/>
+            </div>
+
+<!--
+            
+<div class="row mt-4 mx-5">
+
+                    <input type="submit" value="Enviar " class="btn text-black btn-info "/>
+
                     <div
                         class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2"
                     ></div>
@@ -206,11 +218,13 @@
                         <input
                             type="submit"
                             value="Enviar "
-                            class="btn text-black btn-info rounded-pill"
+                            class="btn text-black btn-info "
                         />
                     </div>
                 </div>
-            </div>
+
+-->
+
         </div>
     </form>
 </div>

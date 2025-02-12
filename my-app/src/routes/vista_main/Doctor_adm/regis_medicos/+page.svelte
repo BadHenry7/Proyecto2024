@@ -125,7 +125,7 @@
     }
 </script>
 
-<Navbadmin></Navbadmin>
+<Navbaradmin></Navbaradmin>
 <div class="container pt-3">
     <div class="text-center fs-1"><b> 🚑Registro de medico 🚑</b></div>
 

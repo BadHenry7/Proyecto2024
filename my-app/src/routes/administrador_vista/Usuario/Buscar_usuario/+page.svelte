@@ -99,7 +99,7 @@
       selectRol.appendChild(defaultOption);
 
 
-      const roless = await fetch ("http://127.0.0.1:8000/get_roles",{
+      const roless = await fetch ("http://127.0.0.1:8000/roles_get",{
         method:"GET",
         headers: { "Content-Type": "application/json" },
       });

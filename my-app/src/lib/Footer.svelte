@@ -1,20 +1,18 @@
-<div class="">
-    <div
-        class="rounded"
-        style="background-color: darkcyan; border-style: solid; border-color: darkcyan;"
-    ><div class="container">
-        <div class="row pt-5" style="margin-left: 10%;">
+<div class="" style=" border-top: 3px solid black; border-color: blue;">
+    <div class="rounded" style="background-color: darkcyan; border-style: solid; border-color: darkcyan; ">
+        <div class="container">
+            <div class="row pt-5" style="margin-left: 10%;" >
             
-            <div
-                class="col-lg-4 col-4 col-md-4 col-sm-4 col-xl-4 text-decoration-none"
-            >
-                <div
-                    class="text-white fs-2 text-center"
-                    style="margin-top: 10%;"
-                >
-                    HOSTIPAL
+            <div class="col-lg-4 col-4 col-md-4 col-sm-4 col-xl-4 text-decoration-none" style="border-right: 1px solid black; border-color: white;" >
+                <div class="text-white fs-2 text-center" style="margin-top: 10%;">
+            <image src="/logo_hostipal.png" style="width: 78px; height: 78px;"></image>
+
+                    
                     <br><a href="/ubicaciones">Sedes</a>
                 </div>
+
+
+                
                 <!--<div class="pt-4"><a href="contactenos.html" class="text-decoration-none text-white">Pongase en contacto
                     con
                     nosotros</a></div>
@@ -24,13 +22,13 @@
             <div
                 class="col-lg-6 col-5 col-md-6 col-sm-6 py-4 col-xl-6 text-white"
             >
-                <div>WhatsApp: +57 302 2843231</div>
-                <div>Correo Electronico: hostipalinc.github@gmail.com</div>
-                <div>Telefono: 3173981</div>
+                <div><i class="fab fa-whatsapp" style="color: black;"></i> WhatsApp: +57 302 2843231</div>
+                <div><i class="fas fa-envelope" style="color: black;"></i> Correo Electronico: hostipalinc.github@gmail.com</div>
+                <div><i class="fas fa-phone" style="color: black;"></i> Telefono: 3173981</div>
                 <div class="py-4">
                     <p>
                         <strong>HOSTIPAL®</strong> Todos los derechos reservados
-                        2024
+                        2025
                     </p>
                 </div>
             </div>

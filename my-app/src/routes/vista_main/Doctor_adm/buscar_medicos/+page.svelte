@@ -293,7 +293,7 @@
     }
 </script>
 
-<Navbaradmi></Navbaradmi>
+<Navbaradmin></Navbaradmin>
 
 <div id="Mostrardoctores">
     <div class="container py-4">

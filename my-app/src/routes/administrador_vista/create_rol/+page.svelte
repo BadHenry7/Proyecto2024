@@ -408,15 +408,17 @@ let loading_estado=true
                     {#each todos_modulos as todo}
                   
                     <label>
-                      <input type="checkbox" value={todo.id}  bind:group={seleccionados}><!--Galesxedkdeas-->
+                      <input type="checkbox" value={todo.id} checked bind:group={seleccionados}><!--Galesxedkdeas-->
                       {todo.submodelos}
                     </label>
                     <br>
+                    
+
                   {/each}
             </div>
             {/if}
           </div>
-
+       
           <div class="card-footer">
             <button class="btn btn-info" on:click={()=>update_rol(todos_info.id_rol)}>Actualizar</button>
           </div>
