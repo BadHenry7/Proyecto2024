@@ -65,10 +65,17 @@
     }
 
 
+
+
+
     var henry=true
 
 
     async function actualizar() {
+
+
+
+
         let miStorage = window.localStorage;
         let v_id = JSON.parse(miStorage.getItem("usuario"));
         v_id = v_id.id;
@@ -97,6 +104,32 @@
                 }),
             });
             console.log("actualizado")
+
+            try {
+                console.log("entra al try de mensajes")
+                const response = await fetch("https://graph.facebook.com/v22.0/619638681222171/messages", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer EAAXrHcKMvGgBOzP62rDmklO73P5k6ZBe054wBIv50M05xGbHoKz1lK35oofsEhq0wagNrOHxIHmgWdfZAANSFWbenTF7OJ68iOdGfZBdamZBpqryhhcwhUPsXvolFWjrP55TTPjFk5xoumxu4DL1uU1BJZCpcElHKGhlnoheJWaF3kjxfwgAHHsZA0407bCfeZBBqph5TF5B0ZCvjtydT8cVDkWdWygZD",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            messaging_product: "whatsapp",
+            to: "573205158257",
+            type: "template",
+            type: "text",
+        text: {
+            body: "Hola, este es un mensaje de prueba desde WhatsApp API!"
+        }
+        })
+    });
+                const data = await response.json();
+                console.log("Respuesta:", data);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+
+
         henry=true
         
       const Toast = Swal.mixin({
@@ -121,7 +154,7 @@
 
         
         setTimeout(() => {
-          location.reload();
+         // location.reload();
           }, 1000);
     }catch(e){
     error=e.message
@@ -225,7 +258,7 @@
           </button>
         {:else}
           <!-- Mostrar botón "Activar" si el usuario está desactivado -->
-          <button class="btn btn-outline-info" on:click={() => actualizar()}>
+          <button class="btn btn-outline-info" id="sendMessage" on:click={() => actualizar()}>
             Actualizar
           </button>
         {/if}
