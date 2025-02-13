@@ -117,10 +117,10 @@
             messaging_product: "whatsapp",
             to: "573205158257",
             type: "template",
-            type: "text",
-        text: {
-            body: "Hola, este es un mensaje de prueba desde WhatsApp API!"
-        }
+            template: {
+                name: "hello_world",
+                language: { code: "en_US" }
+            }
         })
     });
                 const data = await response.json();
