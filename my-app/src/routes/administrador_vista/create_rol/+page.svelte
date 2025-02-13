@@ -10,6 +10,8 @@
   let seleccionados = [];
  
   let todos_info={}
+  let todos_mxp={}
+
 
   onMount(async () => {
     try {
@@ -71,8 +73,9 @@
       create_mxperfil(v_id)
 
     } catch (e) {
-      alert("s")
       error = e.message;
+      console.log(error)
+
       
     } finally {
       loading = false;
@@ -84,6 +87,12 @@
   }
 
   async function modulos_asignados(v_id_rol) {
+    let miStorage = window.localStorage;
+      let usuario = JSON.parse(miStorage.getItem('usuario'));
+      let v_id_u=usuario.id
+
+
+
     console.log("Entramos al try de modulos asignados")
     try {
       const response = await fetch("http://127.0.0.1:8000/get_modulos_asignado",{
@@ -100,19 +109,48 @@
     todos_info=data.resultado[0]
 
 
-    console.log("variables ", todos )
+    console.log("variables ", todos_info )
     document.getElementById("nambre").value = todos_info.nombre;
     document.getElementById("descrition").value = todos_info.descripcion;
     document.getElementById("etado").value = todos_info.estado_rol;
     
 
 
+    //arriba guardo la informacion que tiene el rol a editar, abajo, buscara que modulos
+    //asignado tiene esa id_rol:
+    console.log("-----------")
+    console.log("-----------",v_id_rol)
+    console.log("-----------",v_id_u)
 
 
+
+    const result = await fetch("http://127.0.0.1:8000/get_mxp_id",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", },
+        body: JSON.stringify({
+        id_rol:v_id_rol,
+      }), 
+    });
+    const data_mxp = await result.json();
+    todos_mxp=data_mxp.resultado
+    console.log("revisando esta consulta mxp",todos_mxp)
+    seleccionados=[]
+    for (let i = 0; i < todos_mxp.length; i++) {
+    
+        if (todos_mxp[i].estado==1){
+          seleccionados.push(todos_mxp[i].id_modulo)
+
+        }
+
+
+    }
+    console.log(seleccionados)
 
     } catch (e) {
-      alert("s")
+      
       error = e.message;
+      console.log(error)
     } finally {
       loading = false;
       
@@ -236,7 +274,8 @@
       }, 3000);
 
     }catch(e){
-
+      error=e.message
+      console.log(error)
     }
 
 
@@ -244,7 +283,7 @@
 let loading_estado=true
 
   async function cam_estado() {
-                  alert("a")
+                
                   let v_etado= document.getElementById('etado').value;
                   console.log("es v_etado", v_etado)
 

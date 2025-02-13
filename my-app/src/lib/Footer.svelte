@@ -5,10 +5,10 @@
             
             <div class="col-lg-4 col-4 col-md-4 col-sm-4 col-xl-4 text-decoration-none" style="border-right: 1px solid black; border-color: white;" >
                 <div class="text-white fs-2 text-center" style="margin-top: 10%;">
-            <image src="/logo_hostipal.png" style="width: 78px; height: 78px;"></image>
+            <image src="/logo_hostipal.png" style="width: 102px; height: 108px;"></image>
 
                     
-                    <br><a href="/ubicaciones">Sedes</a>
+                  
                 </div>
 
 
@@ -33,16 +33,11 @@
                 </div>
             </div>
 
-            <div class="  col-lg-2 col-3 col-md-2 col-sm-2 col-xl-2 text-white">
-                <p>Redes sociales</p>
-                <div class="d-flex">
-                    <a target="_blank" href="https://www.facebook.com/"><img src="facebook.png" id="facebook"
-                            width="33" height="33" alt="Facebook icon">
-                    </a>
-                    <a target="_blank" href="https://www.instagram.com/"><img src="instagram.png" id="instagram"
-                            width="55" height="33" alt="Instagram icon">
-                    </a>
-                </div>
+            <div class="  col-lg-2 col-3 col-md-2 col-sm-2 col-xl-2 text-white fs-4">
+                
+                <br>
+                <p>Ubicaciones:</p>
+                <a href="/ubicaciones" class="text-white px-4">Sedes</a>
             </div>
         </div>
     </div>

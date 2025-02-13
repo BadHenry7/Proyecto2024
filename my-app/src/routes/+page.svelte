@@ -1,6 +1,7 @@
 <script>
    import Footer from "../lib/Footer.svelte";
    import Carrusel from "../lib/Carrusel.svelte";
+    import SocialMedia from "$lib/social_media.svelte";
 </script>
 
 
@@ -32,6 +33,9 @@
 <div class="card text-center text-white" style="background: #70c8af;">Hostipal</div>
 
 <Carrusel></Carrusel>
+<SocialMedia></SocialMedia>
+
+
 
 <div class="container">
    <div class="row mt-3">

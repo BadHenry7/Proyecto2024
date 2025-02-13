@@ -29,27 +29,47 @@
         if (modalElement) {
             loginModal = new bootstrap.Modal(modalElement);
         }
-
+        if (window.grecaptcha) {
+        window.grecaptcha.render(document.querySelector(".g-recaptcha"));
+    }
+  
         
     });
 
-    async function token() {
-        const response = await fetch("http://127.0.0.1:8000/generate_token", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                usuario: v_usuario,
-                password: v_password,
-            }),
+    async function token(event) {
+        henry=false
+         event.preventDefault(); 
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length === 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debe completar el CAPTCHA",
         });
+        
+        }else{
+           
+      
 
-        const data = await response.json();
-        //return {"access_token": access_token}
-        todos2 = data.access_token;
-        console.log("Revisando token", todos2);
-        Login(todos2);
+
+            const response = await fetch("http://127.0.0.1:8000/generate_token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    usuario: v_usuario,
+                    password: v_password,
+                }),
+            });
+
+            const data = await response.json();
+            //return {"access_token": access_token}
+            todos2 = data.access_token;
+            console.log("Revisando token", todos2);
+            Login(todos2);
+            
+        }
     }
 
     async function Login(todos2) {
@@ -215,6 +235,11 @@
             token();
         }
     }
+
+
+
+
+
 </script>
 
 <div
@@ -251,6 +276,12 @@
                     bind:value={v_password}
                 />
             </div>
+    <form id="login-form"><!--6LdletYqAAAAAN1Insg4lQuDyDO8zO834KBO6nvs-->
+        <div class="g-recaptcha" style="padding-left: 23%;" data-sitekey="6LeeFo4qAAAAAFIb0Wb5mRE0KWPwaU7xmNEuPfWE"></div>
+        
+    </form>
+
+
         </div>
 
         <div class="text-center">
@@ -440,4 +471,4 @@
     setTimeout(() => {
         window.location.href = "/medico_vista";
     }, 2000);
-}-->
+}-->   

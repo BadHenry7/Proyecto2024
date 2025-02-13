@@ -594,8 +594,8 @@
 </script>
 
 <Navbaradmin></Navbaradmin>
-
-<div style="">
+<iframe title="powerbibibi" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNTNlYzFlZmYtMjM0ZS00NjU1LThhZDktNDExZjZjNGE2YjY2IiwidCI6IjFlOWFhYmU4LTY3ZjgtNGYxYy1hMzI5LWE3NTRlOTI0OTlhZSIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+<!--<div style="">
     <div class="container">
         <div class="row">
             <div class="col-lg-6" id="g1">
@@ -686,5 +686,5 @@
     </div>
 </div>
 
-<style>
-</style>
+
+-->
