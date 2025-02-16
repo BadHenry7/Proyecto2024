@@ -30,23 +30,26 @@
             loginModal = new bootstrap.Modal(modalElement);
         }
         if (window.grecaptcha) {
-        window.grecaptcha.render(document.querySelector(".g-recaptcha"));
+       window.grecaptcha.render(document.querySelector(".g-recaptcha"));
     }
   
         
     });
 
     async function token(event) {
-        henry=false
-         event.preventDefault(); 
+      
+        event.preventDefault(); 
+        console.log("sddddddddddddd")
         const recaptchaResponse = grecaptcha.getResponse();
         if (recaptchaResponse.length === 0) {
+            console.log("aaa")
+
         Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Debe completar el CAPTCHA",
         });
-        
+    
         }else{
            
       
@@ -232,7 +235,7 @@
 
     function enterlog() {
         if (event.key === "Enter") {
-            token();
+            token(event);
         }
     }
 

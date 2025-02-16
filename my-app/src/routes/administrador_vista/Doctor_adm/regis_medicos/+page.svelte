@@ -9,7 +9,7 @@
     let v_usuario = "";
     let v_password = "";
     let v_nombre = "";
-    let v_apellido = ""; //por que mano anda mucha gente aca haciendo bulla entonces no puedo entrar a teams
+    let v_apellido = ""; 
     let v_documento = "";
     let v_telefono = "";
     let v_rol = 3;
@@ -17,11 +17,34 @@
 
     onMount(async () => {
         try {
-            const response = await fetch("");
+            const response = await fetch("https://api-nodejs-buxf.onrender.com/api/especialidades/getespecialidades");
             if (!response.ok) throw new Error("Error al cargar los datos");
-            todos = await response.json();
+           const data = await response.json();
+          let  todos_node=data.data
+          console.log("esto es data de node", data)
+
+            console.log("esto es node", todos_node)
+            console.log(todos_node[1])
+            console.log(todos_node.length)
+            
+
+            const Selectespecialidad = document.getElementById("especialista");
+            for (let i = 0; i < todos_node.length; i++) {
+                const user = todos_node[i];
+
+                const option = document.createElement("option");
+
+                option.value = user.nombre;
+
+                option.textContent = user.nombre;
+
+                Selectespecialidad.appendChild(option);
+            }
+            
+
         } catch (e) {
             error = e.message;
+            console.log(error)
         } finally {
             loading = false;
         }
@@ -48,6 +71,7 @@
 
     async function Register() {
         try {
+            console.log("si entra?")
             const response = await fetch("http://127.0.0.1:8000/create_user", {
                 method: "POST",
                 headers: {
@@ -78,8 +102,8 @@
             console.log("----Este es el v_id")
 
             console.log(v_id)
-            let v_especialidad= document.getElementById("especialidad").value;
-            console.log("Este es el valor que tiene v_esoecialidad")
+            let v_especialidad= document.getElementById("especialista").value;
+            console.log("Este es el valor que tiene v_especialidad")
             console.log(v_especialidad)
             if (data.Informacion != "Ya_existe") {
                 const response = await fetch("http://127.0.0.1:8000/create_atributoxusuario", {
@@ -119,7 +143,7 @@
             }
         } catch (e) {
             error = e.message;
-            alert("Error en la solicitud: " + error);
+            console.log("Error en la solicitud: " + error);
         }
     }
 </script>
@@ -229,17 +253,11 @@
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
                     <label for="">Ocupacion</label>
-                    <select
-                        name=""
-                        id="especialidad"
-                        placeholder=" Especialidad?"
-                        class="form-control rounded-pill"
-                    >
-                        <option value="Medicina general">Medicina general</option>
-                        <option value="Enfermero">Enfermero</option>
-                        <option value="Especialista">Especialista</option>
+                    <select class="form-select form-control rounded-pill" id="especialista" required>
+                        <option selected>Seleccione</option>
                     </select>
                 </div>
+
             </div>
             <div class="row mt-3 mx-5">
                 <div class="row mt-4 mx-5">
