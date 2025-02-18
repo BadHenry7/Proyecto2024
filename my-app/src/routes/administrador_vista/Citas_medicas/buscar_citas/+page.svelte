@@ -74,22 +74,42 @@
                     'id':data[4]
       */
       todos = data.resultado;
-      console.log("Buscando la cita seleccionada");
+      console.log("Buscando la cita seleccionada", todos);
 
      
       document.getElementById("paciente").value = todos[0].paciente;
+      //document.getElementById("Doctor_cita").textContent = todos[0].medico;
+
       document.getElementById("Fecha_cita").value = todos[0].fecha;
       document.getElementById("hora_cita").value = todos[0].hora;
+     // document.getElementById("ubicacion").textContent = todos[0].ubicacion;
+     // document.getElementById("salas").textContent = todos[0].salas;
 
-      const v_edit_Fecha_cita = document.getElementById("Fecha_cita");
-      v_edit_Fecha_cita.removeAttribute("readonly");
 
-      const v_edit_hora_cita = document.getElementById("hora_cita");
-      v_edit_hora_cita.removeAttribute("readonly");
+      // const Selectsalas = document.getElementById("salas");
+      // const option = document.createElement("option");
+      // option.value =todos[0].salas;
+      // option.textContent = todos[0].salas;
+      // Selectsalas.appendChild(option);
+
+      //  const Selectubicacion = document.getElementById("ubicacion");
+      //  const option_ubicacion = document.createElement("option");
+      //  option_ubicacion.value =todos[0].ubicacion;
+      //  option_ubicacion.textContent = todos[0].ubicacion;
+      //  Selectubicacion.appendChild(option_ubicacion);
+
+
+      //  const Selectmedico = document.getElementById("Doctor_cita");
+      //  const option_medico = document.createElement("option");
+      //  option_medico.id =todos[0].medico;
+      //  option_medico.textContent = todos[0].medico;
+      //  Selectmedico.appendChild(option_medico);
+
+
 
       try {
         //    const v_edit_Doctor_cita = document.getElementById("Doctor_cita");
-        // v_edit_Doctor_cita.removeAttribute("readonly");
+        // v_edit_Doctor_cita.removeAttribute("");
         //v_edit_Doctor_cita.focus();
         const response = await fetch("http://127.0.0.1:8000/getmedico");
         if (!response.ok) throw new Error("Error al cargar los datos");
@@ -107,6 +127,11 @@
           Selectdoctor.appendChild(option);      
           
         }
+        console.log("todos")
+        console.log(todos)
+
+        Selectdoctor.value=todos[0].id_usuario;
+
         console.log(Selectdoctor);
         
         
@@ -124,15 +149,17 @@
   
           const hospital = todos_node[i];   
           const option = document.createElement("option");
-          option.value = hospital.id;
+          option.value = hospital.nombre_hospital;
 
           option.textContent = hospital.nombre_hospital;
           Select_hospitales.appendChild(option);      
           
         }
+        Select_hospitales.value=todos[0].ubicacion
+
         console.log(Select_hospitales);  
 
-
+        mostrar_salas(todos[0].salas)
 
       } catch (e) {
         error = e.message;
@@ -275,12 +302,13 @@
   }
   
 
-  async function mostrar_salas() {
+  async function mostrar_salas(t_salas) {
+    console.log("salas", t_salas)
     
     let v_id_hospital= document.getElementById("ubicacion").value;
     console.log("la id del hospital seleccionado fue: ",v_id_hospital)//ALT 96= ``
-
-    const response_node = await fetch(`https://api-nodejs-buxf.onrender.com/api/salas/getsalaById/${v_id_hospital}`);
+  
+    const response_node = await fetch(`https://api-nodejs-buxf.onrender.com/api/salas/getsalaByNombre/${v_id_hospital}`);
     // Selectsalas.innerHTML = "<option selected>Seleccione una sala</option>";
     if (!response_node.ok) throw new Error("Error al cargar los datos");
                  const data_node = await response_node.json();
@@ -305,6 +333,8 @@
                     Selectsalas.appendChild(option);
                     
                 }
+                Selectsalas.value=t_salas
+
   }
 
 </script>
@@ -336,6 +366,9 @@
               <th class="px-4 py-2 border">Doctor</th>
               <th class="px-4 py-2 border">Fecha</th>
               <th class="px-4 py-2 border">Hora</th>
+              <th class="px-4 py-2 border">Hospital</th>
+              <th class="px-4 py-2 border">Ubicacion</th>
+
               <th class="px-4 py-2 border">Opcion</th>
             </tr>
           </thead>
@@ -347,6 +380,9 @@
                 <td class="px-4 py-2 border">{todo.medico}</td>
                 <td class="px-4 py-2 border">{todo.fecha}</td>
                 <td class="px-4 py-2 border">{todo.hora}</td>
+                <td class="px-4 py-2 border">{todo.ubicacion}</td>
+                <td class="px-4 py-2 border">{todo.salas}</td>
+
                 <td class="px-4 py-2 border">
                   <button class="btn btn-info" on:click={() => editar(todo.id)}
                     >Editar</button
@@ -391,7 +427,7 @@
             id="paciente"
             maxlength="100"
             style="border: none; width: 55%;"
-            readonly
+            
           />
         </div>
       </div>
@@ -418,7 +454,7 @@
             id="Fecha_cita"
             placeholder="Fecha de la cita"
             style="width: 55%;"
-            readonly
+            
           />
         </div>
       </div>
@@ -434,7 +470,7 @@
             placeholder="hora de la cita"
             maxlength="20"
             style="width: 55%;"
-            readonly
+            
           />
         </div>
       </div>
@@ -446,7 +482,7 @@
         </div>
         <div class="col-lg-10">
          <select name="opciones" id="ubicacion" class="form-select" style="width: 55%;" on:change={mostrar_salas}>
-          <option selected></option>
+          <option selected>Seleccione</option>
          </select>
         </div>
       </div>
@@ -458,7 +494,7 @@
         </div>
         <div class="col-lg-10">
          <select name="opciones" id="salas" class="form-select" style="width: 55%;">
-          <option selected ></option>
+          <option selected >Seleccione</option>
           
          </select> 
         </div>

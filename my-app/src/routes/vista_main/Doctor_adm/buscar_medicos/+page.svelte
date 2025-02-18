@@ -1,7 +1,7 @@
 <script>
-   import Navbaradmin from "$lib/Navbar.svelte";
+    import Navbaradmi from "$lib/Navbar.svelte";
 
-    import { onMount } from "Svelte";
+    import { onMount } from "svelte";
 
     let todos = {};
     let todos2 = {};
@@ -70,6 +70,8 @@
                     id: v_id,
                 }),
             });
+            const data = await response.json();
+            console.log("data",data);
 
             if (response) {
                 const result = await fetch(
@@ -85,21 +87,51 @@
                     },
                 );
                 console.log("Entro al editar");
-                const data = await response.json();
-                console.log(data);
+          
+             
 
                 const datos = await result.json();
-                console.log(datos);
+                console.log("datos",datos);
+
+
+                //codigo de node:
+                const response = await fetch("https://api-nodejs-buxf.onrender.com/api/especialidades/getespecialidades");
+                if (!response.ok) throw new Error("Error al cargar los datos");
+                 const data_node = await response.json();
+                 let  todos_node=data_node.data
+                console.log("esto es data de node", data)
+
+                console.log("esto es node", todos_node)
+                console.log(todos_node[1])
+                console.log(todos_node.length)
+
+            const Selectespecialidad = document.getElementById("especialidad");
+        
+                for (let i = 0; i < todos_node.length; i++) {
+                    const user = todos_node[i];
+                    const option = document.createElement("option");
+                    option.value = user.nombre;
+                    option.textContent = user.nombre;
+                    Selectespecialidad.appendChild(option);
+                }
+
+
+
+            document.getElementById("especialidad").value = datos.valor;
+
+
 
                 document.getElementById("nombres").value = data.nombre;
                 document.getElementById("apellidos").value = data.apellido;
                 document.getElementById("documento").value = data.documento;
                 document.getElementById("telefono").value = data.telefono;
                 document.getElementById("correo").value = data.usuario;
-                document.getElementById("especialidad").value = datos.valor;
+              
                 const v_estado = data.estado ? "1" : "0";
                 document.getElementById("estado").value = v_estado;
             }
+
+            
         } catch (e) {
             error = e.menssage;
             console.log(error);
@@ -210,7 +242,7 @@
         let vestado = document.getElementById("estado").value;
 
         try {
-            console.log("Entra al try de actualzar");
+            console.log("Entra al try de actualizar");
 
             const response = await fetch(
                 "http://127.0.0.1:8000/actualizaruser",
@@ -293,7 +325,7 @@
     }
 </script>
 
-<Navbaradmin></Navbaradmin>
+<Navbaradmi></Navbaradmi>
 
 <div id="Mostrardoctores">
     <div class="container py-4">
@@ -507,16 +539,9 @@
                     <p class="card-text"><b>Especialidad:</b></p>
                 </div>
                 <div class="col-lg-10">
-                    <select
-                        id="especialidad"
-                        name="opciones"
-                        style="border: none; width: 55%;"
-                    >
-                        <option value="Medicina general"
-                            >Medicina general</option
-                        >
-                        <option value="Enfermero">Enfermero</option>
-                        <option value="Especialista">Especialista</option>
+                    <select id="especialidad"  name="opciones" style="border: none; width: 55%;">
+                        <option  selected></option>
+     
                     </select>
                 </div>
             </div>

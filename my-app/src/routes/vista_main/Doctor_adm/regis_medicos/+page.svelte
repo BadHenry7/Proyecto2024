@@ -1,5 +1,6 @@
 <script>
- import Navbaradmin from "$lib/Navbar.svelte";
+      import Navbaradmin from "$lib/Navbar.svelte";
+
 
     import Footer from "../../../../lib/Footer.svelte";
     import { onMount } from "svelte";
@@ -10,19 +11,44 @@
     let v_usuario = "";
     let v_password = "";
     let v_nombre = "";
-    let v_apellido = ""; //por que mano anda mucha gente aca haciendo bulla entonces no puedo entrar a teams
+    let v_apellido = ""; 
     let v_documento = "";
     let v_telefono = "";
     let v_rol = 3;
     let v_estado = 1;
+    let v_genero="";
+    let v_edad="";
 
     onMount(async () => {
         try {
-            const response = await fetch("");
+            const response = await fetch("https://api-nodejs-buxf.onrender.com/api/especialidades/getespecialidades");
             if (!response.ok) throw new Error("Error al cargar los datos");
-            todos = await response.json();
+           const data = await response.json();
+          let  todos_node=data.data
+          console.log("esto es data de node", data)
+
+            console.log("esto es node", todos_node)
+            console.log(todos_node[1])
+            console.log(todos_node.length)
+            
+
+            const Selectespecialidad = document.getElementById("especialista");
+            for (let i = 0; i < todos_node.length; i++) {
+                const user = todos_node[i];
+
+                const option = document.createElement("option");
+
+                option.value = user.nombre;
+
+                option.textContent = user.nombre;
+
+                Selectespecialidad.appendChild(option);
+            }
+            
+
         } catch (e) {
             error = e.message;
+            console.log(error)
         } finally {
             loading = false;
         }
@@ -49,6 +75,7 @@
 
     async function Register() {
         try {
+            console.log("si entra?")
             const response = await fetch("http://127.0.0.1:8000/create_user", {
                 method: "POST",
                 headers: {
@@ -63,6 +90,8 @@
                     telefono: v_telefono,
                     id_rol: v_rol,
                     estado: v_estado,
+                    genero: v_genero,
+                    edad: v_edad
                 }),
             });
 
@@ -79,8 +108,8 @@
             console.log("----Este es el v_id")
 
             console.log(v_id)
-            let v_especialidad= document.getElementById("especialidad").value;
-            console.log("Este es el valor que tiene v_esoecialidad")
+            let v_especialidad= document.getElementById("especialista").value;
+            console.log("Este es el valor que tiene v_especialidad")
             console.log(v_especialidad)
             if (data.Informacion != "Ya_existe") {
                 const response = await fetch("http://127.0.0.1:8000/create_atributoxusuario", {
@@ -120,7 +149,7 @@
             }
         } catch (e) {
             error = e.message;
-            alert("Error en la solicitud: " + error);
+            console.log("Error en la solicitud: " + error);
         }
     }
 </script>
@@ -133,7 +162,7 @@
         ¿Ya tienes una cuenta?<a href="/Login" class="text-secondary">Click aqui</a>
     </div>
     
-    <border ; rounded-pill; para redondearlo-->
+    <border ; ; para redondearlo-->
 
     <form
         name="formulario"
@@ -152,7 +181,7 @@
                         name="name"
                         placeholder="Escriba el nombre completo"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_nombre}
                     />
@@ -166,7 +195,7 @@
                         name="lastname"
                         placeholder="Escriba su apellido completo"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_apellido}
                     />
@@ -182,7 +211,7 @@
                         name="document"
                         placeholder="Escriba el numero de documento"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_documento}
                     />
@@ -195,12 +224,40 @@
                         name="phone"
                         placeholder="Escriba el numero de telefono o celular"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_telefono}
                     />
                 </div>
             </div>
+
+            <div class="row mt-4 mx-5">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="genero">Genero</label>
+                    <select id="genero" class="form-select"  bind:value={v_genero}>
+                        <option value="" disabled selected>Seleccione un genero</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+
+                    </select>
+                    
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="edad">Edad</label>
+                    <input
+                        type="number"
+                        id="edad"
+                        placeholder="Escriba la edad"
+                        required
+                        class="form-control"
+                        bind:value={v_edad}
+                    />
+                </div>
+            </div>
+
+
+
 
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
@@ -211,7 +268,7 @@
                         name="user"
                         placeholder="Escriba su usuario"
                         required
-                        class="form-control rounded-pill"
+                        class="form-control "
                         bind:value={v_usuario}
                     />
                 </div>
@@ -222,7 +279,7 @@
                         id="password"
                         placeholder="Escriba la contraseña"
                         required
-                        class="form-control rounded-pill"
+                        class="form-control "
                         bind:value={v_password}
                     />
                 </div>
@@ -230,17 +287,11 @@
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
                     <label for="">Ocupacion</label>
-                    <select
-                        name=""
-                        id="especialidad"
-                        placeholder=" Especialidad?"
-                        class="form-control rounded-pill"
-                    >
-                        <option value="Medicina general">Medicina general</option>
-                        <option value="Enfermero">Enfermero</option>
-                        <option value="Especialista">Especialista</option>
+                    <select class="form-select form-control " id="especialista" required>
+                        <option selected>Seleccione</option>
                     </select>
                 </div>
+
             </div>
             <div class="row mt-3 mx-5">
                 <div class="row mt-4 mx-5">
@@ -262,7 +313,7 @@
                         <input
                             type="submit"
                             value="Enviar"
-                            class="btn text-black btn-info rounded-pill"
+                            class="btn text-black btn-info "
                         />
                     </div>
                 </div>

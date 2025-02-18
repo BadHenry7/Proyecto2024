@@ -14,6 +14,8 @@
     let v_telefono = "";
     let v_rol = 3;
     let v_estado = 1;
+    let v_genero="";
+    let v_edad="";
 
     onMount(async () => {
         try {
@@ -86,6 +88,8 @@
                     telefono: v_telefono,
                     id_rol: v_rol,
                     estado: v_estado,
+                    genero: v_genero,
+                    edad: v_edad
                 }),
             });
 
@@ -156,7 +160,7 @@
         ¿Ya tienes una cuenta?<a href="/Login" class="text-secondary">Click aqui</a>
     </div>
     
-    <border ; rounded-pill; para redondearlo-->
+    <border ; ; para redondearlo-->
 
     <form
         name="formulario"
@@ -175,7 +179,7 @@
                         name="name"
                         placeholder="Escriba el nombre completo"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_nombre}
                     />
@@ -189,7 +193,7 @@
                         name="lastname"
                         placeholder="Escriba su apellido completo"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_apellido}
                     />
@@ -205,7 +209,7 @@
                         name="document"
                         placeholder="Escriba el numero de documento"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_documento}
                     />
@@ -218,12 +222,40 @@
                         name="phone"
                         placeholder="Escriba el numero de telefono o celular"
                         autocomplete="off"
-                        class="form-control rounded-pill"
+                        class="form-control "
                         required
                         bind:value={v_telefono}
                     />
                 </div>
             </div>
+
+            <div class="row mt-4 mx-5">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="genero">Genero</label>
+                    <select id="genero" class="form-select"  bind:value={v_genero}>
+                        <option value="" disabled selected>Seleccione un genero</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+
+                    </select>
+                    
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="edad">Edad</label>
+                    <input
+                        type="number"
+                        id="edad"
+                        placeholder="Escriba la edad"
+                        required
+                        class="form-control"
+                        bind:value={v_edad}
+                    />
+                </div>
+            </div>
+
+
+
 
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
@@ -234,7 +266,7 @@
                         name="user"
                         placeholder="Escriba su usuario"
                         required
-                        class="form-control rounded-pill"
+                        class="form-control "
                         bind:value={v_usuario}
                     />
                 </div>
@@ -245,7 +277,7 @@
                         id="password"
                         placeholder="Escriba la contraseña"
                         required
-                        class="form-control rounded-pill"
+                        class="form-control "
                         bind:value={v_password}
                     />
                 </div>
@@ -253,7 +285,7 @@
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6">
                     <label for="">Ocupacion</label>
-                    <select class="form-select form-control rounded-pill" id="especialista" required>
+                    <select class="form-select form-control " id="especialista" required>
                         <option selected>Seleccione</option>
                     </select>
                 </div>
@@ -279,7 +311,7 @@
                         <input
                             type="submit"
                             value="Enviar"
-                            class="btn text-black btn-info rounded-pill"
+                            class="btn text-black btn-info "
                         />
                     </div>
                 </div>

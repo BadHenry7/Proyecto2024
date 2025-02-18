@@ -42,20 +42,15 @@ import Navbaradmin from "$lib/Navbar.svelte";
   async function editar(id) {
     const v_editar = document.getElementById("nav-listado");
     v_editar.removeAttribute("class");
-    console.log(v_editar);
     vid = id;
-    console.log(Number.isInteger(vid));
 
-    console.log("la id cita es esta"+vid);
     let ocultar = document.getElementById("Mostrarcitas");
     ocultar.setAttribute("class", "fade");
-    console.log(ocultar);
 
     const cambiar = ocultar.parentElement;
-    console.log(cambiar);
 
     cambiar.insertBefore(v_editar, ocultar);
-    console.log("NO Entra al try de buscar");
+ 
 
     try {
       console.log("Entra al try de buscar");
@@ -80,22 +75,42 @@ import Navbaradmin from "$lib/Navbar.svelte";
                     'id':data[4]
       */
       todos = data.resultado;
-      console.log("Buscando la cita seleccionada");
+      console.log("Buscando la cita seleccionada", todos);
 
      
       document.getElementById("paciente").value = todos[0].paciente;
+      //document.getElementById("Doctor_cita").textContent = todos[0].medico;
+
       document.getElementById("Fecha_cita").value = todos[0].fecha;
       document.getElementById("hora_cita").value = todos[0].hora;
+     // document.getElementById("ubicacion").textContent = todos[0].ubicacion;
+     // document.getElementById("salas").textContent = todos[0].salas;
 
-      const v_edit_Fecha_cita = document.getElementById("Fecha_cita");
-      v_edit_Fecha_cita.removeAttribute("readonly");
 
-      const v_edit_hora_cita = document.getElementById("hora_cita");
-      v_edit_hora_cita.removeAttribute("readonly");
+      // const Selectsalas = document.getElementById("salas");
+      // const option = document.createElement("option");
+      // option.value =todos[0].salas;
+      // option.textContent = todos[0].salas;
+      // Selectsalas.appendChild(option);
+
+      //  const Selectubicacion = document.getElementById("ubicacion");
+      //  const option_ubicacion = document.createElement("option");
+      //  option_ubicacion.value =todos[0].ubicacion;
+      //  option_ubicacion.textContent = todos[0].ubicacion;
+      //  Selectubicacion.appendChild(option_ubicacion);
+
+
+      //  const Selectmedico = document.getElementById("Doctor_cita");
+      //  const option_medico = document.createElement("option");
+      //  option_medico.id =todos[0].medico;
+      //  option_medico.textContent = todos[0].medico;
+      //  Selectmedico.appendChild(option_medico);
+
+
 
       try {
         //    const v_edit_Doctor_cita = document.getElementById("Doctor_cita");
-        // v_edit_Doctor_cita.removeAttribute("readonly");
+        // v_edit_Doctor_cita.removeAttribute("");
         //v_edit_Doctor_cita.focus();
         const response = await fetch("http://127.0.0.1:8000/getmedico");
         if (!response.ok) throw new Error("Error al cargar los datos");
@@ -113,7 +128,40 @@ import Navbaradmin from "$lib/Navbar.svelte";
           Selectdoctor.appendChild(option);      
           
         }
+        console.log("todos")
+        console.log(todos)
+
+        Selectdoctor.value=todos[0].id_usuario;
+
         console.log(Selectdoctor);
+        
+        
+        //-----------------------------aca va el codigo para node----------------------------------------------------------------------------------
+
+        const response_node = await fetch("https://api-nodejs-buxf.onrender.com/api/hospitales/gethospitales");
+        const data_node= await response_node.json()
+        console.log(data_node)//ubicacion
+        let todos_node= data_node.data
+        console.log("esto es data de node", todos_node)
+
+        const Select_hospitales = document.getElementById("ubicacion");
+
+        for (let i = 0; i < todos_node.length; i++) {
+  
+          const hospital = todos_node[i];   
+          const option = document.createElement("option");
+          option.value = hospital.nombre_hospital;
+
+          option.textContent = hospital.nombre_hospital;
+          Select_hospitales.appendChild(option);      
+          
+        }
+        Select_hospitales.value=todos[0].ubicacion
+
+        console.log(Select_hospitales);  
+
+        mostrar_salas(todos[0].salas)
+
       } catch (e) {
         error = e.message;
       } finally {
@@ -130,8 +178,13 @@ import Navbaradmin from "$lib/Navbar.svelte";
     let vfecha_cita = document.getElementById("Fecha_cita").value;
     let vhora_cita = document.getElementById("hora_cita").value;
     let vdoctor = document.getElementById("Doctor_cita").value;
+    let v_ubicacion= document.getElementById("ubicacion").value;
+    let v_salas= document.getElementById("salas").value;
+
     console.log("la id que esta aca en la fn actualzar es"+vid)
     console.log("la id que esta aca en la fn actualzar es"+vhora_cita)
+    console.log("la ubicacion es"+v_ubicacion)
+
 
     try {
 
@@ -144,7 +197,9 @@ import Navbaradmin from "$lib/Navbar.svelte";
           fecha: vfecha_cita,
           hora: vhora_cita,
           id_usuario: vdoctor,
-          id: vid
+          id: vid,
+          ubicacion: v_ubicacion,
+          salas: v_salas,
 
         }),
       });
@@ -247,6 +302,42 @@ import Navbaradmin from "$lib/Navbar.svelte";
       }
   }
   
+
+  async function mostrar_salas(t_salas) {
+    console.log("salas", t_salas)
+    
+    let v_id_hospital= document.getElementById("ubicacion").value;
+    console.log("la id del hospital seleccionado fue: ",v_id_hospital)//ALT 96= ``
+  
+    const response_node = await fetch(`https://api-nodejs-buxf.onrender.com/api/salas/getsalaByNombre/${v_id_hospital}`);
+    // Selectsalas.innerHTML = "<option selected>Seleccione una sala</option>";
+    if (!response_node.ok) throw new Error("Error al cargar los datos");
+                 const data_node = await response_node.json();
+                 console.log(data_node)
+                 let  todos_node=data_node.data
+                console.log("esto es data de node", data_node)
+
+                console.log("esto es node MOSTRAR SALAS ", todos_node)
+                console.log(todos_node)
+                console.log(todos_node.length)
+
+            const Selectsalas = document.getElementById("salas");
+            
+            Selectsalas.innerHTML = "<option selected>Seleccione una sala</option>";
+                for (let i = 0; i < todos_node.length; i++) {
+
+                    const user = todos_node[i];
+                    const option = document.createElement("option");
+                    option.value = user.salas_nombre;
+
+                    option.textContent = user.salas_nombre; 
+                    Selectsalas.appendChild(option);
+                    
+                }
+                Selectsalas.value=t_salas
+
+  }
+
 </script>
 
 <Navbaradmin></Navbaradmin>
@@ -276,6 +367,9 @@ import Navbaradmin from "$lib/Navbar.svelte";
               <th class="px-4 py-2 border">Doctor</th>
               <th class="px-4 py-2 border">Fecha</th>
               <th class="px-4 py-2 border">Hora</th>
+              <th class="px-4 py-2 border">Hospital</th>
+              <th class="px-4 py-2 border">Ubicacion</th>
+
               <th class="px-4 py-2 border">Opcion</th>
             </tr>
           </thead>
@@ -287,6 +381,9 @@ import Navbaradmin from "$lib/Navbar.svelte";
                 <td class="px-4 py-2 border">{todo.medico}</td>
                 <td class="px-4 py-2 border">{todo.fecha}</td>
                 <td class="px-4 py-2 border">{todo.hora}</td>
+                <td class="px-4 py-2 border">{todo.ubicacion}</td>
+                <td class="px-4 py-2 border">{todo.salas}</td>
+
                 <td class="px-4 py-2 border">
                   <button class="btn btn-info" on:click={() => editar(todo.id)}
                     >Editar</button
@@ -315,7 +412,7 @@ import Navbaradmin from "$lib/Navbar.svelte";
   </div>
   <div class="card border-dark shadow" style="width: 60%; margin-left: 20%;">
     <div class="card-header row g-2">
-      <h5 class="card-title col-lg-11"><b>Editando Usuario</b></h5>
+      <h5 class="card-title col-lg-11"><b>Editando cita</b></h5>
       <button class="btn btn-close col-lg-1" on:click={() => Ocultar()}
         aria-label="Cerrar edición de usuario"></button>
     </div>
@@ -331,7 +428,7 @@ import Navbaradmin from "$lib/Navbar.svelte";
             id="paciente"
             maxlength="100"
             style="border: none; width: 55%;"
-            readonly
+            
           />
         </div>
       </div>
@@ -342,7 +439,7 @@ import Navbaradmin from "$lib/Navbar.svelte";
         </div>
 
         <div class="col-lg-10">
-          <select class="form-select" id="Doctor_cita" required>
+          <select class="form-select" id="Doctor_cita" style=" width: 55%;" required>
             <option selected>Seleccione</option>
           </select>
         </div>
@@ -353,12 +450,12 @@ import Navbaradmin from "$lib/Navbar.svelte";
           <p class="card-text"><b>Fecha:</b></p>
         </div>
         <div class="col-lg-10">
-          <input
+          <input class="form-control"
             type="date"
             id="Fecha_cita"
             placeholder="Fecha de la cita"
-            style="border: none; width: 55%;"
-            readonly
+            style="width: 55%;"
+            
           />
         </div>
       </div>
@@ -368,16 +465,44 @@ import Navbaradmin from "$lib/Navbar.svelte";
           <p class="card-text"><b>Hora:</b></p>
         </div>
         <div class="col-lg-10">
-          <input
+          <input class="form-control"
             type="time"
             id="hora_cita"
             placeholder="hora de la cita"
             maxlength="20"
-            style="border: none; width: 55%;"
-            readonly
+            style="width: 55%;"
+            
           />
         </div>
       </div>
+
+
+      <div class="row pt-3">
+        <div class="col-lg-2">
+          <p class="card-text"><b>Ubicacion:</b></p>
+        </div>
+        <div class="col-lg-10">
+         <select name="opciones" id="ubicacion" class="form-select" style="width: 55%;" on:change={mostrar_salas}>
+          <option selected>Seleccione</option>
+         </select>
+        </div>
+      </div>
+
+
+      <div class="row pt-3">
+        <div class="col-lg-2">
+          <p class="card-text"><b>Sala:</b></p>
+        </div>
+        <div class="col-lg-10">
+         <select name="opciones" id="salas" class="form-select" style="width: 55%;">
+          <option selected >Seleccione</option>
+          
+         </select> 
+        </div>
+      </div>
+
+
+
 
       <div class="row" style="margin-top: 4%;">
         <div class="col-lg-9">

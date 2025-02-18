@@ -29,27 +29,28 @@
         if (modalElement) {
             loginModal = new bootstrap.Modal(modalElement);
         }
-        if (window.grecaptcha) {
-       window.grecaptcha.render(document.querySelector(".g-recaptcha"));
-    }
+    //     if (window.grecaptcha) {
+    //    window.grecaptcha.render(document.querySelector(".g-recaptcha"));
+    // }
   
         
     });
-
+let a=false
     async function token(event) {
       
         event.preventDefault(); 
-        console.log("sddddddddddddd")
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (recaptchaResponse.length === 0) {
-            console.log("aaa")
+        // console.log("sddddddddddddd")
+        // const recaptchaResponse = grecaptcha.getResponse();
+        // if (recaptchaResponse.length === 0) {
+        //     console.log("aaa")
 
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Debe completar el CAPTCHA",
-        });
-    
+        // Swal.fire({
+        //     icon: "error",
+        //     title: "Oops...",
+        //     text: "Debe completar el CAPTCHA",
+        // });
+    if (a==true){
+        
         }else{
            
       

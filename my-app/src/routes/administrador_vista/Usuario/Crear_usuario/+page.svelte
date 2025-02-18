@@ -12,6 +12,9 @@
     let v_apellido = "";
     let v_documento = "";
     let v_telefono = "";
+    let v_edad ="";
+    let v_genero ="";
+
     let v_rol = 2;
     let v_estado = 1;
 
@@ -61,6 +64,8 @@
                     telefono: v_telefono,
                     id_rol: v_rol,
                     estado: v_estado,
+                    genero: v_genero,
+                    edad: v_edad
                 }),
             });
 
@@ -80,6 +85,9 @@
                 document.getElementById("telefono").value = "";
                 document.getElementById("usuario").value = "";
                 document.getElementById("password").value = "";
+                document.getElementById("genero").value = "";
+                document.getElementById("edad").value = "";
+
             } else {
                 Swal.fire({
                     title: "Error",
@@ -175,6 +183,36 @@
                 </div>
             </div>
 
+
+
+            <div class="row mt-4 mx-5">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="genero">Genero</label>
+                    <select id="genero" class="form-select"  bind:value={v_genero}>
+                        <option value="" disabled selected>Seleccione un genero</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+
+                    </select>
+                    
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="edad">Edad</label>
+                    <input
+                        type="number"
+                        id="edad"
+                        placeholder="Escriba la edad"
+                        required
+                        class="form-control"
+                        bind:value={v_edad}
+                    />
+                </div>
+            </div>
+
+
+
+
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
                     <label for="usuario">Usuario</label>
@@ -200,6 +238,9 @@
                     />
                 </div>
             </div>
+
+
+            
 
             <div class="row mt-4 mx-5">
                 <input type="submit" value="Enviar " class="btn text-black btn-info "/>
