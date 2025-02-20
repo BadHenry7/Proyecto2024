@@ -1,6 +1,9 @@
 <script>
     import Navbaradmin from "../../../lib/Navbaradmin.svelte";
     import { onMount } from "svelte";
+    //import twilio from 'twilio'
+
+
 
     let todos = {};
     let error = null;
@@ -105,32 +108,13 @@
             });
             console.log("actualizado")
 
-            try {
-                console.log("entra al try de mensajes")
-                const response = await fetch("https://graph.facebook.com/v22.0/619638681222171/messages", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer EAAXrHcKMvGgBOzP62rDmklO73P5k6ZBe054wBIv50M05xGbHoKz1lK35oofsEhq0wagNrOHxIHmgWdfZAANSFWbenTF7OJ68iOdGfZBdamZBpqryhhcwhUPsXvolFWjrP55TTPjFk5xoumxu4DL1uU1BJZCpcElHKGhlnoheJWaF3kjxfwgAHHsZA0407bCfeZBBqph5TF5B0ZCvjtydT8cVDkWdWygZD",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            messaging_product: "whatsapp",
-            to: "573205158257",
-            type: "template",
-            template: {
-                name: "hello_world",
-                language: { code: "en_US" }
-            }
-        })
-    });
-                const data = await response.json();
-                console.log("Respuesta:", data);
-            } catch (error) {
-                console.error("Error:", error);
-            }
+
+
+            
 
 
         henry=true
+        sendSMS()
         
       const Toast = Swal.mixin({
           toast: true,
@@ -162,6 +146,30 @@
     }
        
     }
+
+    
+        async function sendSMS() {
+        try {
+            const response = await fetch("https://api-nodejs-buxf.onrender.com/api/send-sms", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    phoneNumber: "+573205158257",
+                    message: "Hola, su informacion fue cambiada, revise su cuenta"
+                })
+            });
+
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);
+        } catch (error) {
+            console.error("Error enviando SMS:", error);
+        }
+    }
+
+
+    
 </script>
 
 <Navbaradmin></Navbaradmin>
@@ -262,6 +270,6 @@
             Actualizar
           </button>
         {/if}
-
+        
     </div>
 </div>

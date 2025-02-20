@@ -3,15 +3,19 @@
     import { onMount } from "svelte";
 
     let todos = {};
+    let doctores = {};
     let loading = true;
     let error = null;
     let exportesModal;
     let opcion;
     let fecha_de = "";
     let fecha_hasta = "";
+    const serviceID = 'service_yev294m'
+    const templateID = 'template_833f5mc'
+    const apikey = 'gVmq9ZyZNWP2_LzXW'
 
     onMount(() => {
-        const modalElement = document.getElementById("Exported_modal");
+        const modalElement = document.getElementById("sendpdf");
         if (modalElement) {
             exportesModal = new bootstrap.Modal(modalElement);
         }
@@ -21,19 +25,27 @@
         if (exportesModal) {
             exportesModal.show();
         }
+        
+        select_doctor()
     }
 
     function Ocultar() {
-        exportesModal.hide();
+        location.reload();
     }
 
     async function generar() {
         let opcion = document.getElementById("opcion").value;
         console.log(opcion);
-        try {
+        try { 
+
             if (opcion == 1) {
                 let fecha_de = document.getElementById("desde_citas").value;
                 let fecha_hasta = document.getElementById("hasta_citas").value;
+                
+                if (fecha_de==""){
+                  // return alert("no hay datos para mostrar"), window.location.href="/administrador_vista/Reportes"
+                }
+                
                 console.log("----Comprando el generar------");
                 console.log(fecha_de);
                 console.log(fecha_hasta);
@@ -270,11 +282,96 @@
             loading = false;
         }
     }
+
+
+
+
+    function sendEmail() {
+        let as = document.getElementById("asunto_c").value;
+        let ms = document.getElementById("mensaje_c").value;
+        let enlace = document.getElementById("linking").value;
+    
+        for (let i = 0; i < seleccion_doctor.length; i++) {
+            let ce = seleccion_doctor[i]    
+        
+            emailjs.init(apikey); 
+            emailjs.send(serviceID, templateID, {
+                asunto: as,
+                email: ce, 
+                file: enlace,
+                message: ms
+            })
+            .then(result => {
+                    console.log('Correo enviado con éxito a ',ce);
+            })
+            .catch(error => {
+                console.log('Error al enviar el correo:', error.text);
+            })
+        }
+    }
+
+    function formSubmit(event) {
+        event.preventDefault();
+        sendEmail()
+    }
+    
+let seleccion_doctor=[]
+let seleccionado=[]
+let loading_select=false
+    async function select_doctor() {
+        try{
+            
+            const response = await fetch("http://127.0.0.1:8000/getmedico")
+            const data = await response.json();
+            doctores = data.resultado;
+            console.log("eu",doctores);
+
+            const select_doctor= document.getElementById("select_email");
+             select_doctor.innerHTML= "<option>Eliga un medico</option>";
+
+            console.log(doctores[0])
+            for (let i = 0; i < doctores.length; i++) {
+                const doctor_v = doctores[i];
+                const option= document.createElement("option");
+                option.value=doctor_v.usuario
+                option.textContent=doctor_v.nombre
+                select_doctor.appendChild(option);
+            } 
+                   
+
+        }catch(e){
+            error=e.message
+            console.log(error)
+        }
+    }
+
+    let a={}
+    async function select_change() {
+        try{
+            loading_select=false 
+            let v_change= document.getElementById("select_email").value;
+            console.log("funcion select_change",v_change)
+            seleccion_doctor.push(v_change)
+            a=seleccion_doctor
+            console.log("funcion push",seleccion_doctor)
+            
+
+        }catch(e){
+           
+            error=e.message;
+            console.log(error)
+        }finally{
+            loading_select=true
+        }
+    }
+
 </script>
 
 <Navbaradmin></Navbaradmin>
 
+
 <div class="container" style="margin-top: 5%;">
+
     <div class="text-center pt-1 fs-3">
         <p>Reportes</p>
     </div>
@@ -301,46 +398,56 @@
     </div>
 
     <div class="row">
-        <button type="button" class="btn btn-dark mt-4" on:click={generar}
-            >Generar</button
-        >
+        <button type="button" class="btn btn-dark mt-4"   on:click={generar}>Generar</button>
+        <button type="button" class="btn btn-dark mt-4"   on:click={showModal} >Enviar correo</button>
+
     </div>
 </div>
+<!--XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD-->
 
-<div
-    class="modal fade"
-    id="Exported_modal"
-    tabindex="-1"
-    aria-labelledby="rModalLabel"
-    aria-hidden="true"
->
+<div class="modal fade" id="sendpdf" tabindex="-1" aria-labelledby="rModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <div>
+                    <h3>Enviar correo</h3>
+                </div>
+                <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={Ocultar()}></button>
             </div>
             <div class="modal-body row">
-                <h3>Como quieres exportar los datos?</h3>
-                <button
-                    on:click={generar}
-                    class="col-md-4 text-decoration-none btn btn-outline-dark"
-                    style="margin-left: 4%; margin-top:2%">PDF</button
-                >
-                <div class="col-md-3" style="color: white;">relleno :D</div>
-                <button
-                    on:click={Ocultar}
-                    class="col-md-4 text-decoration-none btn btn-outline-dark"
-                    style="margin-top:2%">Excel</button
-                >
+                
+                <label>Doctores
+                    <select class="form-control" name="" id="select_email" on:change={select_change}>
+                        <option value="" disabled selected class="form-select">Seleccione un medico</option>
+                    </select>
+                </label>
+
+                {#if loading_select}
+                    <p style="margin-top: 2%;">Correos a los cuales se les enviara:</p>
+                    {#each a as todos_d, i}
+                        {console.log("aca entro o no",a)}
+                        <span class="mt-1" style="font-weight: bold;">{todos_d}</span>
+                    {/each}
+                {/if}
+                
+                <label class="mt-3">Asunto del mensaje:
+                    <input type="text" id="asunto_c" class="form-control">
+                </label>
+
+                <label>Mensaje:
+                    <input type="text" name="" id="mensaje_c" class="form-control">
+                </label>
+
+                <label for="">Link:
+                    <input type="text" id="linking" class="form-control">
+                </label>
+                
+                <input type="submit" value="Enviar" class="mt-3 btn btn-info" on:click={formSubmit}>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="Mostrarusuario">
     <div class="container py-4">

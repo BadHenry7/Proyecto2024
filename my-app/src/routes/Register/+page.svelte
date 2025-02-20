@@ -14,6 +14,10 @@
     let v_telefono = "";
     let v_rol = 2;
     let v_estado = 1;
+    let passwordInsegura = false;
+    let v_genero=""
+    let v_edad=""
+
 
     onMount(async () => {
         try {
@@ -45,8 +49,16 @@
         });
     }
 
-    async function Register() {
+    async function Register(event) {
         try {
+            event.preventDefault(); // Evita que el formulario se envíe automáticamente
+        
+        await checkPasswordSecurity(); // Verificar seguridad de la contraseña
+        if (passwordInsegura) {
+            alert("⚠️ La contraseña ha sido comprometida en filtraciones. Usa otra.");
+            return;
+        }
+
             const response = await fetch("http://127.0.0.1:8000/create_user", {
                 method: "POST",
                 headers: {
@@ -61,14 +73,16 @@
                     telefono: v_telefono,
                     id_rol: v_rol,
                     estado: v_estado,
+                    edad: v_edad,
+                    genero: v_genero,
                 }),
             });
 
             const data = await response.json();
             console.log(data);
-            console.log(data.Informacion);
+        
 
-            if (data.Informacion != "Ya_existe") {
+            if (data!="Informacion") {
                 alert("Usuario registrado");
                 document.getElementById("nombre").value = "";
                 document.getElementById("apellido").value = "";
@@ -76,7 +90,10 @@
                 document.getElementById("telefono").value = "";
                 document.getElementById("usuario").value = "";
                 document.getElementById("password").value = "";
-                sendEmail()
+                document.getElementById("edad").value = "";
+                document.getElementById("genero").value = "";
+
+                //sendEmail()
             } else {
                 alert("Usuario ya registrado");
             }
@@ -85,6 +102,34 @@
             alert("Error en la solicitud: " + error);
         }
     }
+
+
+
+    async function sha1(str) {
+        const buffer = new TextEncoder().encode(str);
+        const hashBuffer = await crypto.subtle.digest('SHA-1', buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    }
+
+
+    async function checkPasswordSecurity() {
+        if (!v_password) return;
+        
+        const hash = await sha1(v_password);
+        const prefix = hash.substring(0, 5);
+        const suffix = hash.substring(5).toUpperCase();
+
+        try {
+            const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+            const data = await response.text();
+            
+            passwordInsegura = data.split("\n").some(line => line.split(":")[0] === suffix);
+        } catch (error) {
+            console.error("Error verificando la contraseña:", error);
+        }
+    }
+
 </script>
 
 <div class="container pt-3">
@@ -159,6 +204,31 @@
                     />
                 </div>
             </div>
+            <div class="row mt-4 mx-5">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="genero">Genero</label>
+                    <select id="genero" class="form-select"  bind:value={v_genero}>
+                        <option value="" disabled selected>Seleccione un genero</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+
+                    </select>
+                    
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
+                    <label for="edad">Edad</label>
+                    <input
+                        type="number"
+                        id="edad"
+                        placeholder="Escriba la edad"
+                        required
+                        class="form-control"
+                        bind:value={v_edad}
+                    />
+                </div>
+            </div>
+
 
             <div class="row mt-4 mx-5">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-xl-6 py-2">
@@ -183,6 +253,9 @@
                         class="form-control rounded-pill"
                         bind:value={v_password}
                     />
+                    {#if passwordInsegura}
+                    <p class="text-danger">⚠️ Esta contraseña ha sido comprometida. Usa otra.</p>
+                {/if}
                 </div>
             </div>
 
