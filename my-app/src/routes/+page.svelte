@@ -30,28 +30,28 @@
    </div>
 </div>
 
-<div class="card text-center text-white" style="background: #70c8af;">Hostipal</div>
+<div class="card text-center text-white mb-5" style="background: #70c8af;">Hostipal</div>
 
 <Carrusel></Carrusel>
 <SocialMedia></SocialMedia>
 
 
 
-<div class="container">
+<div class="container mt-5">
    <div class="row mt-3">
       <div class="col-sm-4">
-      <div class="card">
-         <img src="/image4.png" class="card-img-top" alt="...">
-         <div class="card-body">
-            <h5 class="card-title">Gestión de Citas Eficiente</h5>
-            <p class="card-text">Reserva y gestiona tus citas médicas de manera fácil y rápida. Nuestro sistema optimiza la disponibilidad de los especialistas, reduciendo tiempos de espera y asegurando una mejor atención para cada paciente.</p>
-            <p>Agenda tu cita sin preocupaciones y una interfaz intuitiva.</p>
-   
+         <div class="card pt-3">
+            <img src="/image4.png" class="card-img-top" alt="...">
+            <div class="card-body">
+               <h5 class="card-title">Gestión de Citas Eficiente</h5>
+               <p class="card-text">Reserva y gestiona tus citas médicas de manera fácil y rápida. Nuestro sistema optimiza la disponibilidad de los especialistas, reduciendo tiempos de espera y asegurando una mejor atención para cada paciente.</p>
+               <p>Agenda tu cita sin preocupaciones y una interfaz intuitiva.</p>
+      
+            </div>
          </div>
       </div>
-      </div>
       <div class="col-sm-4">
-      <div class="card">
+      <div class="card py-4">
          <img src="/image5.png" class="card-img-top" alt="...">
 
          <div class="card-body">
@@ -64,7 +64,7 @@
 
 
       <div class="col-sm-4">
-         <div class="card">
+         <div class="card pt-4 pb-5">
             <img src="/image6.png" class="card-img-top" alt="...">
    
             <div class="card-body">
@@ -116,7 +116,7 @@
          </div>
          <div class=" col-xl-4 col-lg-6 col-md-8 col-sm-4 col-6 fs-4 text-center">
          </div>
-      </div>
+      </div
    </div>
    </div>
 </div>

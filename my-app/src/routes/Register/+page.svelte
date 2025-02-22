@@ -55,7 +55,7 @@
         
         await checkPasswordSecurity(); // Verificar seguridad de la contraseña
         if (passwordInsegura) {
-            alert("⚠️ La contraseña ha sido comprometida en filtraciones. Usa otra.");
+            alert("⚠️ El nivel de seguridad de la contraseña es debil, no olvides incluir mayuscula y caracter especiales");
             return;
         }
 
@@ -254,7 +254,8 @@
                         bind:value={v_password}
                     />
                     {#if passwordInsegura}
-                    <p class="text-danger">⚠️ Esta contraseña ha sido comprometida. Usa otra.</p>
+                    <p class="text-danger">⚠️ El nivel de seguridad de la contraseña es debil, no olvides incluir mayuscula y caracter especiales</p>
+
                 {/if}
                 </div>
             </div>

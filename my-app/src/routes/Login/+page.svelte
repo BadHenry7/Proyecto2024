@@ -38,7 +38,7 @@
 let a=false
     async function token(event) {
       
-        event.preventDefault(); 
+        // event.preventDefault(); 
         // console.log("sddddddddddddd")
         // const recaptchaResponse = grecaptcha.getResponse();
         // if (recaptchaResponse.length === 0) {
@@ -49,7 +49,8 @@ let a=false
         //     title: "Oops...",
         //     text: "Debe completar el CAPTCHA",
         // });
-    if (a==true){
+        if (a==true){
+   
         
         }else{
            
