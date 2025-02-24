@@ -1,13 +1,137 @@
 <script>
-   import Footer from "../lib/Footer.svelte";
-   import Carrusel from "../lib/Carrusel.svelte";
-    import SocialMedia from "$lib/social_media.svelte";
+    import Footer from "../lib/Footer.svelte";
+    import Navbarindex from "$lib/Navbarindex.svelte";
+    import { onMount } from "svelte";
+    import Carrusel from "$lib/Carrusel.svelte";
+    
+    
+function redirigir() {
+    const v_url = "/usuario/citas_usuario/crear_citas_vista_usuario"; 
+    localStorage.setItem("Redirigir", v_url); 
+    window.location.href = "/Login"; 
+}
 </script>
 
+<div class="bg-light">
+    <!-- Barra superior -->
+  
+   <Navbarindex></Navbarindex>
+
+    <!-- Hero Section
+    <section class="position-relative">
+        <img src="https://storage.googleapis.com/a1aa/image/-EpcjZIo-GJIVeM6HQyxj-5b0RwGBV3QBWsU2OnRX8Q.jpg" 
+             class="w-100" 
+             style="height: 200px; object-fit: cover;" 
+             alt="Background Image">
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+             style="background: rgba(0, 0, 0, 0.5);">
+            <div class="text-center text-white">
+                <h1 class="fs-3 fw-bold">Clínica Médica</h1>
+                <p class="fs-5">Examen y diagnóstico</p>
+            </div>
+        </div>
+    </section>
+     -->
+
+<Carrusel></Carrusel>
+
+
+    <!-- Sección de informacion -->
+    <section class="container py-5">
+        <div class="row g-4" >
+            <div class="col-md-4"><!--bg-success 
+                bg-success 
+                bg-success "-->
+                <div class="card text-white text-center p-4 bg-success" style="background: #B3DFFC;">
+                    <h2 class="fs-4 fw-bold">Historial clinico digital para los pacientes</h2>
+                    <p>Accede a todos tus antecedentes médicos en un solo lugar de manera segura..</p>
+                    <button class="btn btn-light text-success">Leer más</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white text-center p-4 bg-success" style="background: #B3DFFC;">
+                    <h2 class="fs-4 fw-bold">Atención medica a los pacientes del centro medico</h2>
+                    <p>Obtén una evaluación de nuestros especialistas para mayor tranquilidad.</p>
+                    <button class="btn btn-light text-success">Leer más</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white text-center p-4 bg-success" style="background: #B3DFFC;">
+                    <h2 class="fs-4 fw-bold">Red neuronal como apoyo al medico</h2>
+                    <p>Nuestra IA mejora constantemente para brindarte diagnósticos cada vez más precisos..</p>
+                    <button class="btn btn-light text-success">Leer más</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Citas -->
+    <section class="text-white py-5 text-center" style="background-color: cornflowerblue;">
+        <h2 class="fs-3 fw-bold">Agenda tu cita en línea</h2>
+        <button class="btn btn-light text-primary mt-3" on:click={redirigir}>Reservar cita</button>
+    </section>
+
+    <!-- Sección de Facilitando tu atencion medica -->
+    <section class="container text-center py-5">
+        <h2 class="fs-3 text-success fw-bold">Facilitando tu atención médica</h2>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <i class="fas fa-heartbeat text-success display-4"></i>
+                <h3 class="fs-4 mt-3">Gestión de citas médicas</h3>
+                <p>Agenda y administra tus citas médicas de forma rápida y sencilla.</p>
+                
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-envelope text-success display-4"></i>
+                <h3 class="fs-4 mt-3">Confirmación automática de tu cita</h3>
+                <p>Recibe un correo con los detalles de tu cita médica inmediatamente después de agendarla..</p>
+                
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-brain   text-success display-4"></i>
+                <h3 class="fs-4 mt-3">Detección de enfermedades</h3>
+                <p>Utilizamos redes neuronales para detectar enfermedades básicas y brindarte orientación.</p>
+                
+            </div>
+        </div>
+    </section>
+
+ 
+    <section class="bg-light py-5 text-center">
+        <i class="fas fa-clock text-success display-4"></i>
+        <h3 class="fs-4 mt-3">Citas médicas sin largas esperas</h3>
+        <p>Olvídate de las filas y agenda tu consulta en el horario que más te convenga.</p>
+        
+    </section>
+
+    <!-- Footer -->
+    <Footer></Footer>
+</div>
 
 
 
-<!--darkcyan-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--darkcyan
 <div class="py-1" style="background-color:  white;  border-bottom: 1px solid black; border-color: blue; ">
    <div class="container">
       <div class="row g-2">
@@ -94,13 +218,13 @@
 
 <div class="background"></div>
 
-<!-- Contenido del componente aquí -->
+ Contenido del componente aquí
 
 
 <br><br><br><br><b></b>
 
 
-<!--
+
 <div class="bg-info"> 
    <div class="row g-1" >
       <div class="container" style="background-image: url('/image7.png');background-size: cover;
@@ -121,9 +245,10 @@
    </div>
 </div>
 
--->
+
 
 
 <Footer></Footer>
 
-<!--<Login> </Login>-->
+
+-->

@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import Footer from "$lib/Footer.svelte";
+    import Navbarindex from "$lib/Navbarindex.svelte";
 
     onMount(() => {
         var map = L.map("map").setView([10.960658, -74.801816], 16);
@@ -11,10 +12,7 @@
         }).addTo(map);
 
 
-        L.marker([10.960658, -74.801816])
-            .addTo(map)
-            .bindPopup("A pretty CSS popup.<br> Easily customizable.")
-            .openPopup();
+     
 
         var marker = L.marker([10.960658, -74.801816]).addTo(map);
         var circle = L.circle([10.960658, -74.801816], {
@@ -23,6 +21,9 @@
             fillOpacity: 0.5,
             radius: 50,
         }).addTo(map);   
+
+
+
 
         
         var marker2 = L.marker([10.962032, -74.794501]).addTo(map);
@@ -33,18 +34,21 @@
             radius: 50,
         }).addTo(map);   
 
+        L.marker([10.960658, -74.801816])
+            .addTo(map)
+            .bindPopup("Hospital Nazareth")
+            .openPopup();
 
 
+        L.marker([10.962032, -74.794501])
+        .addTo(map)
+        .bindPopup("Paso la 21")
+        
 
-        var polygon = L.polygon([
-            [51.509, -0.08],
-            [51.503, -0.06],
-            [51.51, -0.047],
-        ]).addTo(map);
 
-        function onMapClick(e) {
-        alert("You clicked the map at " + e.latlng);
-    }
+        // function onMapClick(e) {
+        // alert("Ubicacion " + e.latlng);
+        //  }
 
     map.on("click", onMapClick);
 
@@ -52,18 +56,23 @@
 
     
 </script>
+<Navbarindex></Navbarindex>
+
+
+
+
 
 <div class="container pt-4">
-    <a class="btn btn-outline-info" href="/">volver</a>
-
-    <p>Estas son las ubicaciones de los hospitales</p>
+   
+    <p class="fs-4">Estas son las ubicaciones de los hospitales</p>
+    
 
     <div id="map"></div>
 </div>
 
 
 
-<div style="margin-bottom: 200px;"></div>
+<div style="margin-bottom: 30px;"></div>
 
 <Footer></Footer>
 

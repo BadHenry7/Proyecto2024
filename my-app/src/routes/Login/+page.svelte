@@ -29,9 +29,9 @@
         if (modalElement) {
             loginModal = new bootstrap.Modal(modalElement);
         }
-    //     if (window.grecaptcha) {
-    //    window.grecaptcha.render(document.querySelector(".g-recaptcha"));
-    // }
+        if (window.grecaptcha) {
+       window.grecaptcha.render(document.querySelector(".g-recaptcha"));
+    }
   
         
     });
@@ -93,6 +93,9 @@ let a=false
             });
 
             if (response.ok) {
+
+
+
                 const data = await response.json();
                 todos = data.resultado;
 
@@ -137,6 +140,11 @@ let a=false
                     let miStorage = window.localStorage;
                     miStorage.setItem("usuario", JSON.stringify(encontrado));
 
+
+                    
+            
+
+
                     //  alert(                        "Inicio de sesion exitoso2. Bienvenido Usuario " + name,);
                     //document.getElementById("loginex").style.display = "flex";
                     Swal.fire({
@@ -146,10 +154,17 @@ let a=false
                         title: "Inicio de sesion exitoso, bienvenido " + name,
                         showConfirmButton: false,
                     });
-
-                    setTimeout(() => {
-                        window.location.href = "/usuario";
-                    }, 2000);
+                    const v_redirigir = localStorage.getItem("Redirigir"); 
+                            setTimeout(() => {
+                                if (v_redirigir) {
+                            window.location.href = v_redirigir; 
+                            localStorage.removeItem("Redirigir"); 
+                            
+                                }else{
+                                window.location.href = "/usuario";
+                                } 
+                            }, 2000);
+                            
                 } else if (rol_v==3) {
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;

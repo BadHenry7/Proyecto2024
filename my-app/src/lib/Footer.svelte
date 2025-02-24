@@ -1,7 +1,7 @@
-<div class="" style=" border-top: 3px solid black; border-color: blue;">
-    <div class="rounded" style="background-color: darkcyan; border-style: solid; border-color: darkcyan; ">
+<div class="" style="">
+    <div class="rounded" style="background-color: cornflowerblue; border-style: solid; border-color: darkcyan; ">
         <div class="container">
-            <div class="row pt-5" style="margin-left: 10%;" >
+            <div class="row pt-2" style="margin-left: 10%;" >
             
             <div class="col-lg-4 col-4 col-md-4 col-sm-4 col-xl-4 text-decoration-none" style="border-right: 1px solid black; border-color: white;" >
                 <div class="text-white fs-2 text-center" style="margin-top: 10%;">
