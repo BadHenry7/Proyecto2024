@@ -17,8 +17,8 @@
            <ul class="navbar-nav ms-auto">
                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                <li class="nav-item"><a class="nav-link" href="/acerca_de">Acerca de</a></li>
+               <li class="nav-item"><a class="nav-link" href="/salud">Salud y bienestar</a></li>
                <li class="nav-item"><a class="nav-link" href="/ubicaciones">Ubicación</a></li>
-               <li class="nav-item"><a class="nav-link" href="#">Salud</a></li>
                <li class="nav-item"><a class="nav-link" href="/Register">Registrar</a></li>
                <li class="nav-item"><a class="nav-link" href="/Login">Iniciar sesión</a></li>
            </ul>

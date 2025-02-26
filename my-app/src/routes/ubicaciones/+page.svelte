@@ -63,8 +63,11 @@
 
 
 <div class="container pt-4">
+    <div class=" text-start fs-3  text-dark text-center"><b>¡Ubicaciones!</b></div>
+    <hr>
    
-    <p class="fs-4">Estas son las ubicaciones de los hospitales</p>
+
+    <!--<p class="fs-4">Estas son las ubicaciones de los hospitales</p>-->
     
 
     <div id="map"></div>

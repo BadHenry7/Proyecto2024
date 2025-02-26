@@ -1,4 +1,4 @@
-<script>
+<!--<script>
     // MONTHNAME() PARA DEVOLVER EL NOMBRE DEL MES  y yearname el año
     import Navbaradmin from "../../../lib/Navbaradmin.svelte";
     import { onMount } from "svelte";
@@ -591,11 +591,39 @@
         }
     }
 </script>
+-->
+
+<script>
+import Navbaradmin from "../../../lib/Navbaradmin.svelte";
+
+</script>
 
 <Navbaradmin></Navbaradmin>
-<div class="container">
-    <iframe title="powerbibibi" width="1000" height="760" src="https://app.powerbi.com/view?r=eyJrIjoiNTNlYzFlZmYtMjM0ZS00NjU1LThhZDktNDExZjZjNGE2YjY2IiwidCI6IjFlOWFhYmU4LTY3ZjgtNGYxYy1hMzI5LWE3NTRlOTI0OTlhZSIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+
+<div class="iframe-container">
+    <iframe 
+        title="powerbibibi" 
+        src="https://app.powerbi.com/view?r=eyJrIjoiNTNlYzFlZmYtMjM0ZS00NjU1LThhZDktNDExZjZjNGE2YjY2IiwidCI6IjFlOWFhYmU4LTY3ZjgtNGYxYy1hMzI5LWE3NTRlOTI0OTlhZSIsImMiOjR9" 
+        frameborder="0" 
+        allowfullscreen>
+    </iframe>
 </div>
+
+<style>
+    .iframe-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    iframe {
+        width: 70vw;
+        height: 92vh;
+    }
+</style>
+
 <!--<div style="">
     <div class="container">
         <div class="row">

@@ -1,3 +1,4 @@
+
 <script>
   import Navbaradmin from "../../../../lib/Navbaradmin.svelte";
   import { onMount } from "svelte";
@@ -18,7 +19,14 @@
       console.log(todos);
 
       setTimeout(() => {
-        globalThis.$("#myTable").DataTable(); // Para convertrlo en datatable :D
+        globalThis.$("#myTable").DataTable({
+
+            stripeClasses: ["bg-white", "bg-light"], 
+            language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json",
+      },
+        }); // Para convertrlo en datatable :D
+      
       }, 0);
     } catch (e) {
       error = e.message;
@@ -339,10 +347,12 @@
 
 </script>
 
+
 <Navbaradmin></Navbaradmin>
 <div id="Mostrarcitas">
   <div class="container py-4">
-    <h2 class="mb-4">Citas agendadas</h2>
+    <h2 class="mb-4 text-center">¡Citas agendadas!</h2>
+    <hr>
     {#if loading}
       <div class="row g-2 justify-content-center">
         <p class="text-center col-lg-2 col-md-2 col-sm-2 col-12 col-xl-2">
@@ -359,8 +369,8 @@
       <p class="text-red-500">Error: {error}</p>
     {:else}
       <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-300" id="myTable">
-          <thead>
+        <table class="min-w-full bg-white border border-gray-300 table-striped" id="myTable">
+          <thead class="bg-primary text-white">
             <tr>
               <th class="px-4 py-2 border">Paciente</th>
               <th class="px-4 py-2 border">Doctor</th>
@@ -374,8 +384,12 @@
           </thead>
 
           <tbody>
-            {#each todos as todo}
-              <tr class="hover:bg-gray-50">
+            {#each todos as todo, i} 
+            
+
+              <tr>
+                
+              
                 <td class="px-4 py-2 border">{todo.paciente}</td>
                 <td class="px-4 py-2 border">{todo.medico}</td>
                 <td class="px-4 py-2 border">{todo.fecha}</td>

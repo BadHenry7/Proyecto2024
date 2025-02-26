@@ -17,7 +17,11 @@
       console.log(todos.usuario);
 
       setTimeout(() => {
-        globalThis.$("#myTable").DataTable(); // Para convertrlo en datatable :D
+        globalThis.$("#myTable").DataTable({
+          stripeClasses: ["bg-white", "bg-light"], 
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json",}
+        }); // Para convertrlo en datatable :D
       }, 0);
     } catch (e) {
       error = e.message;
@@ -332,7 +336,8 @@
 
 <div id="Mostrarusuario">
   <div class="container py-4">
-    <h2 class="mb-4">Lista de usuarios</h2>
+    <h2 class="mb-4 text-center"><b>¡Lista de usuarios!</b></h2>
+    <hr>  
     {#if loading}
       <!---->
       <div class="row g-2 justify-content-center">
@@ -352,7 +357,7 @@
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300" id="myTable">
           <thead>
-            <tr>
+            <tr class="bg-primary text-white">
               <th class="px-4 py-2 border">Usuario</th>
               <th class="px-4 py-2 border">Nombre</th>
               <th class="px-4 py-2 border">Apellido</th>
@@ -360,46 +365,46 @@
               <th class="px-4 py-2 border">Telefono</th>
               <th class="px-4 py-2 border">Rol</th>
               <th class="px-4 py-2 border">Estado</th>
-              <th class="px-4 py-2 border">Opcion</th>
+              <th class="px-4 py-2 border">Opciones</th>
             </tr>
           </thead>
 
           <tbody>
             {#each todos as todo}
               <tr class="hover:bg-gray-50">
-                <td class="px-2 py-2 border">{todo.usuario}</td>
-                <td class="px-2 py-2 border">{todo.nombre}</td>
-                <td class="px-2 py-2 border">{todo.apellido}</td>
-                <td class="px-2 py-2 border">{todo.documento}</td>
-                <td class="px-2 py-2 border">{todo.telefono}</td>
-                <td class="px-2 py-2 border">{todo.nombre_rol}</td>
+                <td class="py-2 border">{todo.usuario}</td>
+                <td class="py-2 border">{todo.nombre}</td>
+                <td class="py-2 border">{todo.apellido}</td>
+                <td class="py-2 border">{todo.documento}</td>
+                <td class="py-2 border">{todo.telefono}</td>
+                <td class="py-2 border">{todo.nombre_rol}</td>
 
-                <td class="px-2 py-2 border">
+                <td class="py-2 border">
                   <span class={todo.estado ? "text-green-600" : "text-red-600"}>
                     {todo.estado ? "Activo" : "Desactivado"}
                   </span>
                 </td>
-                <td class="px-5 py-2 border">
-                  <button
+                <td class=" py-2 border">
+                  <button aria-label="editar"
                     class="btn btn-info"
-                    on:click={() => editar(todo.id, todo.nombre)}>Editar</button
+                    on:click={() => editar(todo.id, todo.nombre)}> <i class="bi bi-pencil-square"></i></button
                   >
                   {#if todo.estado}
                     <!-- Mostrar botón "Desactivar" si el usuario está activo -->
-                    <button
+                    <button aria-label="desactivar"
                       class="btn btn-danger"
                       on:click={() =>
                         desactivar(todo.id, todo.nombre, todo.usuario)}
                     >
-                      Desactivar
+                    <i class="bi bi-toggle-off"></i>
                     </button>
                   {:else}
                     <!-- Mostrar botón "Activar" si el usuario está desactivado -->
-                    <button
+                    <button aria-label="activar"
                       class="btn btn-success"
                       on:click={() => activar(todo.id, todo.nombre)}
                     >
-                      Activar
+                    <i class="bi bi-toggle-on"></i>
                     </button>
                   {/if}
                 </td>

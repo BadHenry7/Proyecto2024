@@ -11,6 +11,7 @@
  
   let todos_info={}
   let todos_mxp={}
+  let rol_v=0
 
 
   onMount(async () => {
@@ -30,6 +31,13 @@
       console.log("revisando el t_roles", t_roles)
       console.log("revisando el t_roles", t_roles.length)
 
+      setTimeout(() => {
+        globalThis.$("#myTable").DataTable({
+          stripeClasses: ["bg-white", "bg-light"], 
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json",}
+        }); // Para convertrlo en datatable :D
+      }, 0);
 
     } catch (e) {
       alert("s")
@@ -373,7 +381,7 @@ let loading_estado=true
 
 
 
-<!--Mostrar los roles-->
+<!--Mostrar los roles
 <div class="container">
   <div class="card-header text-center "  >Roles creados</div>
   <div class="row">
@@ -397,7 +405,7 @@ let loading_estado=true
         </div>
       </div>
   
-      {#if (i + 1) % 2 === 0 }<!--1%2=1   2%2=0   3%2=1   4%2=0-->
+      {#if (i + 1) % 2 === 0 }//1%2=1   2%2=0   3%2=1   4%2=0
       <div class="pt-2"> 
       </div> 
         {/if}
@@ -405,12 +413,75 @@ let loading_estado=true
   </div>
 </div>
 
+-->
 
+<div id="Mostrarroles">
+  <div class="container">
+    <h2 class="text-center" ><b>¡Lista de Roles!</b></h2>
+    <hr>
+    
+    {#if loading}
+      <!---->
+      <div class="row g-2 justify-content-center">
+        <p class="text-center col-lg-2 col-md-2 col-sm-2 col-12 col-xl-2">
+          Cargando datos...
+        </p>
+        <div
+          class="spinner-border col-lg-4 col-md-4 col-sm-4 col-12 col-xl-4"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    {:else if error}
+      <p class="text-red-500">Error: {error}</p>
+    {:else}
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300" id="myTable">
+          <thead>
+            <tr class="bg-primary text-white">
+              <th class="py-2 border">Nombre</th>
+              <th class="py-2 border">descripcion</th>
+              <th class="py-2 border">Estado</th>
+              <th class="py-2 border">Opcion</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {#each t_roles as rol}
+              <tr class="hover:bg-gray-50">
+                <td class="py-2 border">{rol.nombre}</td>
+                <td class="py-2 border">{rol.descripcion}</td>
+
+                <td class="py-2 border">
+                  <span class={rol.estado ? "text-green-600" : "text-red-600"}>
+                    {rol.estado ? "Activo" : "Desactivado"}
+                  </span>
+                </td>
+                <td class=" py-2 border text-center">
+                {#if rol.id!=1 && rol.id!=2 && rol.id!=3}
+                  <button aria-label="editar" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#RModaledit" on:click={()=>modulos_asignados(rol.id)}>
+                     <i class="bi bi-pencil-square"></i> Editar</button
+                  >
+                {:else}
+                <button aria-label="editar" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#RModalver" on:click={()=>rol_v=rol.id}>
+                  <i class="bi bi-eye"></i> Ver</button>
+
+                {/if}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    {/if}
+  </div>
+</div>
 
 
 <!--Editar roles-->
 <div class="modal fade" id="RModaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog ">
       <div class="modal-content">
           <div class="modal-header">
               <button
@@ -465,7 +536,56 @@ let loading_estado=true
   </div>
 </div>
 
+<!--Mostrar roles exclusivo-->
+<div class="modal fade" id="RModalver" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+              ></button>
+          </div>
+          <div class="modal-body">
+            {#if rol_v == 1}
+        <p>Rol exclusivo del superadministrador</p>
+        <p>Acceso total al sistema.</p>
+        <ul>
+          <li>Gestion de usuario</li>
+          <li>Gestion de medico</li>
+          <li>Gestion de roles</li>
+          <li>Gestion de citas</li>
+          <li>Realizar Reportes</li>
+          <li>ver tablero</li>
+        </ul>
+            {:else if rol_v==2}
+            <p>Rol exclusivo del paciente</p>
+            <p>Podra realizar: </p>
 
+            <ul>
+              <li>Citas medicas</li>
+              <li>Reportes</li>
+              <li>Certificados</li>
+              <li>Ver su perfil</li>
+            </ul>
+            {:else if rol_v==3}
+            <p>Rol exclusivo del doctor</p>
+            <p>Podra realizar: </p>
+
+            <ul>
+              <li>Ver citas</li>
+              <li>Historial clinico</li>
+              <li>Reportes</li>
+              <li>Usar la red neuronal como apoyo para la deteccion de enfermedades basicas</li>
+            </ul>
+            {/if}
+          </div>
+       
+      </div>
+  </div>
+</div>
 
 
 
