@@ -402,7 +402,7 @@
                                     {#if todo.estado}
                                         <!-- Mostrar botón "Desactivar" si el usuario está activo -->
                                         <button aria-label="para desactivar"
-                                            class="btn btn-danger"
+                                            class="btn btn-success"
                                             on:click={() =>
                                                 desactivar(
                                                     todo.id,
@@ -410,17 +410,17 @@
                                                     todo.usuario,
                                                 )}
                                         >
-                                              <i class="bi bi-toggle-off"></i>
+                                              <i class="bi bi-toggle-on"></i>
                                         </button>
                                     {:else}
                                         <!-- Mostrar botón "Activar" si el usuario está desactivado -->
 
                                         <button aria-label="para activar"
-                                            class="btn btn-success"
+                                            class="btn btn-danger"
                                             on:click={() =>
                                                 activar(todo.id, todo.nombre)}
                                         >
-                                        <i class=" bi bi-toggle-on"></i>
+                                        <i class=" bi bi-toggle-off"></i>
                                         </button>
                                     {/if}
                                   

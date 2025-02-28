@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
 
+
 </head>
 
 <script>
@@ -91,24 +92,18 @@
 		console.log("revisando el token", todos)
 
 
-
-		if (todos == "Token expirado" & pagina_v != "/" & pagina_v != "/Login" & pagina_v != "/ubicaciones" & pagina_v != "/Register") {
-			console.log("sssssssssds")
-
-
-			window.location.href = "/Login";
-
-
-		} else if (todos == "Token invalido" & pagina_v != "/" & pagina_v != "/Login" & pagina_v != "/ubicaciones" & pagina_v != "/Register") {
+			if (pagina_v.startsWith("/administrador_vista" || pagina_v.startsWith("/usuario" || pagina_v.startsWith("/medico_vista" || pagina_v.startsWith("/vista_main"))))){
+				console.log("muchacho, no seas tan pingo mano")	
+			
+				if (todos == "Token expirado") {
+					console.log("sssssssssds")
+					window.location.href = "/Login";
 
 
-			window.location.href = "/Login";
-
-
-
-
-
-		}
+				} else if (todos == "Token invalido") {
+					window.location.href = "/Login";
+					}
+			}
 	}
 
 
@@ -158,6 +153,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
 	integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
 
 

@@ -312,10 +312,11 @@ let loading_estado=true
 
 
 <!--Creacion de roles-->
-<div class="card-header">
-  <div class="container">Creacion de roles</div>
-</div>
-<div class="card-body">   
+
+
+<div class="card-body container"> 
+  <div class="container text-center"><b class="fs-4">¡Creacion de roles!</b></div>
+
   <div class="row">
     <div class="col-xl-6">
       <label for="" >Nombre del rol</label>
@@ -330,7 +331,7 @@ let loading_estado=true
   <div class="row mt-1">
     <div class="col-xl-12">
       <button class="btn"  data-bs-toggle="modal" data-bs-target="#RModal2">
-      <i class="fas fa-plus-square fa-2x " style="color: green;"></i><span class="mx-2 ">Añadir modulo</span>
+      <i class="fas fa-plus-square fa-2x " style="color: green;"></i><span class="mx-2 fs-5">Añadir modulo</span>
       </button>
       
     </div>
@@ -417,8 +418,8 @@ let loading_estado=true
 
 <div id="Mostrarroles">
   <div class="container">
-    <h2 class="text-center" ><b>¡Lista de Roles!</b></h2>
-    <hr>
+    
+    
     
     {#if loading}
       <!---->

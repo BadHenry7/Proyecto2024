@@ -398,11 +398,11 @@
                 <td class="px-4 py-2 border">{todo.salas}</td>
 
                 <td class="px-4 py-2 border">
-                  <button class="btn btn-info" on:click={() => editar(todo.id)}
-                    >Editar</button
+                  <button class="btn btn-info" on:click={() => editar(todo.id)} aria-label="Para editar"
+                    ><i class="bi bi-pencil-square"></i></button
                   >
-                  <button class="btn btn-danger" on:click={() => Confirmar_eliminar(todo.id)}
-                    >Cancelar</button
+                  <button class="btn btn-danger" on:click={() => Confirmar_eliminar(todo.id)} aria-label="Para cancelar"
+                    ><i class="bi-ban"></i></button
                   >
                 </td>
               </tr>

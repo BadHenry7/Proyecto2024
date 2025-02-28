@@ -253,7 +253,7 @@
           background: "#ff4e4e",
           title: "usuario desactivado con exito",
         });
-        //sendEmail()
+        sendEmail()
 
         function sendEmail() {
           emailjs.init(apikey);
@@ -392,19 +392,19 @@
                   {#if todo.estado}
                     <!-- Mostrar botón "Desactivar" si el usuario está activo -->
                     <button aria-label="desactivar"
-                      class="btn btn-danger"
+                      class="btn btn-success"
                       on:click={() =>
                         desactivar(todo.id, todo.nombre, todo.usuario)}
                     >
-                    <i class="bi bi-toggle-off"></i>
+                    <i class="bi bi-toggle-on"></i>
                     </button>
                   {:else}
                     <!-- Mostrar botón "Activar" si el usuario está desactivado -->
                     <button aria-label="activar"
-                      class="btn btn-success"
+                      class="btn btn-danger"
                       on:click={() => activar(todo.id, todo.nombre)}
                     >
-                    <i class="bi bi-toggle-on"></i>
+                    <i class="bi bi-toggle-off"></i>
                     </button>
                   {/if}
                 </td>

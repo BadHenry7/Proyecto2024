@@ -599,7 +599,10 @@ import Navbaradmin from "../../../lib/Navbaradmin.svelte";
 </script>
 
 <Navbaradmin></Navbaradmin>
-
+<div class="container">
+    <p class="mt-4 text-center fs-2 "><b>Estadisticas</b></p>
+    
+</div>
 <div class="iframe-container">
     <iframe 
         title="powerbibibi" 
@@ -614,14 +617,16 @@ import Navbaradmin from "../../../lib/Navbaradmin.svelte";
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        width: 100vw;
+        
     }
 
     iframe {
-        width: 70vw;
+        width: 65vw;
         height: 92vh;
     }
+
+    
+
 </style>
 
 <!--<div style="">

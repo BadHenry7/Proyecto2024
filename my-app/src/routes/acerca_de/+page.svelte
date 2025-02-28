@@ -47,8 +47,8 @@
                     médicos y pacientes.
                 </div>
                 <div>
-                    Además, integramos tecnologías avanzadas, como redes
-                    neuronales, para brindar apoyo al personal medico en la
+                    Además, integramos tecnologías avanzadas, como intelifencia artificial,
+                     para brindar apoyo al personal medico en la
                     detección de enfermedades básicas. Esto no reemplaza la
                     consulta médica, pero ofrece un apoyo valioso en el proceso
                     de diagnóstico.

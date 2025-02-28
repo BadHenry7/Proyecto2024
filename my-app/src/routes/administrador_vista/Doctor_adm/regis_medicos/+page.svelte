@@ -315,13 +315,7 @@
                     <p class="text-danger">⚠️Las contraseñas no son las mismas  </p>
                      {/if}
 
-                    <div class="mb-3 ">
-                        <input type="checkbox" id="terminos" required />
-                        <button class="btn btn-link p-0" href="#" data-bs-toggle="modal" data-bs-target="#TerminosCondiciones">
-                                Acepto los términos y condiciones</button>
-                      
-                    </div>
-
+                    
                     <button type="submit" class="btn btn-primary w-100">Registrar</button>
                 </form>
             </div>

@@ -3,12 +3,17 @@
     import Navbarindex from "$lib/Navbarindex.svelte";
     import { onMount } from "svelte";
     import Carrusel from "$lib/Carrusel.svelte";
+    import Slide from "$lib/slide.svelte";
     
     
 function redirigir() {
     const v_url = "/usuario/citas_usuario/crear_citas_vista_usuario"; 
     localStorage.setItem("Redirigir", v_url); 
     window.location.href = "/Login"; 
+}
+
+function ir (){
+   window.location.href="/prueba";
 }
 </script>
 
@@ -17,53 +22,15 @@ function redirigir() {
   
    <Navbarindex></Navbarindex>
 
-    <!-- Hero Section
-    <section class="position-relative">
-        <img src="https://storage.googleapis.com/a1aa/image/-EpcjZIo-GJIVeM6HQyxj-5b0RwGBV3QBWsU2OnRX8Q.jpg" 
-             class="w-100" 
-             style="height: 200px; object-fit: cover;" 
-             alt="Background Image">
-        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
-             style="background: rgba(0, 0, 0, 0.5);">
-            <div class="text-center text-white">
-                <h1 class="fs-3 fw-bold">Clínica Médica</h1>
-                <p class="fs-5">Examen y diagnóstico</p>
-            </div>
-        </div>
-    </section>
-     -->
 
-<Carrusel></Carrusel>
+<Slide></Slide>
+<!-- <Carrusel></Carrusel> -->   
 
 
-    <!-- Sección de informacion -->
-    <section class="container py-5">
-        <div class="row g-4" >
-            <div class="col-md-4"><!--bg-success 
-                bg-success 
-                bg-success "-->
-                <div class="card text-white text-center p-4 bg-success" style="background: #B3DFFC;">
-                    <h2 class="fs-4 fw-bold">Historial clinico digital para los pacientes</h2>
-                    <p>Accede a todos tus antecedentes médicos en un solo lugar de manera segura..</p>
-                    <button class="btn btn-light text-success">Leer más</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white text-center p-4 bg-success" style="background: #B3DFFC;">
-                    <h2 class="fs-4 fw-bold">Atención medica a los pacientes del centro medico</h2>
-                    <p>Obtén una evaluación de nuestros especialistas para mayor tranquilidad.</p>
-                    <button class="btn btn-light text-success">Leer más</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white text-center p-4 bg-success" style="background: #B3DFFC;">
-                    <h2 class="fs-4 fw-bold">Red neuronal como apoyo al medico</h2>
-                    <p>Nuestra IA mejora constantemente para brindarte diagnósticos cada vez más precisos..</p>
-                    <button class="btn btn-light text-success">Leer más</button>
-                </div>
-            </div>
-        </div>
-    </section>
+   <!-- <button on:click={ir}> IR IR IR IR</button> -->
+
+
+   
 
     <!-- Sección de Citas -->
     <section class="text-white py-5 text-center" style="background-color: cornflowerblue;">
