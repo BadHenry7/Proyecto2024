@@ -1,3 +1,6 @@
+
+
+<!--
 <script>
     import Navbaradmin from "../../../lib/Navbaradmin.svelte";
     import { onMount } from "svelte";
@@ -366,12 +369,45 @@ let loading_select=false
     }
 
 </script>
+-->
 
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min.css"
+/>
 <Navbaradmin></Navbaradmin>
 
 
+<script>
+    import { onMount } from "svelte";
+    import Navbaradmin from "../../../lib/Navbaradmin.svelte";
+    
+    let calendarElement;
+  
+    onMount(() => {
+      if (calendarElement) {
+        new coreui.Calendar(calendarElement, {
+          locale: "en-US",
+          calendars: 1,
+          range: true
+        });
+      }
+    });
+  </script>
+  
+  <div class="d-flex justify-content-center">
+    <div bind:this={calendarElement} class="border rounded"></div>
+  </div>
+  
+  
 
 
+
+
+
+
+
+<!--
 
 
 <div class="container" style="margin-top: 5%;">
@@ -510,6 +546,6 @@ let loading_select=false
 </style>
 
 
-
+-->
 
 

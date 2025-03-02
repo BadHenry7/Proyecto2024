@@ -144,6 +144,10 @@
 </script>
 
 <Navbarusuario></Navbarusuario>
+
+
+
+<!--
 <div
     style="background-image: url('/fondoR.jpg'); background-size: cover; background-position: center;height: 100vh; width: 100vw;"
 >
@@ -198,3 +202,4 @@
         </div>
     </div>
 </div>
+-->

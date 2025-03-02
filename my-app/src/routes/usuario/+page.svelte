@@ -1,6 +1,7 @@
 <script>
 //    import Navbar from "$lib/Navbar.svelte";
-import Navbarusuario from "../../lib/Navbarusuario.svelte";
+    import Navbarusuario from "../../lib/Navbarusuario.svelte";
+    import Chatbot from "$lib/chatbot.svelte";
 </script>
 
 <Navbarusuario></Navbarusuario>
@@ -15,7 +16,7 @@ import Navbarusuario from "../../lib/Navbarusuario.svelte";
 
             
         </div>
-
+        <Chatbot></Chatbot>
         <div class="col-xl-6 ">
             <img src="image5.png" alt="" style="height: 600px; width: 750px;"/>
         </div>

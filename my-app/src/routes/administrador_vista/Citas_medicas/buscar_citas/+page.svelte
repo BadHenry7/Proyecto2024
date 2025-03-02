@@ -347,7 +347,6 @@
 
 </script>
 
-
 <Navbaradmin></Navbaradmin>
 <div id="Mostrarcitas">
   <div class="container py-4">

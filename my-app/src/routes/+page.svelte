@@ -4,6 +4,9 @@
     import { onMount } from "svelte";
     import Carrusel from "$lib/Carrusel.svelte";
     import Slide from "$lib/slide.svelte";
+    import SocialMedia from "$lib/social_media.svelte";
+    
+
     
     
 function redirigir() {
@@ -21,10 +24,10 @@ function ir (){
     <!-- Barra superior -->
   
    <Navbarindex></Navbarindex>
+   <SocialMedia></SocialMedia>
+   <Slide></Slide>
 
-
-<Slide></Slide>
-<!-- <Carrusel></Carrusel> -->   
+ 
 
 
    <!-- <button on:click={ir}> IR IR IR IR</button> -->

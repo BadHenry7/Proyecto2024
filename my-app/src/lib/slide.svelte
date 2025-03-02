@@ -64,14 +64,14 @@
   });
 </script>
 
-<div class="carousel-container" 
+<div class="carousel-container"  role="presentation"
      on:mouseenter={stopAutoplay} 
      on:mouseleave={startAutoplay}>
   
   <div class="carousel">
     <div class="slides-wrapper">
       <!-- Slide anterior (previsualización) -->
-      <div class="slide-card prev-card" on:click={prevSlide}>
+      <div class="slide-card prev-card" on:click={prevSlide}  role="presentation">
         <div class="card-inner">
           <img src={slides[getPrevIndex(currentIndex)].image || "/placeholder.svg"} alt="Slide anterior" />
           <div class="preview-caption">
@@ -93,7 +93,7 @@
       {/key}
       
       <!-- Siguiente slide (previsualización) -->
-      <div class="slide-card next-card" on:click={nextSlide}>
+      <div class="slide-card next-card" on:click={nextSlide}  role="presentation">
         <div class="card-inner">
           <img src={slides[getNextIndex(currentIndex)].image || "/placeholder.svg"} alt="Siguiente slide" />
           <div class="preview-caption">
@@ -103,7 +103,7 @@
       </div>
     </div>
     
-    <button class="nav-button prev" on:click={prevSlide}>
+    <button class="nav-button prev" on:click={prevSlide} >
       &lt;
     </button>
     <button class="nav-button next" on:click={nextSlide}>
@@ -113,7 +113,7 @@
   
   <div class="indicators">
     {#each slides as _, i}
-      <button 
+      <button aria-label="indicators"
         class="indicator {i === currentIndex ? 'active' : ''}" 
         on:click={() => currentIndex = i}
       ></button>

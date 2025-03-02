@@ -5,7 +5,7 @@
             
             <div class="col-lg-4 col-4 col-md-4 col-sm-4 col-xl-4 text-decoration-none" style="border-right: 1px solid black; border-color: white;" >
                 <div class="text-white fs-2 text-center" style="margin-top: 10%;">
-            <image src="/logo_hostipal.png" style="width: 102px; height: 108px;"></image>
+            <image src="/hostipal.png" style="width: 102px; height: 108px;"></image>
 
                     
                   
