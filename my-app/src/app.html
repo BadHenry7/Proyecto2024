@@ -59,6 +59,8 @@
       crossorigin="anonymous"
     ></script>
 <script>
+
+	
 	todos = {}
 	henry = true
 	let v_token = ""
@@ -102,17 +104,26 @@
 		console.log("revisando el token", todos)
 
 
-			if (pagina_v.startsWith("/administrador_vistaa") || pagina_v.startsWith("/susuario") || pagina_v.startsWith("/medico_vista") || pagina_v.startsWith("/vista_main")){
+			if (pagina_v.startsWith("/administrador_vista") || pagina_v.startsWith("/usuario") || pagina_v.startsWith("/medico_vista") || pagina_v.startsWith("/vista_main")){
 				console.log("muchacho, no seas tan pingo mano")	
 			
-				if (todos == "Token expirado") {
-					console.log("sssssssssds")
-					window.location.href = "/Login";
+			
+				let cookies = document.cookie.split("; ").find(row => row.startsWith("sesionGoogle="));
+
+				if (!cookies) {		
 
 
-				} else if (todos == "Token invalido") {
-					window.location.href = "/Login";
-					}
+					if (todos == "Token expirado") {
+						console.log("sssssssssds")
+						window.location.href = "/Login";
+
+
+					} else if (todos == "Token invalido") {
+						console.log("ggggggggg")
+
+						window.location.href = "/Login";
+						}
+				}
 			}
 	}
 

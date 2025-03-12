@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
   import { token_obtener } from '$lib';
     let todos = {};
-    let todos2 = {};
+    var todos2 = {};
 
     let loading = false;
     let error = null;
@@ -54,8 +54,10 @@ async function token(event) {
       
       }else{
          let token_v=await token_obtener(v_usuario, v_password, todos2);
-         console.log(token_v)
-          Login(token_v.todos2);
+         console.log("2",token_v)
+         console.log("3",token_v.login2)
+
+          Login(token_v);
           
       }
   }

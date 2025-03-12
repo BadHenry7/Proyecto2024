@@ -326,7 +326,7 @@ href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min
         event.preventDefault();
         sendEmail()
     }
-    
+
 let seleccion_doctor=[]
 let seleccionado=[]
 let loading_select=false
@@ -377,29 +377,127 @@ let loading_select=false
         }
     }
 
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------
 
     let calendarElement;
-  let fecha_de = "";
-  let fecha_hasta = "";
-  let pdfUrl = "";
-  let calendarInstance;
+let fecha_desde = "";
+let fecha_hasta = "";
+let pdfUrl = null;
+let calendarInstance;
 
-  onMount(() => {
+onMount(() => {
     if (calendarElement) {
-      calendarInstance = new coreui.Calendar(calendarElement, {
-        locale: "es-ES",
-        calendars: 1,
-        range: true,
+        calendarInstance = new coreui.Calendar(calendarElement, {
+            locale: "es-ES",
+            calendars: 1,
+            range: true,
+        });
+
+        calendarElement.addEventListener("changed.coreui.calendar", (event) => {
+            if (event.detail.startDate && event.detail.endDate) {
+                fecha_desde = formatDate(event.detail.startDate);
+                fecha_hasta = formatDate(event.detail.endDate);
+                console.log("Fecha desde:", fecha_desde);
+                console.log("Fecha hasta:", fecha_hasta);
+            }
+        });
+    }
+});
+
+function formatDate(date) {
+    return date.toISOString().split("T")[0]; // Formato "YYYY-MM-DD"
+}
+
+
+
+    async function seleccion(){
+
+        console.log(document.getElementById('fecha_desde'))
+        console.log(document.getElementById('fecha_hasta'))
+
+        if (!fecha_de || !fecha_hasta) {
+        alert("Por favor selecciona un rango de fechas.");
+        return;
+        }
+
+        switch (opcion) { //MENU DE SELECCION
+    case 1:
+
+    try {
+        console.log("entra a la API");
+      const response = await fetch("http://127.0.0.1:8000/reportes_citas/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
       });
 
+      if (!response.ok) throw new Error("Error al generar el reporte");
+
+      const pdfBlob = await response.blob();
+      pdfUrl = URL.createObjectURL(pdfBlob);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Hubo un problema al generar el PDF.");
     }
-  });
-
-  function formatDate(date) {
-    return date.toISOString().split("T")[0]; // Formato "YYYY-MM-DD"
-  }
+     break;
 
 
+    case 2:
+        
+        try {
+            console.log("entra a la API");
+        const response = await fetch("http://127.0.0.1:8000/reportes_diagnosticos/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
+        });
+
+        if (!response.ok) throw new Error("Error al generar el reporte");
+
+        const pdfBlob = await response.blob();
+        pdfUrl = URL.createObjectURL(pdfBlob);
+        } catch (error) {
+        console.error("Error:", error);
+        alert("Hubo un problema al generar el PDF.");
+        }
+        break;
+
+    
+    case 3:
+
+        try {
+            console.log("entra a la API");
+        const response = await fetch("http://127.0.0.1:8000/reportes_historial/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
+        });
+
+        if (!response.ok) throw new Error("Error al generar el reporte");
+
+        const pdfBlob = await response.blob();
+        pdfUrl = URL.createObjectURL(pdfBlob);
+        } catch (error) {
+        console.error("Error:", error);
+        alert("Hubo un problema al generar el PDF.");
+        }
+
+
+        break;
+    default:
+        alert ("No has seleccionado el tipo de reporte");
+}
+    }
 
 
   async function generarReporte() {
@@ -408,16 +506,6 @@ let loading_select=false
     let fecha_hasta= calendarInstance._endDate
     console.log(fecha_de)
     console.log(fecha_hasta)
-
-    document.getElementById('fecha_desde').innerHTML=fecha_de
-    document.getElementById('fecha_hasta').innerHTML=fecha_hasta
-
-
-
-    if (!fecha_de || !fecha_hasta) {
-      alert("Por favor selecciona un rango de fechas.");
-      return;
-    }
 
     try {
         console.log("entra a la API");
@@ -448,6 +536,7 @@ let loading_select=false
 
             <!-- Selector de Reporte -->
             <select class="form-select mb-3" id="opcion" required>
+                    <option value="0" selected>SELECCIONE</option>
                     <option value="1">Citas registradas</option>
                     <option value="2">Diagnosticos de usuarios</option>
                     <option value="3">Usuarios que han tenido citas</option>
@@ -459,10 +548,8 @@ let loading_select=false
             </div>        
 
             <!-- Botones --> 
-            <p class="btn mt-1" >📅 Fecha Desde: <span id="fecha_desde"></span> </p>
-            <p class="btn" >📅 Fecha Hasta: <span id="fecha_hasta"></span></p>  
-            <button on:click={generarReporte} class="btn btn-success mt-3 ">Generar</button>
-            <button on:click={showModal} class="btn btn-secondary mt-2 ">Enviar correo</button>
+            <button on:click={seleccion} class="btn btn-success mt-3 ">Generar</button>
+            <!-- <button on:click={showModal} class="btn btn-secondary mt-2 ">Enviar correo</button> -->
        </div>
     </div>
 

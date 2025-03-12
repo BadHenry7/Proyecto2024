@@ -1,6 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
-export  async function token_obtener(v_usuario, v_password, todos2) {
-    let a=false
+export  async function token_obtener(v_usuario, v_password, todos2, opcion) {
+   
       
     // event.preventDefault(); 
     // console.log("sddddddddddddd")
@@ -13,8 +13,30 @@ export  async function token_obtener(v_usuario, v_password, todos2) {
     //     title: "Oops...",
     //     text: "Debe completar el CAPTCHA",
     // });
-    if (a==true){
+    if (opcion==="true"){
 
+
+        const response = await fetch("http://127.0.0.1:8000/generate_token_google", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                usuario: v_usuario,
+            }),
+        });
+
+        const data = await response.json();
+        //return {"access_token": access_token}
+        todos2 = data.access_token;
+        
+        if(todos2!=null){
+            console.log("Revisando token2", todos2);
+            return (todos2)
+        }else{
+            todos2="indefenido"
+            return (todos2)
+        }
     
     }else{
        

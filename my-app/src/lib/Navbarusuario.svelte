@@ -1,16 +1,19 @@
 <script>
 
   import { onMount } from "svelte";
+  import {token_obtener} from "$lib"
+  
   
   let modal_perfil;
   let todos = {};
   let error = null;
   var v_id=1
   var henry=true
-
+  let token_v={}
   
     
   onMount(async() => {
+   
     let cookies = document.cookie
         .split("; ")
         .find(row => row.startsWith("sesionGoogle="));
@@ -23,8 +26,10 @@
         let name = sesionGoogle.nombre;
         let id = sesionGoogle.id;
         let correo = sesionGoogle.email;
-        let encontrado = { name, id, correo};
+        let todos2=await token_obtener(correo, "v_password", token_v, "true");
+        let encontrado = { name, id, correo, todos2};
         miStorage.setItem("usuario", JSON.stringify(encontrado));
+
     } 
   
 
