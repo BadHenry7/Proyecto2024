@@ -1,9 +1,18 @@
-
-
-<!--
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+/>
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min.css">
 <script>
+
     import Navbaradmin from "../../../lib/Navbaradmin.svelte";
     import { onMount } from "svelte";
+    
+    import  jsPDF  from "jspdf";
+    import autoTable from "jspdf-autotable";
+      
 
     let todos = {};
     let doctores = {};
@@ -11,8 +20,8 @@
     let error = null;
     let exportesModal;
     let opcion;
-    let fecha_de = "";
-    let fecha_hasta = "";
+    // let fecha_de = "";
+    // let fecha_hasta = "";
     const serviceID = 'service_yev294m'
     const templateID = 'template_833f5mc'
     const apikey = 'gVmq9ZyZNWP2_LzXW'
@@ -368,165 +377,182 @@ let loading_select=false
         }
     }
 
-</script>
--->
 
-<link
-rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min.css"
-/>
+    let calendarElement;
+  let fecha_de = "";
+  let fecha_hasta = "";
+  let pdfUrl = "";
+  let calendarInstance;
+
+  onMount(() => {
+    if (calendarElement) {
+      calendarInstance = new coreui.Calendar(calendarElement, {
+        locale: "es-ES",
+        calendars: 1,
+        range: true,
+      });
+
+    }
+  });
+
+  function formatDate(date) {
+    return date.toISOString().split("T")[0]; // Formato "YYYY-MM-DD"
+  }
+
+
+
+
+  async function generarReporte() {
+    console.log("s", calendarInstance)
+    let fecha_de= calendarInstance._startDate;
+    let fecha_hasta= calendarInstance._endDate
+    console.log(fecha_de)
+    console.log(fecha_hasta)
+
+    document.getElementById('fecha_desde').innerHTML=fecha_de
+    document.getElementById('fecha_hasta').innerHTML=fecha_hasta
+
+
+
+    if (!fecha_de || !fecha_hasta) {
+      alert("Por favor selecciona un rango de fechas.");
+      return;
+    }
+
+    try {
+        console.log("entra a la API");
+      const response = await fetch("http://127.0.0.1:8000/reportes_historial/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
+      });
+
+      if (!response.ok) throw new Error("Error al generar el reporte");
+
+      const pdfBlob = await response.blob();
+      pdfUrl = URL.createObjectURL(pdfBlob);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Hubo un problema al generar el PDF.");
+    }
+  }
+
+
+</script> 
+
 <Navbaradmin></Navbaradmin>
 
+    <div class="container d-flex justify-content-center">
+       <div class="card shadow-lg p-4 justify-content" style="width: 500px; background: #f0f4f8; border-radius: 12px;">
+            <h3 class="text-center mb-4 text-danger">Reportes</h3>
 
-<script>
-    import { onMount } from "svelte";
-    import Navbaradmin from "../../../lib/Navbaradmin.svelte";
-    
-    let calendarElement;
-  
-    onMount(() => {
-      if (calendarElement) {
-        new coreui.Calendar(calendarElement, {
-          locale: "en-US",
-          calendars: 1,
-          range: true
-        });
-      }
-    });
-  </script>
-  
-  <div class="d-flex justify-content-center">
-    <div bind:this={calendarElement} class="border rounded"></div>
-  </div>
-  
-  
-
-
-
-
-
-
-
-<!--
-
-
-<div class="container" style="margin-top: 5%;">
-
-    <div class="text-center pt-1 fs-3">
-        <p>Reportes</p>
-    </div>
-    <div class="row g-2">
-        <div class="col-xl-1"></div>
-        <div class=" col-xl-10 text-center fs-3 py-5">
-            <select class="form-select" id="opcion" style="" required>
-                <option value="1">Citas registradas</option>
-                <option value="2">Diagnosticos de usuarios</option>
-                <option value="3">Usuarios que han tenido citas</option>
+            <!-- Selector de Reporte -->
+            <select class="form-select mb-3" id="opcion" required>
+                    <option value="1">Citas registradas</option>
+                    <option value="2">Diagnosticos de usuarios</option>
+                    <option value="3">Usuarios que han tenido citas</option>
             </select>
-        </div>
+            
+            <!-- Calendario -->
+            <div class="d-flex justify-content-center">
+                <div bind:this={calendarElement} class="border rounded p-2 bg-white calendar-container"></div>
+            </div>        
+
+            <!-- Botones --> 
+            <p class="btn mt-1" >📅 Fecha Desde: <span id="fecha_desde"></span> </p>
+            <p class="btn" >📅 Fecha Hasta: <span id="fecha_hasta"></span></p>  
+            <button on:click={generarReporte} class="btn btn-success mt-3 ">Generar</button>
+            <button on:click={showModal} class="btn btn-secondary mt-2 ">Enviar correo</button>
+       </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl-6 text-start">
-            Desde:
-            <input type="date" name="citas" id="desde_citas" class="form-control"/>
-        </div>
-        <div class="col-xl-6">              
-            Hasta:
-            <input type="date" name="citas" id="hasta_citas" class="form-control"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <button type="button" class="btn btn-dark mt-4"   on:click={generar}>Generar</button>
-        <button type="button" class="btn btn-dark mt-4"   on:click={showModal} >Enviar correo</button>
-
-    </div>
-</div>
 
 
-<div class="modal fade" id="sendpdf" tabindex="-1" aria-labelledby="rModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h3>Enviar correo</h3>
+<!-- 
+
+    <div class="modal fade" id="sendpdf" tabindex="-1" aria-labelledby="rModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h3>Enviar correo</h3>
+                    </div>
+                    <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={Ocultar()}></button>
                 </div>
-                <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={Ocultar()}></button>
-            </div>
-            <div class="modal-body row">
-                
-                <label>Doctores
-                    <select class="form-control" name="" id="select_email" on:change={select_change}>
-                        <option value="" disabled selected class="form-select">Seleccione un medico</option>
-                    </select>
-                </label>
+                <div class="modal-body row">
+                    
+                    <label>Doctores
+                        <select class="form-control" name="" id="select_email" on:change={select_change}>
+                            <option value="" disabled selected class="form-select">Seleccione un medico</option>
+                        </select>
+                    </label>
 
-                {#if loading_select}
-                    <p style="margin-top: 2%;">Correos a los cuales se les enviara:</p>
-                    {#each a as todos_d, i}
-                        {console.log("aca entro o no",a)}
-                        <span class="mt-1" style="font-weight: bold;">{todos_d}</span>
-                    {/each}
-                {/if}
-                
-                <label class="mt-3">Asunto del mensaje:
-                    <input type="text" id="asunto_c" class="form-control">
-                </label>
+                    {#if loading_select}
+                        <p style="margin-top: 2%;">Correos a los cuales se les enviara:</p>
+                        {#each a as todos_d, i}
+                            {console.log("aca entro o no",a)}
+                            <span class="mt-1" style="font-weight: bold;">{todos_d}</span>
+                        {/each}
+                    {/if}
+                    
+                    <label class="mt-3">Asunto del mensaje:
+                        <input type="text" id="asunto_c" class="form-control">
+                    </label>
 
-                <label>Mensaje:
-                    <input type="text" name="" id="mensaje_c" class="form-control">
-                </label>
+                    <label>Mensaje:
+                        <input type="text" name="" id="mensaje_c" class="form-control">
+                    </label>
 
-                <label for="">Link:
-                    <input type="text" id="linking" class="form-control">
-                </label>
-                
-                <input type="submit" value="Enviar" class="mt-3 btn btn-info" on:click={formSubmit}>
+                    <label for="">Link:
+                        <input type="text" id="linking" class="form-control">
+                    </label>
+                    
+                    <input type="submit" value="Enviar" class="mt-3 btn btn-info" on:click={formSubmit}>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div id="Mostrarusuario">
-    <div class="container py-4">
-        <h2 class="mb-4">Citas agendadas</h2>
-        {#if loading}
-            <p class="text-center">Cargando datos...</p>
-        {:else if error}
-            <p class="text-red-500">Error: {error}</p>
-        {:else}
-            <div class="overflow-x-auto">
-                <table
-                    class="min-w-full bg-white border border-gray-300"
-                    id="myTable"
-                >
-                    <thead>
-                        <tr>
-                            <th class="px-4 py-2 border">Paciente</th>
-                            <th class="px-4 py-2 border">Doctor</th>
-                            <th class="px-4 py-2 border">Fecha</th>
-                            <th class="px-4 py-2 border">Hora</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {#each todos as todo}
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{todo.paciente}</td
-                                >
-                                <td class="px-4 py-2 border">{todo.medico}</td>
-                                <td class="px-4 py-2 border">{todo.fecha}</td>
-                                <td class="px-4 py-2 border">{todo.hora}</td>
+    <div id="Mostrarusuario">
+        <div class="container py-4">
+            <h2 class="mb-4">Citas agendadas</h2>
+            {#if loading}
+                <p class="text-center">Cargando datos...</p>
+            {:else if error}
+                <p class="text-red-500">Error: {error}</p>
+            {:else}
+                <div class="overflow-x-auto">
+                    <table
+                        class="min-w-full bg-white border border-gray-300"
+                        id="myTable"
+                    >
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 border">Paciente</th>
+                                <th class="px-4 py-2 border">Doctor</th>
+                                <th class="px-4 py-2 border">Fecha</th>
+                                <th class="px-4 py-2 border">Hora</th>
                             </tr>
-                        {/each}
-                    </tbody>
-                </table>
-            </div>
-        {/if}
+                        </thead>
+
+                        <tbody>
+                            {#each todos as todo}
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-2 border">{todo.paciente}</td
+                                    >
+                                    <td class="px-4 py-2 border">{todo.medico}</td>
+                                    <td class="px-4 py-2 border">{todo.fecha}</td>
+                                    <td class="px-4 py-2 border">{todo.hora}</td>
+                                </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
+            {/if}
+        </div>
     </div>
-</div>
+
 
 <style>
     .container {
@@ -543,9 +569,9 @@ href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min
             width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeñas */
         }
     }
-</style>
+</style> -->
 
 
--->
+
 
 

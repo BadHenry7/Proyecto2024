@@ -15,9 +15,6 @@ function redirigir() {
     window.location.href = "/Login"; 
 }
 
-function ir (){
-   window.location.href="/prueba";
-}
 </script>
 
 <div class="bg-light">
