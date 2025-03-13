@@ -5,14 +5,14 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 <link
 rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min.css">
+
 <script>
+
+
+    
 
     import Navbaradmin from "../../../lib/Navbaradmin.svelte";
     import { onMount } from "svelte";
-    
-    import  jsPDF  from "jspdf";
-    import autoTable from "jspdf-autotable";
-      
 
     let todos = {};
     let doctores = {};
@@ -20,17 +20,29 @@ href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min
     let error = null;
     let exportesModal;
     let opcion;
-    // let fecha_de = "";
-    // let fecha_hasta = "";
+    let fecha_de = "";
+    let fecha_hasta = "";
     const serviceID = 'service_yev294m'
     const templateID = 'template_833f5mc'
     const apikey = 'gVmq9ZyZNWP2_LzXW'
+    let calendarElement;
+    let calendarInstance;
 
     onMount(() => {
         const modalElement = document.getElementById("sendpdf");
         if (modalElement) {
             exportesModal = new bootstrap.Modal(modalElement);
         }
+
+        if (calendarElement) {
+         calendarInstance = new coreui.Calendar(calendarElement, {
+            locale: "es-ES",
+            calendars: 1,   
+            range: true,
+        });}
+        
+
+  console.log("esto que es",calendarInstance)
     });
 
     function showModal() {
@@ -44,15 +56,38 @@ href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min
     function Ocultar() {
         location.reload();
     }
+    let fecha_desde=""
+    let hasta_fecha=""
+
 
     async function generar() {
+        console.log("esto tiene",calendarInstance)
+        fecha_desde=calendarInstance._startDate
+        hasta_fecha=calendarInstance._endDate
+        console.log("---------------------------- Separacion ----------------------------")
+        console.log(fecha_desde)
+        console.log(hasta_fecha)
+
         let opcion = document.getElementById("opcion").value;
         console.log(opcion);
         try { 
 
             if (opcion == 1) {
-                let fecha_de = document.getElementById("desde_citas").value;
-                let fecha_hasta = document.getElementById("hasta_citas").value;
+                
+                let fecha_1=new Date(fecha_desde)
+                let fecha_de =fecha_1.toISOString().split('T')[0];
+
+
+                let fecha_2=new Date(hasta_fecha)
+                let fecha_hasta =fecha_2.toISOString().split('T')[0];
+
+
+
+                
+                
+
+
+
                 
                 if (fecha_de==""){
                   // return alert("no hay datos para mostrar"), window.location.href="/administrador_vista/Reportes"
@@ -119,7 +154,12 @@ href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min
                     "Informacion de las citas registradas en el sistema",
                 );
                 var columns = ["fecha", "hora", "medico", "paciente"];
-                doc.autoTable(columns, body, { margin: { top: 70 } });
+                doc.autoTable({
+                    columns: columns,
+                    body: body,
+                    margin: { top: 70 }
+                });
+
 
                 doc.save("Cita_dia.pdf");
                 //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
@@ -326,7 +366,7 @@ href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min
         event.preventDefault();
         sendEmail()
     }
-
+    
 let seleccion_doctor=[]
 let seleccionado=[]
 let loading_select=false
@@ -377,269 +417,145 @@ let loading_select=false
         }
     }
 
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-    // --------------------------------------------------------------------------------------------------------------------
-
-    let calendarElement;
-let fecha_desde = "";
-let fecha_hasta = "";
-let pdfUrl = null;
-let calendarInstance;
-
-onMount(() => {
-    if (calendarElement) {
-        calendarInstance = new coreui.Calendar(calendarElement, {
-            locale: "es-ES",
-            calendars: 1,
-            range: true,
-        });
-
-        calendarElement.addEventListener("changed.coreui.calendar", (event) => {
-            if (event.detail.startDate && event.detail.endDate) {
-                fecha_desde = formatDate(event.detail.startDate);
-                fecha_hasta = formatDate(event.detail.endDate);
-                console.log("Fecha desde:", fecha_desde);
-                console.log("Fecha hasta:", fecha_hasta);
-            }
-        });
-    }
-});
-
-function formatDate(date) {
-    return date.toISOString().split("T")[0]; // Formato "YYYY-MM-DD"
-}
+</script>
 
 
-
-    async function seleccion(){
-
-        console.log(document.getElementById('fecha_desde'))
-        console.log(document.getElementById('fecha_hasta'))
-
-        if (!fecha_de || !fecha_hasta) {
-        alert("Por favor selecciona un rango de fechas.");
-        return;
-        }
-
-        switch (opcion) { //MENU DE SELECCION
-    case 1:
-
-    try {
-        console.log("entra a la API");
-      const response = await fetch("http://127.0.0.1:8000/reportes_citas/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
-      });
-
-      if (!response.ok) throw new Error("Error al generar el reporte");
-
-      const pdfBlob = await response.blob();
-      pdfUrl = URL.createObjectURL(pdfBlob);
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Hubo un problema al generar el PDF.");
-    }
-     break;
-
-
-    case 2:
-        
-        try {
-            console.log("entra a la API");
-        const response = await fetch("http://127.0.0.1:8000/reportes_diagnosticos/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
-        });
-
-        if (!response.ok) throw new Error("Error al generar el reporte");
-
-        const pdfBlob = await response.blob();
-        pdfUrl = URL.createObjectURL(pdfBlob);
-        } catch (error) {
-        console.error("Error:", error);
-        alert("Hubo un problema al generar el PDF.");
-        }
-        break;
-
-    
-    case 3:
-
-        try {
-            console.log("entra a la API");
-        const response = await fetch("http://127.0.0.1:8000/reportes_historial/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
-        });
-
-        if (!response.ok) throw new Error("Error al generar el reporte");
-
-        const pdfBlob = await response.blob();
-        pdfUrl = URL.createObjectURL(pdfBlob);
-        } catch (error) {
-        console.error("Error:", error);
-        alert("Hubo un problema al generar el PDF.");
-        }
-
-
-        break;
-    default:
-        alert ("No has seleccionado el tipo de reporte");
-}
-    }
-
-
-  async function generarReporte() {
-    console.log("s", calendarInstance)
-    let fecha_de= calendarInstance._startDate;
-    let fecha_hasta= calendarInstance._endDate
-    console.log(fecha_de)
-    console.log(fecha_hasta)
-
-    try {
-        console.log("entra a la API");
-      const response = await fetch("http://127.0.0.1:8000/reportes_historial/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fecha: fecha_de, fecha2: fecha_hasta }),
-      });
-
-      if (!response.ok) throw new Error("Error al generar el reporte");
-
-      const pdfBlob = await response.blob();
-      pdfUrl = URL.createObjectURL(pdfBlob);
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Hubo un problema al generar el PDF.");
-    }
-  }
-
-
-</script> 
-
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.10.0/dist/css/coreui.min.css"
+/>
 <Navbaradmin></Navbaradmin>
 
-    <div class="container d-flex justify-content-center">
-       <div class="card shadow-lg p-4 justify-content" style="width: 500px; background: #f0f4f8; border-radius: 12px;">
-            <h3 class="text-center mb-4 text-danger">Reportes</h3>
 
-            <!-- Selector de Reporte -->
-            <select class="form-select mb-3" id="opcion" required>
-                    <option value="0" selected>SELECCIONE</option>
-                    <option value="1">Citas registradas</option>
-                    <option value="2">Diagnosticos de usuarios</option>
-                    <option value="3">Usuarios que han tenido citas</option>
+
+
+  <div class="container" style="margin-top: 3%;">
+
+    <div class="text-center pt-1 fs-3">
+        <p>Reportes</p>
+    </div>
+    <div class="row g-2">
+        <div class="col-xl-1"></div>
+        <div class=" col-xl-10 text-center fs-3 py-5">
+            <select class="form-select" id="opcion" style="" required>
+                <option value="1">Citas registradas</option>
+                <option value="2">Diagnosticos de usuarios</option>
+                <option value="3">Usuarios que han tenido citas</option>
             </select>
-            
-            <!-- Calendario -->
-            <div class="d-flex justify-content-center">
-                <div bind:this={calendarElement} class="border rounded p-2 bg-white calendar-container"></div>
-            </div>        
-
-            <!-- Botones --> 
-            <button on:click={seleccion} class="btn btn-success mt-3 ">Generar</button>
-            <!-- <button on:click={showModal} class="btn btn-secondary mt-2 ">Enviar correo</button> -->
-       </div>
+        </div>
     </div>
 
+    <div class="row">
+        <!-- <div class="col-xl-6 text-start">
+            Desde:
+            <input type="date" name="citas" id="desde_citas" class="form-control"/>
+        </div>
+        <div class="col-xl-6">              
+            Hasta:
+            <input type="date" name="citas" id="hasta_citas" class="form-control"/>
+        </div> -->
 
 
-<!-- 
 
-    <div class="modal fade" id="sendpdf" tabindex="-1" aria-labelledby="rModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div>
-                        <h3>Enviar correo</h3>
-                    </div>
-                    <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={Ocultar()}></button>
+        <div class="d-flex justify-content-center"><!--data-coreui-start-date="2022/08/23"-->
+            <div bind:this={calendarElement} class="border rounded" >
+            </div>
+        </div>
+          
+          
+
+    </div>
+
+    <div class="row">
+        <button type="button" class="btn btn-success mt-4"   on:click={generar}>Generar</button>
+        <button type="button" class="btn btn-dark mt-4"   on:click={showModal} >Enviar correo</button>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="sendpdf" tabindex="-1" aria-labelledby="rModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3>Enviar correo</h3>
                 </div>
-                <div class="modal-body row">
-                    
-                    <label>Doctores
-                        <select class="form-control" name="" id="select_email" on:change={select_change}>
-                            <option value="" disabled selected class="form-select">Seleccione un medico</option>
-                        </select>
-                    </label>
+                <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={Ocultar()}></button>
+            </div>
+            <div class="modal-body row">
+                
+                <label>Doctores
+                    <select class="form-control" name="" id="select_email" on:change={select_change}>
+                        <option value="" disabled selected class="form-select">Seleccione un medico</option>
+                    </select>
+                </label>
 
-                    {#if loading_select}
-                        <p style="margin-top: 2%;">Correos a los cuales se les enviara:</p>
-                        {#each a as todos_d, i}
-                            {console.log("aca entro o no",a)}
-                            <span class="mt-1" style="font-weight: bold;">{todos_d}</span>
-                        {/each}
-                    {/if}
-                    
-                    <label class="mt-3">Asunto del mensaje:
-                        <input type="text" id="asunto_c" class="form-control">
-                    </label>
+                {#if loading_select}
+                    <p style="margin-top: 2%;">Correos a los cuales se les enviara:</p>
+                    {#each a as todos_d, i}
+                        {console.log("aca entro o no",a)}
+                        <span class="mt-1" style="font-weight: bold;">{todos_d}</span>
+                    {/each}
+                {/if}
+                
+                <label class="mt-3">Asunto del mensaje:
+                    <input type="text" id="asunto_c" class="form-control">
+                </label>
 
-                    <label>Mensaje:
-                        <input type="text" name="" id="mensaje_c" class="form-control">
-                    </label>
+                <label>Mensaje:
+                    <input type="text" name="" id="mensaje_c" class="form-control">
+                </label>
 
-                    <label for="">Link:
-                        <input type="text" id="linking" class="form-control">
-                    </label>
-                    
-                    <input type="submit" value="Enviar" class="mt-3 btn btn-info" on:click={formSubmit}>
-                </div>
+                <label for="">Link:
+                    <input type="text" id="linking" class="form-control">
+                </label>
+                
+                <input type="submit" value="Enviar" class="mt-3 btn btn-info" on:click={formSubmit}>
             </div>
         </div>
     </div>
+</div>
 
 
-    <div id="Mostrarusuario">
-        <div class="container py-4">
-            <h2 class="mb-4">Citas agendadas</h2>
-            {#if loading}
-                <p class="text-center">Cargando datos...</p>
-            {:else if error}
-                <p class="text-red-500">Error: {error}</p>
-            {:else}
-                <div class="overflow-x-auto">
-                    <table
-                        class="min-w-full bg-white border border-gray-300"
-                        id="myTable"
-                    >
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2 border">Paciente</th>
-                                <th class="px-4 py-2 border">Doctor</th>
-                                <th class="px-4 py-2 border">Fecha</th>
-                                <th class="px-4 py-2 border">Hora</th>
+<div id="Mostrarusuario">
+    <div class="container py-4">
+        <h2 class="mb-4">Citas agendadas</h2>
+        {#if loading}
+            <p class="text-center">Cargando datos...</p>
+        {:else if error}
+            <p class="text-red-500">Error: {error}</p>
+        {:else}
+            <div class="overflow-x-auto">
+                <table
+                    class="min-w-full bg-white border border-gray-300"
+                    id="myTable"
+                >
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border">Paciente</th>
+                            <th class="px-4 py-2 border">Doctor</th>
+                            <th class="px-4 py-2 border">Fecha</th>
+                            <th class="px-4 py-2 border">Hora</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {#each todos as todo}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border">{todo.paciente}</td
+                                >
+                                <td class="px-4 py-2 border">{todo.medico}</td>
+                                <td class="px-4 py-2 border">{todo.fecha}</td>
+                                <td class="px-4 py-2 border">{todo.hora}</td>
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            {#each todos as todo}
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-2 border">{todo.paciente}</td
-                                    >
-                                    <td class="px-4 py-2 border">{todo.medico}</td>
-                                    <td class="px-4 py-2 border">{todo.fecha}</td>
-                                    <td class="px-4 py-2 border">{todo.hora}</td>
-                                </tr>
-                            {/each}
-                        </tbody>
-                    </table>
-                </div>
-            {/if}
-        </div>
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+        {/if}
     </div>
-
+</div>
 
 <style>
     .container {
@@ -651,14 +567,6 @@ function formatDate(date) {
         background-color: #f9f9f9; /* Color de fondo claro */
     }
 
-    @media (max-width: 768px) {
-        .col-md-4 {
-            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeñas */
-        }
-    }
-</style> -->
-
-
-
+</style>
 
 
