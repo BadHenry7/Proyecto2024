@@ -5,6 +5,7 @@
     let todos2 = {};
     let loading = true;
     let error = null;
+    let visualizar=null
    
     async function Generar() {
         let opcion = document.getElementById("opcion").value;

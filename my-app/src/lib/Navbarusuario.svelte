@@ -165,7 +165,7 @@
             <a class="nav-link" href="/usuario/Reportes">Reportes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/certificados">Certificados</a><!---->
+            <a class="nav-link" href="/usuario/certificados">Incapacidad</a><!---->
           </li>
         <!--  <li class="nav-item">
             <a class="nav-link" href="/usuario/perfil">Perfil</a>
