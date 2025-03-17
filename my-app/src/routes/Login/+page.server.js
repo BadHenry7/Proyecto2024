@@ -1,6 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 import {SECRET_CLIENT_ID,SECRET_CLIENT_SECRET} from '$env/static/private';
+import {MICROSOFT_CLIENT_ID, MICROSOFT_CLIENT_SECRET} from '$env/static/private';
+console.log("verificando")
 
 
 export const actions = {
@@ -23,10 +25,21 @@ export const actions = {
           });
           console.log("------  ----   --   ", authorizeUrl)
           throw redirect(302,authorizeUrl);
-      
+    },
 
-    
 
-    }
+      OAuth2Microsoft: async () => {
+
+
+        console.log(MICROSOFT_CLIENT_ID)
+        console.log(MICROSOFT_CLIENT_SECRET)
+      const redirectURL = 'http://localhost:5173/oauth-microsoft';
+
+      const authorizeUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&redirect_uri=${redirectURL}&scope=openid email profile User.Read&response_mode=query&prompt=consent`;
+
+
+
+      throw redirect(302, authorizeUrl);
+  }
 
 }

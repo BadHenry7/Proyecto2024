@@ -138,7 +138,7 @@
 
                     }, 3000);
                 
-                    //sendEmail()
+                   //sendEmail()
                 } else {
                     alert("Usuario ya registrado");
                 }

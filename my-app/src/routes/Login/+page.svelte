@@ -293,6 +293,7 @@ async function token(event) {
 
                         <button class="form-control btn" type="submit">Inicia sesion con Google</button>
                         </form>    
+                        
                     </div>
                 </div>
                 <div class="col-sm-2 col-md-3 col-xl-6 col-lg-3 col-2">
@@ -301,7 +302,9 @@ async function token(event) {
                             <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width="24">
 
                         </span>
+                        <form method="post" action="?/OAuth2Microsoft">
                         <button class="form-control"  style="font-size: 14px;">Inicia sesion con Microsoft</button>
+                        </form>
                     </div>
 
                     
