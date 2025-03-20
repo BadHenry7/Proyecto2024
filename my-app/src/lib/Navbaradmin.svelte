@@ -9,8 +9,8 @@ let todos = {};
 let error = null;
 var v_id=1
 var henry=true
-
-
+let token_v={}
+let image=""
 onMount(async() => {
 
   let cookies = document.cookie
@@ -25,6 +25,9 @@ onMount(async() => {
         let name = sesionGoogle.nombre;
         let id = sesionGoogle.id;
         let correo = sesionGoogle.email;
+        image= sesionGoogle.foto
+        console.log(image)
+
         let todos2=await token_obtener(correo, "v_password", token_v, "true");
         let encontrado = { name, id, correo, todos2};
         miStorage.setItem("usuario", JSON.stringify(encontrado));
@@ -372,7 +375,7 @@ async function editar() {
 
 
                 <div class="col-md-6">
-                  <img src="/image.png" alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                  <img src={image} alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
                   
                 </div>
              </div>
