@@ -204,6 +204,50 @@
             console.log(error);
         }
     }
+
+    async function incapacidad() {
+        try {
+
+            let miStorage = window.localStorage;
+            let usuario = JSON.parse(miStorage.getItem('usuario'));
+            let v_id_doctor=usuario.id
+    
+
+            let v_id_paciente= todos.id
+            console.log(v_id_paciente)
+
+            
+            let v_descripcion= document.getElementById('v_descripcion').value;
+            console.log(v_descripcion)
+
+            let v_observaciones= document.getElementById('v_observaciones').value;
+            console.log(v_observaciones)
+
+            let v_dia_incapacidad= document.getElementById('v_dia_incapacidad').value;
+            console.log(v_dia_incapacidad)
+
+            const response = await fetch("http://127.0.0.1:8000/incapacidad", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    descripcion: v_descripcion,
+                    dias_de_incapacidad: v_dia_incapacidad,
+                    id_usuario: v_id_paciente,
+                    id_doctor: v_id_doctor,
+                    observaciones: v_observaciones
+                }),
+            });
+
+            alert("añadido :D")
+
+        } catch (e) {
+            error = e.message;
+            console.log(error);
+        } 
+    }
+
 </script>
 
 <Navbarmedico></Navbarmedico>
@@ -322,6 +366,10 @@
                     <button class="btn btn-outline-info" on:click={editar}
                         >Añadir historial medico</button
                     >
+                    <button class="btn btn-outline-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#incapacidad_modal">Añadir incapacidad medica</button
+                >
                 </div>
             </div>
         {/if}
@@ -459,6 +507,49 @@
                     >
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade"  id="incapacidad_modal" tabindex="-1" aria-labelledby="rModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mleModalLabel">
+                    <b>Incapacidad medica</b>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             <p>Ingrese los datos de la incapacidad medica:</p>
+            
+                <div class="row">
+                    <div class="col-xl-12 text-center">
+                    <label for="">Duracion de la incapacidad:
+                        <input type="text" class="form-control" id="v_dia_incapacidad">
+                    </label>
+                       
+                </div>
+                    <div class="col-xl-12 text-center">
+                        <label for="">Descripcion:
+                        </label>
+                            <textarea type="text" class="form-control" id="v_descripcion"></textarea>
+                    </div>
+                    
+                </div>
+                <div class=" text-center"><!--Y como se pondria-->
+                        <label for="">Observaciones
+                        </label>
+                        <textarea type="text" class="form-control" id="v_observaciones"></textarea>
+                </div>
+                
+            </div>
+
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-outline-info" on:click={incapacidad}>Añadir incapacidad medica</button>
+            </div>
+          
         </div>
     </div>
 </div>

@@ -600,28 +600,30 @@ import Navbaradmin from "../../../lib/Navbaradmin.svelte";
 
 <Navbaradmin></Navbaradmin>
 <div class="container">
-    <p class="mt-4 text-center fs-2 "><b>Estadisticas</b></p>
+    
     
 </div>
-<div class="iframe-container">
+<div class=" mt-3 mb-3 " style=" " >
     <iframe 
         title="powerbibibi" 
         src="https://app.powerbi.com/view?r=eyJrIjoiNTNlYzFlZmYtMjM0ZS00NjU1LThhZDktNDExZjZjNGE2YjY2IiwidCI6IjFlOWFhYmU4LTY3ZjgtNGYxYy1hMzI5LWE3NTRlOTI0OTlhZSIsImMiOjR9" 
         frameborder="0" 
-        allowfullscreen>
+        allowfullscreen style="width: 100%; height: 822px;">
+        
     </iframe>
 </div>
 
 <style>
     .iframe-container {
-        display: flex;
+        
         justify-content: center;
         align-items: center;
+        
         
     }
 
     iframe {
-        width: 65vw;
+        width: 165px;
         height: 92vh;
     }
 

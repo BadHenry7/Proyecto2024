@@ -75,3 +75,7 @@ pip install matplotlib
 
 pip install jwt
 pip install PyJWT
+
+
+CANCELAR COMMIT:
+git reset HEAD~1

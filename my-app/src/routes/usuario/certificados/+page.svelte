@@ -1,8 +1,41 @@
 <script>
+
     import Navbarusuario from "$lib/Navbarusuario.svelte";
     import { onMount } from "svelte";
 
-    function generarPDF() {
+    let v_id_usuario=0
+    let error=null
+    let todos={}
+    let v_name=""
+    onMount(async () => {
+        let mistorage=window.localStorage    
+        let v_usuario = JSON.parse(mistorage.getItem("usuario"));
+        v_id_usuario = v_usuario.id;
+        v_name= v_usuario.name
+      }
+    )
+    
+
+    async function generarPDF() {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/incapacidad_medica", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id_usuario: v_id_usuario
+                }),
+            });
+            const data = await response.json();
+            todos= data
+            console.log("data toma",data)
+            loading=true
+        }catch(e){
+            error= e.mensaje
+        }
+
+
         const { jsPDF } = window.jspdf; 
         const doc = new jsPDF();
         // Título
@@ -14,32 +47,43 @@
         doc.setLineWidth(0.5);
         doc.line(20, 25, 190, 25);
 
-        // Contenido
+        // Contenido 
         doc.setFont("times", "normal");
         doc.setFontSize(12);
-        doc.text("Estimado/a paciente,", 20, 40);
+        doc.text(`Estimado/a ${v_name}` ,20, 40);
+        
         doc.text(
-            "Por medio del presente, le informamos que debido a su condición médica, se le ha otorgado una incapacidad médica de", 
+            `El motivo de la incapacidad es:  ${todos[0].descripcion}`, 
             20, 50, { maxWidth: 170 }
         );
+        
+        doc.text(
+            `Por medio del presente, le informamos que debido a su condición médica, se le ha otorgado una incapacidad médica de: `, 
+            20, 70, { maxWidth: 170 }
+        );
         doc.setFont("times", "bold");
-        doc.text("7 días (1 semana)", 20, 60);
+        doc.text(`${todos[0].dias_de_incapacidad}`, 20, 80);
+        
+        doc.setFont("times", "bold");
+        doc.text(`A partir de la fecha: ${todos[0].fecha}`, 20, 90);
+
+
         doc.setFont("times", "normal");
         doc.text(
-            "Durante este período, se recomienda reposo absoluto y el seguimiento de las indicaciones médicas brindadas.",
-            20, 70, { maxWidth: 170 }
+            `Durante este período, se recomienda reposo absoluto y el seguimiento de las siguientes observaciónes \n ${todos[0].observaciones}`,
+            20, 100, { maxWidth: 170 }
         );
 
         doc.text(
             "En caso de requerir una extensión de la incapacidad o presentar síntomas adicionales, le recomendamos acudir nuevamente a consulta médica.",
-            20, 85, { maxWidth: 170 }
+            20, 125, { maxWidth: 170 }
         );
 
         // Espacio para la firma
-        doc.text("Atentamente,", 20, 120);
-        doc.text("__________________________", 20, 135);
-        doc.text("Dr. Adm", 20, 145);
-        doc.text("Médico General", 20, 155);
+        doc.text("Atentamente,", 20, 145);
+        doc.text(`${todos[0].observaciones}`, 20, 155);
+        doc.text("Dr. Adm", 20, 165);
+        doc.text("Médico General", 20, 175);
 
         // Guardar PDF
         doc.save("Incapacidad_Medica.pdf");

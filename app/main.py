@@ -11,6 +11,7 @@ from red.botsi_routes import router as botci_router
 from app.routes.token_routes import router as token_router
 from app.routes.modulo_routes import router as modulo_router
 from app.routes.moduloxperfil_routes import router as moduloxperfil_router
+from app_Dynamobd.app import router as incapacidad_Dunamobd
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,7 +32,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173","http://localhost:3000","http://127.0.0.1:8000","https://api-nodejs-buxf.onrender.com",  # URL local de Svelte en desarrollo
-        "https://d4fe-161-10-137-76.ngrok-free.app","https://607f-161-10-137-76.ngrok-free.app", "http://26.156.183.54:5173'"  # URL de ngrok
+        "https://7b38-191-110-53-15.ngrok-free.app","https://abff-191-110-53-15.ngrok-free.app", "http://26.156.183.54:5173'"  # URL de ngrok
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
@@ -50,6 +51,8 @@ app.include_router(botci_router)
 app.include_router(token_router)
 app.include_router(modulo_router)
 app.include_router(moduloxperfil_router)
+app.include_router(incapacidad_Dunamobd)
+
 
 
 

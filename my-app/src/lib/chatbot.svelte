@@ -24,17 +24,27 @@
                         }),
                     });
                     const data = await response.json();
+                    console.log("data toma",data)
                     loading=true
-                    
-                  
-                    setTimeout(()=>{
+                                 
+            
+                    // Agrega la respuesta del bot al chat
+                for (let i = 0; i < data.length; i++) {
+                    setTimeout(() => {
+                        loading = true;
+                        // Muestra el loading antes de enviar el mensaje
+                        console.log("Mostrando loading...");
                         
-                // Agrega la respuesta del bot al chat
-                    if (data.length > 0) {
-                        mensajes = [...mensajes, { texto: data[0].text, emisor: "bot" }];
-                        loading=false
-                    }
-                    },3000)
+                        setTimeout(() => {
+                            // Envía el mensaje después de un pequeño retraso
+                            mensajes = [...mensajes, { texto: data[i].text, emisor: "bot",  image: data[i].image? data[i].image:null  }];
+                            loading = false;
+                            console.log("Mensaje enviado:", data[i].text);
+                        }, 1000); // Esto simula que mientras loading es true, después de 1 segundo llega el mensaje
+
+                    }, i * 3000); // Cada mensaje se envía con 3s de diferencia
+                }
+
 
                 } catch (e) {
                     console.error("Error:", e);
@@ -65,7 +75,15 @@
                 {#each mensajes as msg}
                     <div class="mt-2 d-flex {msg.emisor === 'user' ? 'justify-content-end' : 'justify-content-start'}">
                         <div class="{msg.emisor === 'user' ? 'mensaje-user' : 'mensaje-bot'}">
+                            {#if msg.texto}
                             {msg.texto}
+                            {:else}
+                            <img src={msg.image} 
+                                class="img-fluid"  alt="">
+                            
+                            {/if}
+
+
                         </div>
                     </div>
                 {/each}        
