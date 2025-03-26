@@ -257,7 +257,7 @@ async function token(event) {
             style="text-align: center; margin-top: 4%; margin-bottom: 3%; "
             class="fs-3"
         >
-            <b>Inicio de sesion</b>
+            <b>Inicio de sesión</b>
         </div>
         <div class="row justify-content-center g-2">
             <div class=" mx-5 col-md-6 mb-3">
@@ -291,7 +291,7 @@ async function token(event) {
                           </span>
                         <form method="post" action="?/OAuth2">
 
-                        <button class="form-control btn" type="submit">Inicia sesion con Google</button>
+                        <button class="form-control btn" type="submit">Inicia sesión con Google</button>
                         </form>    
                         
                     </div>
@@ -303,7 +303,7 @@ async function token(event) {
 
                         </span>
                         <form method="post" action="?/OAuth2Microsoft">
-                        <button class="form-control"  style="font-size: 14px;">Inicia sesion con Microsoft</button>
+                        <button class="form-control"  style="font-size: 14px;">Inicia sesión con Microsoft</button>
                         </form>
                     </div>
 

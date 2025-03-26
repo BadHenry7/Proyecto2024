@@ -8,6 +8,7 @@ from app.routes.diagnosticos_routes import router as Diagnosticos_router
 from app.routes.historial_routes import router as historial_router
 from app.routes.sintomas_routes import router as sintomas_router
 from red.botsi_routes import router as botci_router
+
 from app.routes.token_routes import router as token_router
 from app.routes.modulo_routes import router as modulo_router
 from app.routes.moduloxperfil_routes import router as moduloxperfil_router

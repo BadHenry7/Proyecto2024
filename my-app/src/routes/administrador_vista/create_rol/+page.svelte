@@ -315,7 +315,7 @@ let loading_estado=true
 
 
 <div class="card-body container"> 
-  <div class="container text-center"><b class="fs-4">¡Creacion de roles!</b></div>
+  <div class="container text-center"><b class="fs-4">Creación de roles!</b></div>
 
   <div class="row">
     <div class="col-xl-6">
@@ -323,7 +323,7 @@ let loading_estado=true
       <input type="text" id="name_m" class="form-control" />
     </div>
     <div class="col-xl-6">
-      <label for="" >Descripcion</label>
+      <label for="" >Descripción</label>
       <input type="text" id="descripcion" class="form-control" />
     </div>
   </div>
@@ -442,7 +442,7 @@ let loading_estado=true
           <thead>
             <tr class="bg-primary text-white">
               <th class="py-2 border">Nombre</th>
-              <th class="py-2 border">descripcion</th>
+              <th class="py-2 border">descripción</th>
               <th class="py-2 border">Estado</th>
               <th class="py-2 border">Opcion</th>
             </tr>
@@ -499,7 +499,7 @@ let loading_estado=true
             </div>
 
             <div class="col-lx-4">
-              <label for="">Descripcion:</label>
+              <label for="">Descripción:</label>
               <input type="text" id="descrition"   class="form-control">
             </div>
 

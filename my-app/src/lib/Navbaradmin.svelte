@@ -295,7 +295,8 @@ async function editar() {
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/botci">Botci :D</a>
+            <a class="nav-link " href="/botci">SmartBot IA🤖</a>
+
           </li>
 
         </ul>
@@ -375,8 +376,12 @@ async function editar() {
 
 
                 <div class="col-md-6">
+                  {#if image}
                   <img src={image} alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
-                  
+                  {:else}
+                  <img src={"/image.png"} alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
+
+                  {/if}
                 </div>
              </div>
 
