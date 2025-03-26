@@ -79,3 +79,7 @@ pip install PyJWT
 
 CANCELAR COMMIT:
 git reset HEAD~1
+
+
+------Para dynamodb:
+pip install boto3
