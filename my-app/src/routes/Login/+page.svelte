@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-  import { token_obtener } from '$lib';
+    import { token_obtener } from '$lib';
     let todos = {};
     var todos2 = {};
 
@@ -284,26 +284,25 @@ async function token(event) {
          
 
             <div class="row">
-                <div class="col-sm-2 col-md-3 col-xl-6 col-lg-2 col-2">
-                    <div class="input-group" >
-                        <span class="input-group-text">
-                            <img src="https://ssl.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" width="24">
-                          </span>
-                        <form method="post" action="?/OAuth2">
+                <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 col-1">
 
-                        <button class="form-control btn" type="submit">Inicia sesión con Google</button>
+                </div>
+                <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5 col-5">
+                    <div class="" >
+                        <form method="post" action="?/OAuth2">
+                            <button class="form-control btn btn_login" type="submit">
+                                <img src="https://ssl.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" width="26">
+                            </button>
                         </form>    
                         
                     </div>
                 </div>
-                <div class="col-sm-2 col-md-3 col-xl-6 col-lg-3 col-2">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width="24">
-
-                        </span>
-                        <form method="post" action="?/OAuth2Microsoft">
-                        <button class="form-control"  style="font-size: 14px;">Inicia sesión con Microsoft</button>
+                <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5 col-5">
+                    <div class="">
+                        <form method="post" action="?/OAuth2Microsoft">    
+                            <button class="form-control btn btn_login"  style="font-size: 14px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width="26">
+                            </button>   
                         </form>
                     </div>
 
@@ -424,6 +423,11 @@ async function token(event) {
 
     .btn-primary:hover {
         background-color: #1bd1d1; /* Color de fondo al pasar el mouse */
+    }
+
+    .btn_login:hover {
+        background-color: rgb(27, 27, 27);
+        transition: all 0.4s ease; /* Añadir transición para suavizar el movimiento */
     }
 
     @media (max-width: 768px) {

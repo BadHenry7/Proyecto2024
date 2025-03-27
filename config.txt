@@ -86,7 +86,7 @@ pip install jwt
 pip install PyJWT
 
 
-CANCELAR COMMIT:
+DEVOLVER COMMIT:
 git reset HEAD~1
 
 

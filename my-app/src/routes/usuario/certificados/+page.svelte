@@ -6,6 +6,7 @@
     let v_id_usuario=0
     let error=null
     let todos={}
+    let todos2={}
     let v_name=""
     onMount(async () => {
         let mistorage=window.localStorage    
@@ -28,12 +29,28 @@
                 }),
             });
             const data = await response.json();
-            todos= data
-            console.log("data toma",data)
+            todos= data            
+
+            console.log("Estoy aca?")
+            const response2 = await fetch("http://127.0.0.1:8000/get_user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: todos[0].id_doctor,
+                }),
+            });
+            const data2 = await response2.json();
+            todos2=data2
+
             loading=true
         }catch(e){
             error= e.mensaje
         }
+
+
+        //Poner aca lo del doctor todos[0].id_doctor}
 
 
         const { jsPDF } = window.jspdf; 
@@ -81,9 +98,8 @@
 
         // Espacio para la firma
         doc.text("Atentamente,", 20, 145);
-        doc.text(`${todos[0].observaciones}`, 20, 155);
-        doc.text("Dr. Adm", 20, 165);
-        doc.text("Médico General", 20, 175);
+        doc.text(`${todos2.nombre} ${todos2.apellido}`, 20, 155);
+        doc.text("Médico General", 20, 165);
 
         // Guardar PDF
         doc.save("Incapacidad_Medica.pdf");
