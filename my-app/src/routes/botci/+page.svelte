@@ -6,7 +6,7 @@
     let seleccionados = []; // Lista de síntomas seleccionados
     let enfermedad = null; // Resultado de la predicción
     let filtro = ""; // Para la búsqueda en tiempo real
-
+    let probabilidad=null;
     // Cargar los síntomas al montar el componente
     onMount(async () => {
         try {
@@ -19,7 +19,7 @@
     });
 
     function mostrar() {
-        Swal.fire("Su enfermedad es " + enfermedad);
+        Swal.fire("Su enfermedad es " + enfermedad+" con una probabilidad de "+probabilidad);
     }
 
     function manejarCambioCheckbox(e, sintoma) {
@@ -41,6 +41,7 @@
             });
             const data = await res.json();
             enfermedad = data.enfermedad;
+            probabilidad= data.probabilidad;
             mostrar();
         } catch (error) {
             console.error("Error al predecir la enfermedad:", error);
