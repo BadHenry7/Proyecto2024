@@ -141,61 +141,17 @@
                     margin: { top: 70 },
                 });
 
-                //modal de previsualizacion
+                //modal de previsualizacion de pdf
                 const pdfBlob = doc.output("blob");
                 pdfUrl = URL.createObjectURL(pdfBlob);
 
                 document.getElementById("pdfvista").src = pdfUrl;
-                //window.open(pdfUrl, "_blank");
-
-                //const iframe = document.createElement("iframe");
-                //iframe.style.width = "100%";
-                //iframe.style.height = "600px";
-                //iframe.src = pdfUrl;
-                //
-                //const modal = document.createElement("div");
-                //modal.style.position = "fixed";
-                //modal.style.top = "0";
-                //modal.style.left = "0";
-                //modal.style.width = "100vw";
-                //modal.style.height = "100vh";
-                //                //modal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-                //                //modal.style.display = "flex";
-                //                //modal.style.justifyContent = "center";
-                //                //modal.style.alignItems = "center";
-                //                //modal.appendChild(iframe);
-                //
-                //const closeButton = document.createElement("button");
-                //closeButton.textContent = "Cerrar";
-                //closeButton.style.position = "absolute";
-                //closeButton.style.top = "20px";
-                //closeButton.style.right = "20px";
-                //closeButton.style.padding = "10px";
-                //closeButton.style.backgroundColor = "red";
-                //closeButton.style.color = "white";
-                //closeButton.style.border = "none";
-                //                //closeButton.style.cursor = "pointer";
-                //                //closeButton.onclick = () => {
-                //                //    document.body.removeChild(modal);
-                //                //    URL.revokeObjectURL(pdfUrl);
-                //                //};
-                //
-                //const buttonContainer = document.createElement("div");
-                //                //buttonContainer.style.position = "absolute";
-                //                //buttonContainer.style.top = "10px";
-                //                //buttonContainer.style.right = "10px";
-                //                //buttonContainer.appendChild(closeButton);
-                //                //modal.appendChild(buttonContainer);
-                //
-                //document.body.appendChild(modal);
-
-                //doc.save("Cita_dia.pdf");
-                //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "bottom-start",
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 1500,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
@@ -269,14 +225,18 @@
                     body: body2,
                     margin: { top: 70 },
                 });
+                
+                //modal de previsualizacion de pdf
+                const pdfBlob = doc.output("blob");
+                pdfUrl = URL.createObjectURL(pdfBlob);
 
-                doc.save("diagnostico.pdf");
-                //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                document.getElementById("pdfvista").src = pdfUrl;
+                
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "bottom-start",
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 1500,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
@@ -285,8 +245,27 @@
                 });
                 Toast.fire({
                     icon: "success",
-                    title: "Reporte de diagnostico generado",
+                    title: "Reporte generado",
                 });
+
+
+                // doc.save("diagnostico.pdf");
+                // //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                // const Toast = Swal.mixin({
+                //     toast: true,
+                //     position: "bottom-start",
+                //     showConfirmButton: false,
+                //     timer: 3000,
+                //     timerProgressBar: true,
+                //     didOpen: (toast) => {
+                //         toast.onmouseenter = Swal.stopTimer;
+                //         toast.onmouseleave = Swal.resumeTimer;
+                //     },
+                // });
+                // Toast.fire({
+                //     icon: "success",
+                //     title: "Reporte de diagnostico generado",
+                // });
                 
             } else {
                 let fecha_1 = new Date(fecha_desde);
@@ -355,13 +334,17 @@
                     margin: { top: 70 },
                 });
 
-                doc.save("Historial_citas.pdf");
-                //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                //modal de previsualizacion de pdf
+                const pdfBlob = doc.output("blob");
+                pdfUrl = URL.createObjectURL(pdfBlob);
+
+                document.getElementById("pdfvista").src = pdfUrl;
+                
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "bottom-start",
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 1500,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;
@@ -370,8 +353,26 @@
                 });
                 Toast.fire({
                     icon: "success",
-                    title: "Reporte de historial de usuario generado",
+                    title: "Reporte generado",
                 });
+
+                // doc.save("Historial_citas.pdf");
+                // //Popup window position, can be 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
+                // const Toast = Swal.mixin({
+                //     toast: true,
+                //     position: "bottom-start",
+                //     showConfirmButton: false,
+                //     timer: 3000,
+                //     timerProgressBar: true,
+                //     didOpen: (toast) => {
+                //         toast.onmouseenter = Swal.stopTimer;
+                //         toast.onmouseleave = Swal.resumeTimer;
+                //     },
+                // });
+                // Toast.fire({
+                //     icon: "success",
+                //     title: "Reporte de historial de usuario generado",
+                // });
             }
         } catch (e) {
             error = e.message;

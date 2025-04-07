@@ -19,7 +19,7 @@
     });
 
     function mostrar() {
-        Swal.fire("Su enfermedad es " + enfermedad+" con una probabilidad de "+probabilidad);
+        Swal.fire("Tiene  un " + probabilidad+" de probabilidad de tener "+enfermedad);
     }
 
     function manejarCambioCheckbox(e, sintoma) {

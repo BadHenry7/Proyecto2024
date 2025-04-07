@@ -13,7 +13,6 @@ aws_region = os.getenv('AWS_REGION')
 
 
 
-
 #crea un cliente de Dynamodb
 dynamodb= boto3.client('dynamodb',
               region_name= aws_region,
