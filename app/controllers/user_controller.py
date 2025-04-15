@@ -27,7 +27,8 @@ class UserController:
                 conn.commit()
                 conn.close()
                 id=cursor.lastrowid
-                return {id}#aja
+                return {"id": id, "Informacion": "Creado"}
+
 
         except mysql.connector.Error as err:
             conn.rollback()
@@ -152,7 +153,7 @@ class UserController:
             cursor.execute("""SELECT usuario.*, rol.*
                 FROM usuario
                 JOIN rol ON usuario.id_rol = rol.id
-                        WHERE usuario.id_rol!=1;
+                        WHERE usuario.id_rol!=1
 
                            
                            
@@ -295,6 +296,13 @@ class UserController:
             print("user", user)
             conn = get_db_connection()
             cursor = conn.cursor()
+            cursor.execute("SELECT genero, edad,id_rol password FROM usuario WHERE id = %s", (user.id,))
+            actual = cursor.fetchone()
+            genero = user.genero if user.genero is not None else actual[0]
+            edad = user.edad if user.edad is not None else actual[1]
+            password = user.password if user.password is not None else actual[2]
+            rol=user.id_rol if user.id_rol is not None else actual[3]
+            
             cursor.execute("""
             UPDATE usuario
             SET usuario = %s,
@@ -308,7 +316,7 @@ class UserController:
             edad=%s, 
             password=%s
             WHERE id = %s
-            """,(user.usuario,user.nombre,user.apellido,user.documento,user.telefono,user.id_rol,user.estado,user.genero, user.edad,user.password,user.id,))
+            """,(user.usuario,user.nombre,user.apellido,user.documento,user.telefono,rol,user.estado,genero, edad,password,user.id,))
             conn.commit()
            
             return {"resultado": "Usuario actualizado correctamente"} 
@@ -369,6 +377,7 @@ class UserController:
                     'usuario':data[1],
                     'password':data[2],
                     'nombre':data[3],
+                    'apellido': data [4],
                     'id':data[0],
                     'rol':data[7],
 
@@ -470,7 +479,7 @@ class UserController:
     #         return res.json(rows[0]);  // Si existe, devolver sus datos
     #     } else {
     #         console.log("Nuevo usuario, registrándolo en la BD...");
-    #         await db.execute('INSERT INTO usuarios (google_id,     access_token) VALUES (?, ?, ?, ?, ?)', 
+    #         await db.execute('4 INTO usuarios (google_id,     access_token) VALUES (?, ?, ?, ?, ?)', 
     #             [google_id, nombre, email, foto, access_token]);
 
     #         return res.json({ google_id, nombre, email, foto });

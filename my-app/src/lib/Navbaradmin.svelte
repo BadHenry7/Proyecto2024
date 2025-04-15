@@ -379,7 +379,7 @@ async function editar() {
                   {#if image}
                   <img src={image} alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
                   {:else}
-                  <img src={"/image.png"} alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                  <img src="/image.png" alt="Hospital" class="img-fluid w-100 h-100" style="object-fit: cover;">
 
                   {/if}
                 </div>

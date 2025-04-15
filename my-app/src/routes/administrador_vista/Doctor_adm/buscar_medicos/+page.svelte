@@ -267,6 +267,7 @@
                         apellido: vapellidos,
                         documento: vdocumento,
                         telefono: vtelefono,
+                        id_rol: 3,
                         estado: vestado,
                     }),
                 },

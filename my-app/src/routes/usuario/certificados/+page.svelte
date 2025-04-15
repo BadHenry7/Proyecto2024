@@ -191,19 +191,7 @@
 
 <Navbarusuario />
 
-<!-- Tarjeta de recomendaciones médicas ocupando toda la pantalla -->
-<div class="container">
-    <div class="full-width-card bg-light">
-        <h2>🔹 Recomendaciones Médicas Generales 🔹</h2>
-        <p>Para garantizar una pronta recuperación, es importante seguir estas recomendaciones adicionales:</p>
-        <ul>
-            <p>Evitar el contacto con personas enfermas para prevenir comppcaciones.</p>
-            <p>Descansar lo suficiente y no interrumpir el tratamiento antes de tiempo.</p>
-            <p>Mantener una apmentación balanceada con frutas y verduras para reforzar el sistema inmunológico.</p>
-            <p>Evitar el consumo de alcohol y tabaco durante el periodo de recuperación.</p>
-            <p>Si persisten los síntomas, acudir de inmediato a una consulta médica.</p>
-        </ul>
-    </div></div>
+
 <div class="container">
     <!-- Columna izquierda -->
     <div class="left">
@@ -231,6 +219,20 @@
             <li>Hidratación constante</li>
             <li>Evitar esfuerzo físico</li>
             <li>Acudir a revisión si los síntomas empeoran</li>
+        </ul>
+    </div>
+</div>
+<!-- Tarjeta de recomendaciones médicas ocupando toda la pantalla -->
+<div class="container">
+    <div class="full-width-card bg-light">
+        <h2>🔹 Recomendaciones Médicas Generales 🔹</h2>
+        <p>Para garantizar una pronta recuperación, es importante seguir estas recomendaciones adicionales:</p>
+        <ul>
+            <p>Evitar el contacto con personas enfermas para prevenir comppcaciones.</p>
+            <p>Descansar lo suficiente y no interrumpir el tratamiento antes de tiempo.</p>
+            <p>Mantener una apmentación balanceada con frutas y verduras para reforzar el sistema inmunológico.</p>
+            <p>Evitar el consumo de alcohol y tabaco durante el periodo de recuperación.</p>
+            <p>Si persisten los síntomas, acudir de inmediato a una consulta médica.</p>
         </ul>
     </div>
 </div>
