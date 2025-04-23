@@ -37,10 +37,11 @@
         try {
             if (seleccionados.length<=3){
                 Swal.fire({
-                    title: "Error!",
-                    text: "Seleccione al menos 3 síntomas para predecir.",
-                    icon: "info",
-                    confirmButtonText: "Cool",
+                    title: "Síntomas insuficientes",
+                    text: "Seleccione al menos 4 síntomas para predecir.",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 3500
                 });
             return
         }
