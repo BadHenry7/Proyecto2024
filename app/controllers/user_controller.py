@@ -154,14 +154,14 @@ class UserController:
                 FROM usuario
                 JOIN rol ON usuario.id_rol = rol.id
                         WHERE usuario.id_rol!=1
-
-                           
-                           
                            """)
             result = cursor.fetchall()
+            usuarios_ordenados = sorted(result, key=lambda  data: (not data[8], data[1].lower()))
+            
             payload = []
             content = {} 
-            for data in result:
+            for data in usuarios_ordenados:
+                print (data[8])
                 content={
                     'id':data[0],
                     'usuario':data[1],
@@ -172,7 +172,6 @@ class UserController:
                     'telefono':data[6],
                     'id_rol':data[7],
                     'estado':data[8],
-
                     'nombre_rol':data[14],
                    
 
@@ -196,9 +195,11 @@ class UserController:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM usuario WHERE id_rol=3")
             result = cursor.fetchall()
+            usuarios_ordenados = sorted(result, key=lambda  data: (not data[8], data[1].lower()))
+
             payload = []
             content = {} 
-            for data in result:
+            for data in usuarios_ordenados:
                 content={
                     'id':data[0],
                     'usuario':data[1],

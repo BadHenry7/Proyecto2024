@@ -27,6 +27,7 @@
         if (!seleccionados.includes(sintoma)) {
             seleccionados = [...seleccionados, sintoma];
         }
+       
     } else {
         quitarSintoma(sintoma);
     }
@@ -34,6 +35,15 @@
 
     async function predecir() {
         try {
+            if (seleccionados.length<=3){
+                Swal.fire({
+                    title: "Error!",
+                    text: "Por favor seleccione mas de 3 sintomas",
+                    icon: "info",
+                    confirmButtonText: "Cool",
+                });
+            return
+        }
             const res = await fetch("http://127.0.0.1:8000/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -104,7 +114,7 @@
                 {/each}
             </ul>
 
-            <button type="button" class="btn" on:click={predecir} disabled={seleccionados.length === 0}>
+            <button type="button" class="btn" on:click={predecir} disabled={seleccionados.length ===0}>
                 Predecir
             </button>
         </div>
