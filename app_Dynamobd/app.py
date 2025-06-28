@@ -7,9 +7,6 @@ from datetime import datetime
 import time
 import os
 # Especifica las credenciales y la region
-aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
-aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-aws_region = os.getenv('AWS_REGION')
 
 
 
@@ -48,7 +45,7 @@ class Incapacidad(BaseModel):
 class Buscar(BaseModel):
     id_usuario: int
 
-
+#Vista: Medico-Historial clinico--->Registrar la incapacidad
 @router.post('/incapacidad_medica')
 async def get_incapacidad(user: Buscar):
     print ("-----------------------",user)
@@ -80,6 +77,7 @@ async def get_incapacidad(user: Buscar):
 #payload[]
 #content {}
 
+#Vista: Paciente, incapacidades --->Descargar la incapacidad
 @router.post("/incapacidad")
 async def incapacidad(user: Incapacidad):
     print ("------------------", user)

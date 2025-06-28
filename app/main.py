@@ -8,7 +8,6 @@ from app.routes.diagnosticos_routes import router as Diagnosticos_router
 from app.routes.historial_routes import router as historial_router
 from app.routes.sintomas_routes import router as sintomas_router
 from red.botsi_routes import router as botci_router
-
 from app.routes.token_routes import router as token_router
 from app.routes.modulo_routes import router as modulo_router
 from app.routes.moduloxperfil_routes import router as moduloxperfil_router
@@ -20,7 +19,29 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import os
+
+#-------------Para autenticacion con gitlab
+from fastapi import FastAPI, Depends, HTTPException, Security, Request, Response 
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm 
+from starlette.responses import RedirectResponse 
+from jose import JWTError, jwt 
+import requests 
+from datetime import datetime, timedelta 
+#----------------------------------
+
 app = FastAPI()
+
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+security = HTTPBearer()
+
+
+# Configuración de OAuth2 
+
+
+
+
+
 
 origins = [
     #"http://localhost.tiangolo.com",
@@ -56,6 +77,101 @@ app.include_router(incapacidad_Dunamobd)
 
 
 
+# @app.middleware("http")
+# async def check_authentication(request: Request, call_next):
+#     allowed_paths = ["/login2/", "/static", "/favicon.ico"]
+    
+#     # Si la ruta comienza con algo permitido, dejar pasar
+#     if any(request.url.path.startswith(path) for path in allowed_paths):
+#         response = await call_next(request)
+#         return response
+    
+#     # Si no, redirigir al login
+#     return RedirectResponse(url="/login2/")
+
+
+#Ruta de inicio de sesión 
+@app.get("/login2/") 
+async def ogin(request: Request, code: str=None): 
+    if code is None: 
+        #Si no se proporciona un código de autorización, redirige al usuario al endpoint de autorización de GitLab 
+        authorize_url = f"{GITLAB_AUTHORIZE_URL}?client_id={GITLAB_CLIENT_ID}&redirect_uri={GITLAB_REDIRECT_URI}&response_type=code&scope=read_user" 
+        return RedirectResponse (url=authorize_url) 
+    #Intercambio de código de autorización por un token de acceso en GitLab 
+    token_url = "https://gitlab.com/oauth/token" 
+    data = { 
+    "client_id": GITLAB_CLIENT_ID, 
+    "client_secret": GITLAB_CLIENT_SECRET, 
+    "grant_type": "authorization_code", 
+    "code": code, 
+    "redirect_uri": GITLAB_REDIRECT_URI, 
+    } 
+    response= requests.post(token_url, data=data) 
+    if response.status_code != 200: 
+        print(response.text) # Imprime el contenido de la respuesta para obtener más detalles sobre el error
+    response_data= response.json() 
+    access_token= response_data.get("access_token") 
+    if not access_token: 
+        raise HTTPException(status_code=400, detail="No se pudo obtener el token de acceso") 
+    expires_delta= timedelta(minutes=50) 
+    #token_content ["sub": access token, "scopes": ["items"]} 
+    token_content = {"sub": access_token, "scopes": ["items"], "exp": datetime.utcnow() + expires_delta} 
+    jwt_token= jwt.encode(token_content, SECRET_KEY, algorithm= ALGORITHM) 
+    #Aquí puedes redirigir al usuario a otra página o enviar el token JWT en la respuesta 
+    return {"access_token": jwt_token, "token_type": "bearer"}
+
+
+
+
+
+
+
+#Ruta para verificar la validez del token JWT 
+@app.get("/verify-token/") 
+def verify_token(token: str): 
+    try: 
+        print ("ssssssssssss")
+        #Decodifica el token JWT y verifica su firma 
+        decoded_token= jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]) 
+        sub=decoded_token.get("sub") 
+        scopes= decoded_token.get("scopes", []) 
+        #Aquí puedes realizar cualquier otra verificación o lógica basada en el contenido del token 
+        #Por ejemplo, puedes verificar si el sub o scopes son välidos 
+        return {"valid": True, "sub": sub, "scopes": scopes}
+    except JWTError as e: 
+    #Si el token no es válido o ha expirado, se generará una excepción JWTError 
+        raise HTTPException(status_code=401, detail="Token inválido o expirado")
+
+
+#Ruta para obtener datos del usuario autenticado en östlab 
+@app.get("/user/") 
+#def get_user_data(token: str = Depends(oauth2_scheme)): 
+def get_user_data(credentials: HTTPAuthorizationCredentials = Depends(security)): 
+    try: 
+        token = credentials.credentials
+        print ("2",token)
+        #Decodifica el token JWT para obtener el token de acceso 
+        decoded_token=jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]) 
+        access_token= decoded_token.get("sub") 
+        #Realiza una solicitud a la API de Gitlab para obtener datos del usuario 
+        user_url = "https://gitlab.com/api/v4/user" 
+        headers = { 
+        "Authorization": f"Bearer {access_token}" 
+        }
+        response=requests.get(user_url, headers=headers) 
+        user_data = response.json() 
+        #Aquí puedes retornar los datos del usuario o realizar cualquier otra logica basada en los datos 
+        return user_data 
+    except JWTError as e:
+    #Si el token no es válido o ha expirado, se generará una excepción JWTerror 
+        raise HTTPException(status_code=401, detail="Token inválido o expirado")
+
+
+
+@app.post("/token")
+def login(form_data: OAuth2PasswordRequestForm= Depends()):
+    return {form_data.username}
+  
 
 """
 

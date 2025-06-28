@@ -96,18 +96,23 @@ async def predict_disease(request: PredictionRequest):
     # enfermedad_predicha = label_encoder.inverse_transform(pred)[0]
     
      # Realizar predicción con probabilidad
-    probabilities = modelo.predict_proba(input_vector)
-    
-    # Obtener el índice de la enfermedad con mayor probabilidad
-    indice_predicho = np.argmax(probabilities)
-    enfermedad_predicha = label_encoder.inverse_transform([indice_predicho])[0]
-    probabilidad_predicha = probabilities[0, indice_predicho] * 100  # Convertir a porcentaje
+    probabilities = modelo.predict_proba(input_vector)[0]
 
-    return {
-        "enfermedad": enfermedad_predicha,
-        "probabilidad": f"{probabilidad_predicha:.2f}%"
-    }
+    # Obtener todas las enfermedades y sus probabilidades
+    resultados = [
+        {
+            "enfermedad": label_encoder.inverse_transform([i])[0],
+            "probabilidad": f"{prob * 100:.2f}%"
+        }
+        for i, prob in enumerate(probabilities)
+        if prob > 0  # Opcional: solo mostrar si la probabilidad es mayor a cero
+    ]
 
+    # Ordenar de mayor a menor probabilidad
+    resultados.sort(key=lambda x: float(x["probabilidad"].replace('%', '')), reverse=True)
+
+    # Retornar el top 5 (opcional)
+    return resultados[:5]
 
 
 

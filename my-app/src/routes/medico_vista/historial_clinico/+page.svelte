@@ -187,10 +187,10 @@
           },
         });
         Toast.fire({
-          icon: "error",
+          icon: "Success",
           iconColor: "white",
           color: "white",
-          background: "#ff4e4e",
+          background: "green",
           title: "Historial clinico añadido",
         });
 
@@ -248,20 +248,85 @@
         } 
     }
 
+    async function Camara() {
+           let v_id = todos.id;
+    
+
+        const img = document.getElementById('video');
+        img.src = ''; 
+        setTimeout(() => {
+            img.src = 'http://127.0.0.1:8000/video_feed?id=' + v_id + '&cache=' + Date.now();
+        }, 200); 
+
+        
+//     navigator.mediaDevices.getUserMedia({audio: false, video: true}).then(async(stream)=>{
+//    console.log("Stream",stream)
+//    let video= document.getElementById('video');
+//    video.srcObject = stream
+
+   
+//     video.onloadedmetadata =(ev)=>video.play()
+
+//     }).catch((err)=>console.log(err))
+    
+        
+    }
+
+//     async function capturar() {
+//          const canvas = document.createElement("canvas");
+
+//   canvas.width = video.videoWidth;
+//   canvas.height = video.videoHeight;
+//   const context = canvas.getContext("2d");
+//   context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+//   // Convierte el canvas a base64
+//   const dataUrl = canvas.toDataURL("image/jpeg");
+//   const base64Image = dataUrl.split(',')[1]; // Solo los datos
+
+//     const response = await  fetch ('http://127.0.0.1:8000/Altura_paciente',{
+
+//         "method": "POST",
+//         headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//                 body: JSON.stringify({
+//                    image: base64Image
+//                 }),
+//     });
+//     const data = await response.json();
+//     console.log("Estamos haciendo prueba con la altura", data)
+
+
+//     }
+ 
 </script>
 
 <Navbarmedico></Navbarmedico>
+<style>
+    .Input_buscar:hover{
+        border-color: blue;
+    }
+</style>
+<div class="container mt-3" id="Mostrarhistorial">
+    <label for=""><b>Ingrese el número  de documento</b></label>
+    <div class="row">
+        <div class="col-xl-6 ">
+            <div class="input-group">
+                <button class="input-group-text" on:click={buscar} aria-label="Buscar"><i class="bi bi-search"  style="color: steelblue" ></i></button>
+                <input type="text" class="form-control Input_buscar" id="buscardocument_v" style="">
+            </div>
+        </div>
 
-<div class="container" id="Mostrarhistorial">
-    <div>
-        <label for="">Cedula:</label>
-        <input type="text" class="mt-3" id="buscardocument_v" />
-        <button class="btn btn-outline-info" on:click={buscar}>Buscar</button>
+       
     </div>
-    <div class="card border-dark shadow mt-5">
-        <div class="card-header">
+
+    
+    
+    <div class="card border-dark shadow mt-5" >
+        <div class="card-header" style="background-color: cornflowerblue; color: white;">
             <!--Header-->
-            <div class="fs-2 text-center">
+            <div class="fs-2 text-center" >
                 Historial clinico de <span class="" id="nombre"></span>
             </div>
         </div>
@@ -272,18 +337,18 @@
 
             <div>
                 <label for=""
-                    ><b>Documento:</b> <span id="documento"> </span></label
+                    ><b>Documento:</b> <span id="documento">----------</span></label
                 >
                 <br />
                 <label for=""
-                    ><b>Telefono:</b> <span id="telefono"></span></label
+                    ><b>Telefono:</b> <span id="telefono">-------------</span></label
                 >
             </div>
 
             <div class="pt-4">
                 <h3 style="color: steelblue;">Antecedentes medicos:</h3>
 
-                <!--Aca estaria la tabla de antecedentes medicos-->
+             
             </div>
 
             {#if loading}
@@ -292,14 +357,42 @@
                     <p
                         class="text-center col-lg-2 col-md-2 col-sm-2 col-12 col-xl-2"
                     >
-                        Digita la cedula y dar clic en el boton de buscar...
+                        <b>Digita la cedula y dar clic en el boton de buscar para cargar el antecedentes...</b>
                     </p>
-                    <div
-                        class="spinner-border col-lg-4 col-md-4 col-sm-4 col-12 col-xl-4"
-                        role="status"
-                    >
+                   
+
+                    <!---------------------------------------------------------------------------------->
+
+                        <div class="text-center">
+                        <div class="spinner-grow text-primary" role="status">
                         <span class="visually-hidden">Loading...</span>
-                    </div>
+                        </div>
+                        <div class="spinner-grow text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-warning" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-light" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-dark" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                        </div>
+                    <!---------------------------------------------------------------------------------->
+
+                    <img src="/Cargando.svg" alt="" class="img-fluid" style="width: 380px;">
+
                 </div>
             {:else if error}
                 <p class="text-red-500">Error: {error}</p>
@@ -376,140 +469,114 @@
         <!--Aca termina el footer-->
     </div>
 </div>
+<div class="fade" id="nav-listado">
+  <div class="container py-5">
+    <div class="card shadow-sm">
+      <div class="card-header text-center fw-bold fs-5" style="background-color: cornflowerblue; color: white;">
+        Historial clínico de <span id="nombre_v"></span>
+      </div>
 
-<div class=" fade" id="nav-listado">
-    <div class="container pt-5">
-        <div class="card">
-            <div class="card-header text-center">
-                <b>Historial clinico de <span class="" id="nombre_v"></span></b>
-            </div>
+      <div class="card-body">
 
-            <div class="card-body" style="margin-left: 10%;">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p class="card-text"><b>Sintomas:</b></p>
-                    </div>
-
-                    <div class="col-lg-10">
-                        <input
-                            type="text"
-                            placeholder="sintomas del paciente"
-                            id="sintomas"
-                            
-                            style="border: none; width: 55%;"
-                            readonly
-                        />
-                    </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-lg-2">
-                        <p class="card-text">
-                            <b>Descripcion del/los sintoma/s</b>
-                        </p>
-                    </div>
-
-                    <div class="col-lg-10">
-                        <input
-                            type="text"
-                            placeholder="descripcion del sintoma del paciente"
-                            id="descripcion_sintomas"
-                            style="border: none; width: 55%;"
-                            readonly
-                        />
-                    </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-lg-2">
-                        <p class="card-text"><b>Diagnostico:</b></p>
-                    </div>
-                    <div class="col-lg-10">
-                        <input
-                            type="text"
-                            id="diagnostico"
-                            placeholder="diagnostico del usuario"
-                            style="border: none; width: 55%;"
-                            readonly
-                        />
-                    </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-lg-2">
-                        <p class="card-text">
-                            <b>Descripcion del diagnostico:</b>
-                        </p>
-                    </div>
-                    <div class="col-lg-10">
-                        <input
-                            type="text"
-                            id="descripcion_diagnostico"
-                            placeholder="descripcion del diagnostico"
-                           
-                            style="border: none; width: 55%;"
-                            readonly
-                        />
-                    </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-lg-2">
-                        <p class="card-text">
-                            <b>Observacion o tratamiento:</b>
-                        </p>
-                    </div>
-                    <div class="col-lg-10">
-                        <input
-                            type="text"
-                            placeholder="Observacion de tratamiento"
-                            id="Observaciontratamiento"
-                            style="border: none; width: 55%;"
-                            readonly
-                        />
-                    </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-lg-2">
-                        <p class="card-text">
-                            <b>Seleccione la cita </b>
-                        </p>
-                    </div>
-                    <div class="col-lg-10">
-                        <select
-                            id="citas"
-                            class="form-select"
-                            aria-label="Selecciona una cita"
-                        >
-                            <option value="">Selecciona una cita</option>
-                            {#each citas as cita}
-                                <option value={cita.id}>
-                                    Fecha: {cita.fecha} - Hora: {cita.hora}
-                                </option>
-                            {/each}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 4%;">
-                    <div class="col-lg-9">
-                        ¡Al terminar, darle click en guardara para guardar los
-                        cambios!
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <div class="text-center">
-                    <button class="btn btn-outline-info" on:click={guardar}
-                        >Guardar</button
-                    >
-                </div>
-            </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Síntomas:</label>
+          <div class="input-group">
+            <span class="input-group-text text-danger"><i class="bi bi-heart-pulse"></i></span>
+            <input type="text" class="form-control" id="sintomas" placeholder="Síntomas del paciente" readonly />
+          </div>
         </div>
+
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Descripción de los síntomas:</label>
+          <div class="input-group">
+            <span class="input-group-text text-warning"><i class="bi bi-file-earmark-text" ></i></span>
+            <input type="text" class="form-control" id="descripcion_sintomas"  placeholder="Descripción detallada" readonly />
+          </div>
+        </div>
+
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Diagnóstico:</label>
+          <div class="input-group">
+            <span class="input-group-text text-primary"><i class="bi bi-clipboard2-pulse"  ></i></span>
+            <input type="text" class="form-control" id="diagnostico" placeholder="Diagnóstico del usuario" readonly />
+          </div>
+        </div>
+
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Descripción del diagnóstico:</label>
+          <div class="input-group">
+            <span class="input-group-text text-info"><i class="bi bi-journal-text" ></i></span>
+            <input type="text" class="form-control" id="descripcion_diagnostico" placeholder="Explicación del diagnóstico" readonly />
+          </div>
+        </div>
+
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Observación o tratamiento:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-capsule-pill" style="color: cadetblue;"></i></span>
+            <input type="text" class="form-control" id="Observaciontratamiento"  placeholder="Recomendaciones médicas" readonly />
+          </div>
+        </div>
+
+        
+        <div class="mb-4">
+          <label class="form-label fw-bold">Seleccione la cita:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar-check" style="color: #6f42c1;"></i></span>
+            <select id="citas" class="form-select">
+              <option value="">Selecciona una cita</option>
+              {#each citas as cita}
+                <option value={cita.id}>Fecha: {cita.fecha} - Hora: {cita.hora}</option>
+              {/each}
+            </select>
+          </div>
+        </div>
+
+        
+        <div class="text-center my-4">
+          
+          <button on:click={() => Camara()} class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Camara">
+            <i class="bi bi-camera-fill me-1"></i> Calcular estatura
+          </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="Camara" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="CamaraLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="CamaraLabel">Calculando estatura...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <img src="" id="video" class="img-fluid w-100 object-fit-cover" style="height: 400px;" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guardar -->
+        <div class="text-center mt-5">
+            <p class="text-muted">¡Al terminar, dale click en guardar para aplicar los cambios!</p>
+            <button class="btn btn-success px-4" on:click={guardar}>
+                <i class="bi bi-save me-1"></i> Guardar
+            </button>
+        </div>
+
+      </div>
     </div>
+  </div>
 </div>
+
 
 
 <div class="modal fade"  id="incapacidad_modal" tabindex="-1" aria-labelledby="rModalLabel" aria-hidden="true">

@@ -12,15 +12,29 @@
         try {
             const res = await fetch("http://127.0.0.1:8000/sintomas");
             const data = await res.json();
-            sintomas = [...data.sintomas]; // SOLUCIÓN: Forzar actualización en Svelte
+            sintomas = [...data.sintomas]; 
         } catch (error) {
             console.error("Error al cargar los síntomas:", error);
         }
     });
 
-    function mostrar() {
-        Swal.fire("Tiene  un " + probabilidad+" de probabilidad de tener "+enfermedad);
+    function mostrar(data) {
+        // Swal.fire("Tiene  un " + probabilidad+" de probabilidad de tener "+enfermedad);
+        let mensaje = "Resultados de predicción:\n";
+
+    if (data.length >= 1) {
+        mensaje += data[0].enfermedad + ": " + data[0].probabilidad + "\n";
     }
+    if (data.length >= 2) {
+        mensaje += data[1].enfermedad + ": " + data[1].probabilidad + "\n";
+    }
+    if (data.length >= 3) {
+        mensaje += data[2].enfermedad + ": " + data[2].probabilidad + "\n";
+    }
+
+    Swal.fire(mensaje);
+    }
+    
 
     function manejarCambioCheckbox(e, sintoma) {
     if (e.target.checked) {
@@ -51,9 +65,9 @@
                 body: JSON.stringify({ selected_symptoms: seleccionados }),
             });
             const data = await res.json();
-            enfermedad = data.enfermedad;
-            probabilidad= data.probabilidad;
-            mostrar();
+            // enfermedad = data.enfermedad;
+            // probabilidad= data.probabilidad;
+            mostrar(data);
         } catch (error) {
             console.error("Error al predecir la enfermedad:", error);
         }
@@ -74,8 +88,8 @@
 <div class="container">
     <h1 class="text-center">Predicción de Enfermedades</h1>
 
-    <div class="grid">
-        <!-- Izquierda: Lista de síntomas -->
+    <div class="main-grid">
+        <!-- Lista de síntomas -->
         <div class="sintomas-box">
             <input
                 type="text"
@@ -84,16 +98,16 @@
                 class="search-box"
             />
 
-            <div class="sintomas-list">
+            <div class="sintomas-grid">
                 {#if sintomasFiltrados.length > 0}
                     {#each sintomasFiltrados as sintoma}
                         <label class="sintoma-item">
                             <input
-                            type="checkbox"
-                            value={sintoma}
-                            checked={seleccionados.includes(sintoma)}
-                            on:change={(e) => manejarCambioCheckbox(e, sintoma)}
-                        />
+                                type="checkbox"
+                                value={sintoma}
+                                checked={seleccionados.includes(sintoma)}
+                                on:change={(e) => manejarCambioCheckbox(e, sintoma)}
+                            />
                             {sintoma}
                         </label>
                     {/each}
@@ -103,19 +117,19 @@
             </div>
         </div>
 
-        <!-- Derecha: Síntomas seleccionados -->
+        <!-- Síntomas seleccionados -->
         <div class="seleccionados-box">
             <h3>Síntomas Seleccionados</h3>
             <ul>
                 {#each seleccionados as sintoma}
-                    <li class="seleccionado-item">
+                    <div class="seleccionado-item">
                         {sintoma}
                         <button on:click={() => quitarSintoma(sintoma)}>❌</button>
-                    </li>
+                    </div>
                 {/each}
             </ul>
 
-            <button type="button" class="btn" on:click={predecir} disabled={seleccionados.length ===0}>
+            <button type="button" class="btn" on:click={predecir} disabled={seleccionados.length === 0}>
                 Predecir
             </button>
         </div>
@@ -123,84 +137,109 @@
 </div>
 
 <style>
-    
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px;
+}
 
-    .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-top: 20px;
-    }
+.text-center {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
 
-    .sintomas-box, .seleccionados-box {
-        border: 1px solid #ddd;
-        padding: 10px;
-        border-radius: 5px;
-        background: #f9f9f9;
-    }
+.main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
 
-    .search-box {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+.sintomas-box {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff;
+}
 
-    .sintomas-list {
-        max-height: 500px;
-        overflow-y: auto;
-        padding: 5px;
-    }
+.search-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
 
-    .sintoma-item {
-        display: flex;
-        align-items: center;
-        padding: 5px;
-        border-bottom: 1px solid #ddd;
-    }
+.sintomas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
 
-    .seleccionados-box h3 {
-        margin-bottom: 10px;
-    }
+.sintoma-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f7f7f7;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
 
-    .seleccionado-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px;
-        border-bottom: 1px solid #ddd;
-    }
+.seleccionados-box {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fafafa;
+}
 
-    .seleccionado-item button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        color: red;
-    }
+.seleccionados-box h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
 
-    .btn {
-        margin-top: 10px;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        background: #007bff;
-        color: white;
-        cursor: pointer;
-        width: 100%;
-    }
+.seleccionado-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e3f2fd;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    margin-right: 29px;
+}
 
-    .btn:hover {
-        background: #0056b3;
-    }
+.seleccionado-item button {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    font-size: 1rem;
+    cursor: pointer;
+}
 
-    .btn:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-    }
+.btn {
+    margin-top: 15px;
+    padding: 12px 20px;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 </style>
-
 
 
 

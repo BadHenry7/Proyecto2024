@@ -99,7 +99,7 @@
                 console.log("Entro al editar");
           
              
-
+                                    
                 const datos = await result.json();
                 console.log("datos",datos);
 
