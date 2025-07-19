@@ -12,7 +12,7 @@
       const response = await fetch("http://127.0.0.1:8000/get_users");
       if (!response.ok) throw new Error("Error al cargar los datos");
       const data = await response.json();
-      todos = data.resultado;
+      todos = data;
       console.log(todos);
       console.log(todos.usuario);
 

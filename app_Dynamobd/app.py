@@ -9,7 +9,6 @@ import os
 # Especifica las credenciales y la region
 
 
-
 #crea un cliente de Dynamodb
 dynamodb= boto3.client('dynamodb',
               region_name= aws_region,

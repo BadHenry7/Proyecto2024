@@ -14,20 +14,21 @@ router = APIRouter()
 
 nuevo_usuario = UserController()
 
+#   token = credentials.credentials  # Aquí tienes el token que mandaron
+#     print("Token recibido:", token)
+    
+  
+#     try:
+#         decoded_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        
+#     except JWTError:
+#         raise HTTPException(status_code=401, detail="Token inválido o expirado")
+    
+#     # Ya todo ok, crear usuario
 
 @router.post("/create_user")
-async def create_user(user: User, credentials: HTTPAuthorizationCredentials = Depends(security)):
-    token = credentials.credentials  # Aquí tienes el token que mandaron
-    print("Token recibido:", token)
-    
-    # (Opcional) Verificar el token
-    try:
-        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        # Si quieres hacer algo con el decoded_token aquí, puedes
-    except JWTError:
-        raise HTTPException(status_code=401, detail="Token inválido o expirado")
-    
-    # Ya todo ok, crear usuario
+async def create_user(user: User):
+  
     rpta = nuevo_usuario.create_user(user)
     return rpta
 
@@ -122,5 +123,12 @@ async def video_feed(id: int):
 @router.get("/Actualizar_estatura")
 async def Actualizar_estatura(user: Estatura_user):
     rpta = nuevo_usuario.Actualizar_estatura(user)
+    return rpta 
+
+
+
+@router.put("/telegram_id_user")
+async def telegram_id_user(user: Buscar):
+    rpta = nuevo_usuario.telegram_id_user(user)
     return rpta 
 #v_usuario   

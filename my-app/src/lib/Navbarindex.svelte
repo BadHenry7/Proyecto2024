@@ -1,4 +1,133 @@
- <!-- Navbar -->
+   <div class="text-center text-white py-2" style="background-color: cornflowerblue;">
+        Innovando siempre para prestar el mejor servicio, su salud es nuestro compromiso.
+    </div>
+<br>
+
+<nav class="navbar" style="margin-bottom: 12px;">
+    
+  <div class="logo">
+    <a href="/"><img src="/image_otro_logo.png" alt="no found"></a>
+  </div>
+
+  <nav class="menu">
+    <ul>
+      <li><a href="/" class="active">Inicio</a></li>
+      <li><a href="/acerca_de">Acerca de</a></li>
+      <li><a href="/Register">Registrar</a></li>
+      <li><a href="/Login">Iniciar Sesión </a></li>
+    </ul> 
+  </nav>
+
+  <div class="redes">
+    <a href="/" id="red"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" id="red"><i class="fab fa-instagram"></i></a>
+    <a href="#" id="red"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</nav>
+
+
+<style>body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+  margin: 0px auto;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 15px 100px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+/* LOGO */
+.logo img {
+  height: 50px;
+  cursor: pointer;
+}
+
+.logo:hover{
+  transform: scale(1.05);
+}
+
+/* MENÚ PRINCIPAL */
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.menu a {
+  display: inline-block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: #00214d;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover,
+.menu .activo {
+  color: #7bbefc;
+  transform: scale(1.05);
+}
+
+/* Línea debajo del enlace activo */
+.menu .activo::after {
+  content: '';
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  width: 70%;
+  border-bottom: 2px solid #2268ab;
+}
+
+/* REDES SOCIALES */
+.redes {
+  background-color: #2c3fa0;
+  padding: 10px 15px;
+  border-radius: 20px;
+  display: flex;
+  gap: 20px;
+
+}
+
+.redes a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.redes a:hover {
+  color: #000000;
+}
+
+#red{
+  
+  display: inline-block; /* Necesario para que el zoom funcione correctamente */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  
+}
+
+#red:hover{
+    transform: scale(1.05); /* 5% más grande */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* sombra para realce */
+
+}
+</style> 
+ 
+ 
+ 
+ 
+ 
+ <!-- Navbar
    <div class="text-center text-white py-2" style="background-color: cornflowerblue;">
         Innovando siempre para prestar el mejor servicio, su salud es nuestro compromiso.
     </div>
@@ -8,7 +137,7 @@
        <a class="navbar-brand" href="/">
         <img src="hostipal.png" alt="Logo" height="50" width="100">
 
-          <!-- <span class="fs-4">Hostipal</span>-->
+          <span class="fs-4">Hostipal</span>
        </a>
        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="para celulares">
            <span class="navbar-toggler-icon"></span>
@@ -24,4 +153,4 @@
            </ul>
        </div>
    </div>
-</nav>
+</nav> -->

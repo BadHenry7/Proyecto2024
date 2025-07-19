@@ -17,69 +17,234 @@ function redirigir() {
 
 </script>
 
-<div class="bg-light">
     <!-- Barra superior -->
   
    <Navbarindex></Navbarindex>
    <SocialMedia></SocialMedia>
+   
    <Slide></Slide>
-
- 
-
-
-   <!-- <button on:click={ir}> IR IR IR IR</button> -->
-
-
    
 
-    <!-- Sección de Citas -->
-    <section class="text-white py-5 text-center" style="background-color: cornflowerblue;">
-        <h2 class="fs-3 fw-bold">Agenda tu cita en línea</h2>
-        <button class="btn btn-light text-primary mt-3" on:click={redirigir}>Reservar cita</button>
-    </section>
+  <!-- Boton de reserva -->
+  <div class="reserva">
+    <div class="texto-reserva">
+      <h3><b>Reserve su cita aquí</b></h3>
+      <p><b>No pierdas más el tiempo, no dejes <br>pasar más el tiempo 
+         la solución esta <br> aquí no esperes más.</b></p>
+    </div>
+    <button href="" class="btn btn-success" on:click={redirigir}> Reservar </button>
 
-    <!-- Sección de Facilitando tu atencion medica -->
-    <section class="container text-center py-5">
-        <h2 class="fs-3 text-success fw-bold">Facilitando tu atención médica</h2>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <i class="fas fa-heartbeat text-success display-4"></i>
-                <h3 class="fs-4 mt-3">Gestión de citas médicas</h3>
-                <p>Agenda y administra tus citas médicas de forma rápida y sencilla.</p>
-                
-            </div>
-            <div class="col-md-4">
-                <i class="fas fa-envelope text-success display-4"></i>
-                <h3 class="fs-4 mt-3">Confirmación automática de tu cita</h3>
-                <p>Recibe un correo con los detalles de tu cita médica inmediatamente después de agendarla..</p>
-                
-            </div>
-            <div class="col-md-4">
-                <i class="fas fa-brain   text-success display-4"></i>
-                <h3 class="fs-4 mt-3">Detección de enfermedades</h3>
-                <p>Utilizamos redes neuronales para detectar enfermedades básicas y brindarte orientación.</p>
-                
-            </div>
+        
+  </div>
+
+  <!-- cartas ... -->
+        <h1 style="text-align: center; margin-top: 5vh;
+           font-family: poppins; color: #022a63;">
+           Beneficios con nosotros
+        </h1>
+
+  <div class="cartas">
+
+        <div class="card">
+            <img src="/gestion.png" alt="">
+            <h3 class="fs-5 mt-3">Gestión de citas médicas</h3>
+            <p>Agenda y administra tus citas médicas de forma rápida y sencilla.</p>
         </div>
-    </section>
+
+        <div class="card">
+            <img src="/carta.png" alt="">
+            <h3 class="fs-5 mt-3">Confirmación automática de tu cita</h3>
+                <p>Recibe un correo con los detalles de tu cita médica inmediatamente después de agendarla.</p>
+        </div>
+
+        <div class="card">
+            <img src="/detectar.png" alt="">
+            <h3 class="fs-5 mt-3">Detección de enfermedades</h3>
+            <p>Utilizamos redes neuronales para detectar enfermedades básicas y brindarte orientación.</p>
+        </div>
+
+        <div class="card">
+            <img src="/tiempo.png" alt="">
+            <h3 class="fs-5 mt-3" >Citas médicas sin largas esperas</h3>
+            <p>Olvídate de las filas y agenda tu consulta en el horario que más te convenga.</p>
+        </div>
+
+  </div>
+      <!-- Cartas de Logos -->
+    <h1 style="text-align: center; margin-top: 5vh;
+     font-family: poppins; color: #022a63;">
+     Servicios e información
+    </h1>
+
+    <div class="logos">
+
+        <div class="card-logo" id="icono-1">
+        <img src="/tonyopng.png" alt="">
+            <p>Chatbot</p>
+        </div>
+
+        <div class="card-logo" id="icono-2">
+            <a href="/ubicaciones" class="btn"><img src="/ubicacion.png" alt="">
+            <p>Ubicación</p>
+            </a>    
+        </div>
+
+        <div class="card-logo" id="icono-3">
+        <a href="/acerca_de" class="btn"><img src="/nosotros.png" alt=""></a>
+            <p>Nosotros</p>
+        </div>
+
+        <div class="card-logo" id="icono-4">
+        <a href="/salud"><img src="/salud.png" alt="/salud"></a>
+            <p>Salud & Bienestar</p>
+        </div>
+
+  </div>
+
 
  
-    <section class="bg-light py-5 text-center">
-        <i class="fas fa-clock text-success display-4"></i>
-        <h3 class="fs-4 mt-3">Citas médicas sin largas esperas</h3>
-        <p>Olvídate de las filas y agenda tu consulta en el horario que más te convenga.</p>
-        
-    </section>
-
-    <!-- Footer -->
     <Footer></Footer>
-</div>
 
 
 
 
 
 
+<style>*{
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.cartas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 10vh;
+      margin-bottom: 1vh;
+      background-color: #9fc6ca09;
+} 
+
+.card {
+      width: 310px;
+      height: 310px;
+      background-color: #fff;
+      box-shadow: 0 10px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding:30px;
+    }    
+
+.card img{
+  height: 100px;
+  width: 100px;
+}
+
+.card:hover {
+      transform: translateY(-10px); 
+      box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+      background-color: #e0f7fa;
+    }
+
+@keyframes flotar {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.card h3 {
+      margin-bottom: 10px;
+      color: #333;
+      padding: 05px;
+    }    
+
+.card p {
+      color: #666;
+      padding: 0 10px;
+      font-family: Comic sans-serif;
+    }    
+
+.reserva{
+      justify-content: center;
+      display: flex;
+      gap: 50px;
+      padding: 20vh;
+      background-image: url(../../../../fondo2.png);
+      background-attachment: fixed; 
+      background-size: 50vh;
+      position: relative;
+      z-index: 1;
+      clip-path: ellipse(100% 100% at 50% 1%);
+    }
+
+.reserva button{
+  border-radius: 30%;
+  width: 90px;
+  height: 90px;
+  animation: flotar 3s ease-in-out infinite;
+  transition: transform 0.3s, box-shadow 0.3s;
+}    
+
+.texto-reserva p{
+  color: #000000;
+  font-family: Comic sans-serif;
+
+}
+
+.texto-reserva h3{
+  color: rgb(164, 16, 16);
+}
+
+.logos{
+  justify-content: center;
+  display: flex;
+  gap: 100px;
+  background-image: url(../../../../fondo2.png);
+  background-size: 50vh;
+  background-attachment: fixed;
+  padding: 8vh;
+  z-index: 1;
+}
+
+.card-logo{
+  padding: 5vh;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 60% 40% 40% 60% / 50% 60% 40% 50%; /* Forma orgánica */
+  box-shadow: 0 10px 15px rgba(159, 94, 94, 0.504); /* Sombra */
+}
+
+.card-logo img{
+  width: 70px;
+  height: auto;
+  justify-content: center;
+  justify-items: center;
+  animation: flotar 2s ease-in-out infinite;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#icono-1{
+  background-color: rgb(188, 241, 241);
+}
+
+#icono-2{
+  background-color: rgb(241, 191, 188);
+}
+
+#icono-3{
+  background-color: rgb(241, 188, 240);
+}
+
+#icono-4{
+  background-color: rgb(241, 221, 188);
+}
+
+.card-logo img:hover{
+
+  transform: translateY(-5px);
+
+}</style>
 
 
 

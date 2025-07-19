@@ -66,7 +66,7 @@
 
 <div class="carousel-container"  role="presentation"
      on:mouseenter={stopAutoplay} 
-     on:mouseleave={startAutoplay}>
+     on:mouseleave={startAutoplay} style="background-image: url(../../../../fondo2.png);   background-size: 50vh;" >
   
   <div class="carousel">
     <div class="slides-wrapper">

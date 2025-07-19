@@ -47,6 +47,7 @@
     function Ocultar() {
         location.reload();
     }
+    
     let fecha_desde = "";
     let hasta_fecha = "";
 

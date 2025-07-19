@@ -39,6 +39,16 @@ security = HTTPBearer()
 # Configuración de OAuth2 
 
 
+#Configuración de GitLab OAuth2 
+GITLAB_CLIENT_ID = "299d33ddd76f4c8eb38c9478d3cc75620958a65424bd117d7747832b09fe22d2" 
+GITLAB_CLIENT_SECRET ="gloas-52ae7a851ee10e1bfd8f4f2a9fa0248958b184b64ce9a4b7d0b986c9899a802c"
+GITLAB_REDIRECT_URI = "http://127.0.0.1:8000/login2/" 
+GITLAB_AUTHORIZE_URL = "https://gitlab.com/oauth/authorize" 
+#Clave secreta para JWT 
+SECRET_KEY = "your-secret-key" 
+ALGORITHM = "HS256"
+
+
 
 
 
@@ -54,7 +64,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173","http://localhost:3000","http://127.0.0.1:8000","https://api-nodejs-buxf.onrender.com",  # URL local de Svelte en desarrollo
-        "https://494d-161-10-149-66.ngrok-free.app","https://7a66-161-10-149-66.ngrok-free.app", "http://26.156.183.54:5173","http://localhost:5174"   # URL de ngrok
+        "https://494d-161-10-149-66.ngrok-free.app","https://7a66-161-10-149-66.ngrok-free.app", "http://26.156.183.54:5173","http://localhost:5174"   
+        ,'http://localhost:4200'# URL de ngrok
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
