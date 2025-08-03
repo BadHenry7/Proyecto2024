@@ -272,33 +272,12 @@
         
     }
 
-//     async function capturar() {
-//          const canvas = document.createElement("canvas");
+    async function capturar() {
+     await fetch('http://127.0.0.1:8000/detener_altura', {
+  method: 'GET'
+});
 
-//   canvas.width = video.videoWidth;
-//   canvas.height = video.videoHeight;
-//   const context = canvas.getContext("2d");
-//   context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-//   // Convierte el canvas a base64
-//   const dataUrl = canvas.toDataURL("image/jpeg");
-//   const base64Image = dataUrl.split(',')[1]; // Solo los datos
-
-//     const response = await  fetch ('http://127.0.0.1:8000/Altura_paciente',{
-
-//         "method": "POST",
-//         headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify({
-//                    image: base64Image
-//                 }),
-//     });
-//     const data = await response.json();
-//     console.log("Estamos haciendo prueba con la altura", data)
-
-
-//     }
+    }
  
 </script>
 
@@ -558,7 +537,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-primary" on:click={capturar}>Aceptar</button>
               </div>
             </div>
           </div>

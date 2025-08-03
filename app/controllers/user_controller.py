@@ -414,32 +414,46 @@ class UserController:
 
             if result:
                 
-                content = {}    
-                content={"Informacion":"Ya_existe", 'id':int(result[0]),'rol_v':int(result[7]), 'estado':bool(result[8]), }
-              
-                return jsonable_encoder(content)
-            else:   
-                cursor.execute("SELECT * FROM sesiongoogle where google_id = %s",(user.google_id,))
-
-                result= cursor.fetchone()
+                id=result[0]
+               
                 
-                if result:
+            
+                cursor.execute("SELECT * FROM sesiongoogle where google_id = %s",(user.google_id,))
+                result_google= cursor.fetchone()
+                
+                if result_google:
                     content = {}    
-                    content={"Informacion":"Ya_existe_google"}
+                    content={"Informacion":"Ya_existe", 'id':int(result[0]),'rol_v':int(result[7]), 'estado':bool(result[15]), }
                     return jsonable_encoder(content)
 
                 else:
                     print ("*--------**-/*/",user)
-                    cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado, genero, edad) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,"LOGINadminLOGIN1",user.nombre,user.apellido,"google_id","000000",2,0, "genero", 0,))
-                    id=cursor.lastrowid
                     cursor.execute("INSERT INTO sesiongoogle (id_usuario, google_id, access_token, foto, estado) VALUES (%s, %s, %s, %s,%s)",
                                (id, user.google_id, user.access_token,user.foto,user.estado,))
                     conn.commit()
                    
                     content = {}    
-                    content={"Informacion":"Registrada", 'id': id}
+                    content={"Informacion":"Ya_existe", 'id':int(result[0]),'rol_v':int(result[7]), 'estado':bool(result[15]), }
+
                     return jsonable_encoder(content)
 
+
+
+                
+            else:   
+                print ("*--------**-/*/",user)
+                cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,telefono,id_rol,estado, genero, edad, completado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,"LOGINadminLOGIN1",user.nombre,user.apellido,"000000",2,0, "genero", 0,0))
+                id=cursor.lastrowid
+                cursor.execute("INSERT INTO sesiongoogle (id_usuario, google_id, access_token, foto, estado) VALUES (%s, %s, %s, %s,%s)",
+                               (id, user.google_id, user.access_token,user.foto,user.estado,))
+                conn.commit()
+    
+                content = {}    
+                content={"Informacion":"Registrada", 'id': id}
+                return jsonable_encoder(content)
+
+               
+                    
 
         except mysql.connector.Error as err:
             conn.rollback()
@@ -537,9 +551,13 @@ class UserController:
         finally:
             conn.close() 
 
+    detener_captura = False
+
     def Estatura_user(self, id):
         ALTURA_REFERENCIA_M = 1.70    # Altura real de la persona de referencia (en metros)
-        PIXEL_REF = 368                # Medida en píxeles de esa persona (ajustar luego con print si es necesario)
+        PIXEL_REF = 368                # Medida en píxeles de esa persona 
+        global detener_captura
+        detener_captura = False 
 
         # Inicializa MediaPipe Pose
         mp_pose = mp.solutions.pose # Esta es el Módulo para detectar posturas
@@ -549,13 +567,13 @@ class UserController:
 
         # Abre la cámara (el  0  significa que abre  la cámara por defecto)
         cap = cv2.VideoCapture(0)
-        while cap.isOpened():
+        while cap.isOpened()  and not detener_captura:
             ret, frame = cap.read()    # Leer frame de la cámara
             if not ret:
                 break
 
             # Rota la imagen para cámara en vertical
-            frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+            #frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 
             # Convierte de BGR ( el cual es el formato que usa OpenCV) a RGB (formato que usa MediaPipe)
             image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -614,17 +632,16 @@ class UserController:
                   promedio = sum(historial_alturas) / len(historial_alturas)
                   print("ya", promedio, "y la id del usuario es", id)
                   historial_alturas.clear()
-                  self.Actualizar_estatura(promedio, id)
+                  #self.Actualizar_estatura(promedio, id)
                  
-                  break
-
+                 
             # # Mostrar ventana
             # cv2.imshow("Altura con MediaPipe Pose", frame)
             
             # if cv2.waitKey(1) & 0xFF == 27:  # Presiona ESC para salir
             #     break
         print("ahora deberia de cerrarseeeeeeeeeeee")
-
+        self.Actualizar_estatura(promedio, id)
         # Libera la cámara 
         cap.release()
         #Cierra todas las ventanas creadas por OpenCV 
@@ -664,6 +681,12 @@ class UserController:
             conn.rollback()
         finally:
             conn.close()    
+
+ 
+    def detener_altura(self):
+        global detener_captura
+        detener_captura = True
+        return {"mensaje": "Captura detenida"}
     
     #StreamingResponse, es una clase de FastAPI que permite enviar datos como un flujo continuo, útil para video o audio.
     #Estatura_user devuelve frames JPEG uno a uno (cada imagen del video).
