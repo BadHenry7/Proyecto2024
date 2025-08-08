@@ -29,7 +29,7 @@ class UserController:
               
                 return jsonable_encoder(content)
             else:   
-                cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado, genero, edad) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,user.password,user.nombre,user.apellido,user.documento,user.telefono,user.id_rol,user.estado, user.genero, user.edad,))
+                cursor.execute("INSERT INTO usuario (usuario,password,nombre,apellido,documento,telefono,id_rol,estado, genero, edad, completado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (user.usuario,user.password,user.nombre,user.apellido,user.documento,user.telefono,user.id_rol,user.estado, user.genero, user.edad,1))
                 conn.commit()
                 conn.close()
                 id=cursor.lastrowid
@@ -101,7 +101,10 @@ class UserController:
                     'telefono':result[6],
                     'id_rol':int(result[7]),
                     'estado':bool(result[8]),
-                    'roles_name':result[14],
+                    'roles_name':result[17],
+                    'edad': result[9],
+                    'genero': result[10],
+                    'estatura': result[13],
             }
             payload.append(content)
             
@@ -159,7 +162,7 @@ class UserController:
             cursor.execute("""SELECT usuario.*, rol.*
                 FROM usuario
                 JOIN rol ON usuario.id_rol = rol.id
-                        WHERE usuario.id_rol!=1
+                        WHERE usuario.id_rol!=1 and completado!=0
                            """)
             result = cursor.fetchall()
             usuarios_ordenados = sorted(result, key=lambda  data: (not data[8], data[1].lower()))
@@ -338,6 +341,7 @@ class UserController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
+            print ("eeeeeeeeeeeeeeee")
             cursor.execute("""
             UPDATE usuario
             SET usuario = %s,
@@ -345,15 +349,21 @@ class UserController:
             apellido = %s,
             documento=%s,
             password=%s,                           
-            telefono=%s
+            telefono=%s,
+            genero=%s,
+            edad=%s,
             WHERE id = %s
-            """,(adm.usuario,adm.nombre,adm.apellido,adm.documento,adm.password,adm.telefono,adm.id,))
+            """,(adm.usuario,adm.nombre,adm.apellido,adm.documento,adm.password,adm.telefono, adm.genero, adm.edad ,adm.id,))
             conn.commit()
-           
-            return {"resultado": "Usuario actualizado correctamente"} 
+            print ("ssssssssssssss",cursor)
+            if cursor.rowcount == 0:
+                return {"error": "No se actualizó ningún usuario. Verifique si el ID es correcto o si los datos no han cambiado."}
+            else:
+                return {"resultado": "Usuario actualizado correctamente"} 
                 
         except mysql.connector.Error as err:
             conn.rollback()
+            return {"error": f"Error al actualizar usuario: {err}"}
         finally:
             conn.close()    
 

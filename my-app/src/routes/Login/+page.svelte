@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { token_obtener } from '$lib';
+    import { token_obtener } from "$lib";
     let todos = {};
     var todos2 = {};
 
@@ -30,37 +30,31 @@
             loginModal = new bootstrap.Modal(modalElement);
         }
         if (window.grecaptcha) {
-       window.grecaptcha.render(document.querySelector(".g-recaptcha"));
-    }
-  
-        
+            window.grecaptcha.render(document.querySelector(".g-recaptcha"));
+        }
     });
-let a=false
-async function token(event) {
-      
-      // event.preventDefault(); 
-      // console.log("sddddddddddddd")
-      // const recaptchaResponse = grecaptcha.getResponse();
-      // if (recaptchaResponse.length === 0) {
-      //     console.log("aaa")
+    let a = false;
+    async function token(event) {
+        // event.preventDefault();
+        // console.log("sddddddddddddd")
+        // const recaptchaResponse = grecaptcha.getResponse();
+        // if (recaptchaResponse.length === 0) {
+        //     console.log("aaa")
 
-      // Swal.fire({
-      //     icon: "error",
-      //     title: "Oops...",
-      //     text: "Debe completar el CAPTCHA",
-      // });
-      if (a==true){
- 
-      
-      }else{
-         let token_v=await token_obtener(v_usuario, v_password, todos2);
-         console.log("2",token_v)
-         console.log("3",token_v.login2)
+        // Swal.fire({
+        //     icon: "error",
+        //     title: "Oops...",
+        //     text: "Debe completar el CAPTCHA",
+        // });
+        if (a == true) {
+        } else {
+            let token_v = await token_obtener(v_usuario, v_password, todos2);
+            console.log("2", token_v);
+            console.log("3", token_v.login2);
 
-          Login(token_v);
-          
-      }
-  }
+            Login(token_v);
+        }
+    }
     async function Login(todos2) {
         console.log(todos2);
         loading = true;
@@ -77,9 +71,6 @@ async function token(event) {
             });
 
             if (response.ok) {
-
-
-
                 const data = await response.json();
                 todos = data.resultado;
 
@@ -87,10 +78,8 @@ async function token(event) {
                 console.log(rol_v);
 
                 console.log(todos);
-                
-                //return {"access_token": access_token}
 
-    
+                //return {"access_token": access_token}
 
                 if (rol_v == 1) {
                     let name = data.resultado[0].nombre;
@@ -111,9 +100,8 @@ async function token(event) {
                     });
 
                     setTimeout(() => {
-                    window.location.href = "/administrador_vista";
+                        window.location.href = "/administrador_vista";
                     }, 2000);
-                    
                 } else if (rol_v == 2) {
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
@@ -124,11 +112,6 @@ async function token(event) {
                     let miStorage = window.localStorage;
                     miStorage.setItem("usuario", JSON.stringify(encontrado));
 
-
-                    
-            
-
-
                     //  alert(                        "Inicio de sesion exitoso2. Bienvenido Usuario " + name,);
                     //document.getElementById("loginex").style.display = "flex";
                     Swal.fire({
@@ -138,18 +121,16 @@ async function token(event) {
                         title: "Inicio de sesion exitoso, bienvenido " + name,
                         showConfirmButton: false,
                     });
-                    const v_redirigir = localStorage.getItem("Redirigir"); 
-                            setTimeout(() => {
-                                if (v_redirigir) {
-                            window.location.href = v_redirigir; 
-                            localStorage.removeItem("Redirigir"); 
-                            
-                                }else{
-                                window.location.href = "/usuario";
-                                } 
-                            }, 2000);
-                            
-                } else if (rol_v==3) {
+                    const v_redirigir = localStorage.getItem("Redirigir");
+                    setTimeout(() => {
+                        if (v_redirigir) {
+                            window.location.href = v_redirigir;
+                            localStorage.removeItem("Redirigir");
+                        } else {
+                            window.location.href = "/usuario";
+                        }
+                    }, 2000);
+                } else if (rol_v == 3) {
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
                     let correo = data.resultado[0].usuario;
@@ -171,10 +152,8 @@ async function token(event) {
 
                     setTimeout(() => {
                         window.location.href = "/medico_vista";
-                        
-
                     }, 2000);
-                }else{
+                } else {
                     let name = data.resultado[0].nombre;
                     let id = data.resultado[0].id;
                     let correo = data.resultado[0].usuario;
@@ -197,7 +176,6 @@ async function token(event) {
                     setTimeout(() => {
                         //window.location.href = "/medico_vista";
                         window.location.href = "/vista_main";
-
                     }, 2000);
                 }
             } else {
@@ -231,7 +209,6 @@ async function token(event) {
             event.preventDefault(); // Evita que el formulario se envíe
             document.getElementById(contrasena).focus(); // Cambia el enfoque al campo especificado
         }
-      
     }
 
     function enterlog() {
@@ -239,11 +216,6 @@ async function token(event) {
             token(event);
         }
     }
-
-
-
-
-
 </script>
 
 <div
@@ -281,43 +253,50 @@ async function token(event) {
                 />
             </div>
 
-         
-
             <div class="row">
-                <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 col-1">
-
-                </div>
+                <div class="col-sm-1 col-md-1 col-xl-1 col-lg-1 col-1"></div>
                 <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5 col-5">
-                    <div class="" >
+                    <div class="">
                         <form method="post" action="?/OAuth2">
-                            <button class="form-control btn btn_login" type="submit">
-                                <img src="https://ssl.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" width="26">
+                            <button
+                                class="form-control btn btn_login"
+                                type="submit"
+                            >
+                                <img
+                                    src="https://ssl.gstatic.com/images/branding/product/1x/gsa_512dp.png"
+                                    alt="Google"
+                                    width="26"
+                                />
                             </button>
-                        </form>    
-                        
+                        </form>
                     </div>
                 </div>
                 <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5 col-5">
                     <div class="">
-                        <form method="post" action="?/OAuth2Microsoft">    
-                            <button class="form-control btn btn_login"  style="font-size: 14px;">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width="26">
-                            </button>   
+                        <form method="post" action="?/OAuth2Microsoft">
+                            <button
+                                class="form-control btn btn_login"
+                                style="font-size: 14px;"
+                            >
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
+                                    alt="Microsoft"
+                                    width="26"
+                                />
+                            </button>
                         </form>
                     </div>
-
-                    
                 </div>
-
             </div>
 
-
-            <form id="login-form"><!--6LdletYqAAAAAN1Insg4lQuDyDO8zO834KBO6nvs-->
-                <div class="g-recaptcha" style="padding-left: 23%;" data-sitekey="6LeeFo4qAAAAAFIb0Wb5mRE0KWPwaU7xmNEuPfWE"></div>
-                
+            <form id="login-form">
+                <!--6LdletYqAAAAAN1Insg4lQuDyDO8zO834KBO6nvs-->
+                <div
+                    class="g-recaptcha"
+                    style="padding-left: 23%;"
+                    data-sitekey="6LeeFo4qAAAAAFIb0Wb5mRE0KWPwaU7xmNEuPfWE"
+                ></div>
             </form>
-
-
         </div>
 
         <div class="text-center">
@@ -372,78 +351,6 @@ async function token(event) {
         </div>
     </div>
 </div>
-
-<!--  <div class="modal show">
-        <div class="modal-content">
-            <h2>Selecciona tu rol</h2>
-            <button on:click={() => redirect('admin')}>Administrador</button>
-            <button on:click={() => redirect('user')}>Usuario</button>
-        </div>
-    </div>
--->
-
-<style>
-    .container {
-        max-width: 600px; /* Limita el ancho del contenedor */
-        margin: auto; /* Centra el contenedor horizontalmente */
-        padding: 20px; /* Agrega padding interno */
-        border-radius: 10px; /* Bordes redondeados */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
-        background-color: #f9f9f9; /* Color de fondo claro */
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5); /* Oscurecimiento del fondo */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1050; /* Asegurarse de que estÃ© sobre el contenido */
-    }
-
-    .form-control {
-        border-radius: 5px; /* Bordes redondeados para los inputs */
-        border: 1px solid #ced4da; /* Borde gris claro */
-    }
-
-    .form-control:focus {
-        border-color: #80bdff; /* Color del borde al enfocar */
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra al enfocar */
-    }
-
-    .btn-primary {
-        background-color: #008b8b; /* Color de fondo del botÃ³n */
-        border: none; /* Sin borde */
-        padding: 10px 20px; /* Padding interno */
-    }
-
-    .btn-primary:hover {
-        background-color: #1bd1d1; /* Color de fondo al pasar el mouse */
-    }
-
-    .btn_login:hover {
-        background-color: rgb(27, 27, 27);
-        transition: all 0.4s ease; /* Añadir transición para suavizar el movimiento */
-    }
-
-    @media (max-width: 768px) {
-        .col-md-4 {
-            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeÃ±as */
-        }
-    }
-</style>
-
-
-
-
-
-
-
-
 
 <!--if (rol_v == 18) {
     let name = data.resultado[0].nombre;
@@ -512,4 +419,68 @@ async function token(event) {
     setTimeout(() => {
         window.location.href = "/medico_vista";
     }, 2000);
-}-->   
+}-->
+
+<!--  <div class="modal show">
+        <div class="modal-content">
+            <h2>Selecciona tu rol</h2>
+            <button on:click={() => redirect('admin')}>Administrador</button>
+            <button on:click={() => redirect('user')}>Usuario</button>
+        </div>
+    </div>
+-->
+
+<style>
+    .container {
+        max-width: 600px; /* Limita el ancho del contenedor */
+        margin: auto; /* Centra el contenedor horizontalmente */
+        padding: 20px; /* Agrega padding interno */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+        background-color: #f9f9f9; /* Color de fondo claro */
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); /* Oscurecimiento del fondo */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050; /* Asegurarse de que estÃ© sobre el contenido */
+    }
+
+    .form-control {
+        border-radius: 5px; /* Bordes redondeados para los inputs */
+        border: 1px solid #ced4da; /* Borde gris claro */
+    }
+
+    .form-control:focus {
+        border-color: #80bdff; /* Color del borde al enfocar */
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra al enfocar */
+    }
+
+    .btn-primary {
+        background-color: #008b8b; /* Color de fondo del botÃ³n */
+        border: none; /* Sin borde */
+        padding: 10px 20px; /* Padding interno */
+    }
+
+    .btn-primary:hover {
+        background-color: #1bd1d1; /* Color de fondo al pasar el mouse */
+    }
+
+    .btn_login:hover {
+        background-color: rgb(27, 27, 27);
+        transition: all 0.4s ease; /* Añadir transición para suavizar el movimiento */
+    }
+
+    @media (max-width: 768px) {
+        .col-md-4 {
+            width: 100%; /* Hace que los inputs ocupen el 100% en pantallas pequeÃ±as */
+        }
+    }
+</style>

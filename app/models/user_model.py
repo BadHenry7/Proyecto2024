@@ -13,6 +13,7 @@ class User(BaseModel):
     estado:bool
     genero: str= None
     edad: int = None
+    completado: bool=None
     
 class Login(BaseModel):
     usuario: str
@@ -40,6 +41,7 @@ class Actualizar(BaseModel):
     genero: str= None
     edad: int = None
     password: str= None
+    estatura: str=None
     
 
 
@@ -50,8 +52,13 @@ class ActualizarAdm(BaseModel):
     nombre: str
     apellido: str
     documento: str
-    password:str
     telefono:str
+    id_rol:int
+    estado: bool
+    genero: str= None
+    edad: int = None
+    password: str= None
+    estatura: str=None
 
 
 

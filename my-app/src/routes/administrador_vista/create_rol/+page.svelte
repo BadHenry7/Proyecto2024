@@ -456,7 +456,7 @@ let loading_estado=true
                 <td class="py-2 border">{rol.descripcion}</td>
 
                 <td class="py-2 border">
-                  <span class={rol.estado ? "text-green-600" : "text-red-600"}>
+                  <span class={rol.estado ? "text-success" : "text-danger"}>
                     {rol.estado ? "Activo" : "Desactivado"}
                   </span>
                 </td>
