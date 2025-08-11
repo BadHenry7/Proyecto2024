@@ -378,7 +378,7 @@
                 <td class="py-2 border">{todo.apellido}</td>
                 <td class="py-2 border">{todo.documento}</td>
                 <td class="py-2 border">{todo.telefono}</td>
-                <td class="py-2 border">{todo.id_rol===2?'Paciente':'Doctor'}</td>
+                <td class="py-2 border">{todo.nombre_rol}</td>
 
                 <td class="py-2 border">
                   <span class={todo.estado ? "text-green-600" : "text-red-600"}>
