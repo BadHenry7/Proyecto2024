@@ -12,6 +12,7 @@ aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 aws_region = os.getenv('AWS_REGION')
 
 
+
 #crea un cliente de Dynamodb
 dynamodb= boto3.client('dynamodb',
               region_name= aws_region,
@@ -58,6 +59,7 @@ async def get_incapacidad(user: Buscar):
         ':id': {'N': str(user.id_usuario)}
     }
     )
+    payload=[]
     for item in response['Items']:
         identificacion = item['identificacion']['N']
         descripcion= item['descripcion']['S']
@@ -72,9 +74,14 @@ async def get_incapacidad(user: Buscar):
         content={"descripcion": descripcion, 
                 "dias_de_incapacidad": dias_de_incapacidad,
                 "id_usuario": id_usuario, "id_doctor": id_doctor, "observaciones": observaciones, "fecha": fecha}
-        payload=[]
+        
         payload.append(content)
-        return(payload)
+    payload = sorted(
+        payload,
+        key=lambda x: datetime.strptime(x['fecha'], "%Y-%m-%d %H:%M:%S"),
+        reverse=True
+    )   
+    return(payload)
         
 #payload[]
 #content {}
