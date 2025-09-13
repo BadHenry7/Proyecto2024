@@ -109,7 +109,7 @@ class citaController:
             cursor.execute("""
                            
                           SELECT cita.fecha,  cita.hora, usuario.nombre AS nombre_usuario,  paciente.nombre AS nombre_paciente, cita.id,
-                           cita.ubicacion, cita.salas
+                           cita.ubicacion, cita.salas, paciente.usuario
             FROM cita
             INNER JOIN usuario AS usuario ON cita.id_usuario = usuario.id
             INNER JOIN usuario AS paciente ON cita.id_paciente = paciente.id
@@ -127,7 +127,8 @@ class citaController:
                     'paciente':data[3],
                     'id':data[4],
                     'ubicacion':data[5],
-                    'salas':data[6]
+                    'salas':data[6], 
+                    'email': data[7]
 
 
                 
@@ -921,3 +922,50 @@ class citaController:
             conn.rollback()
         finally:
             conn.close()
+
+
+ #------Mostrar HISTORIAL CITAS PACIENTE
+    def HistorialCitas(self, user: Buscar):
+        
+        try:
+            print ("-----", user)
+            
+
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""SELECT  c.id, c.fecha, c.hora, c.estado, c.ubicacion, c.salas, a.valor AS atributo_medico, u.nombre, d.nombre
+                            FROM cita c
+                            JOIN atrixusuario a ON c.id_usuario = a.id_usuario 
+                            JOIN usuario u ON u.id=c.id_paciente
+                            JOIN usuario d ON d.id=c.id_usuario
+                            WHERE u.id=%s
+                 """, (user.id_paciente,))
+            results = cursor.fetchall()
+            payload = []
+            content = {} 
+            for result in results:
+                content = {
+                'Fecha': result[1],
+                'Hora': str(result[2]),
+                'estado': 'Finalizada' if result[3] == 0 else 'Pendiente',
+                'ubicacion': result[4],
+                'salas': result[5],
+                'especialidad': result[6],
+                'paciente': result[7],
+                'doctor': result[8],
+                }
+                payload.append(content)
+            
+            
+            json_data = jsonable_encoder(payload)     
+            print (payload)
+           
+            return {"resultado": json_data}
+            
+                
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+            

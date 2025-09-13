@@ -399,9 +399,10 @@ class UserController:
             password=%s,                           
             telefono=%s,
             genero=%s,
-            edad=%s,
+            edad=%s, 
+            estatura=%s
             WHERE id = %s
-            """,(adm.usuario,adm.nombre,adm.apellido,adm.documento,adm.password,adm.telefono, adm.genero, adm.edad ,adm.id,))
+            """,(adm.usuario,adm.nombre,adm.apellido,adm.documento,adm.password,adm.telefono, adm.genero, adm.edad ,adm.estatura, adm.id,))
             conn.commit()
             print ("ssssssssssssss",cursor)
             if cursor.rowcount == 0:
@@ -481,6 +482,7 @@ class UserController:
                 
                 if result_google:
                     content = {}    
+                    print ("rol_v", result[7])
                     content={"Informacion":"Ya_existe", 'id':int(result[0]),'rol_v':int(result[7]), 'estado':bool(result[15]), }
                     return jsonable_encoder(content)
 

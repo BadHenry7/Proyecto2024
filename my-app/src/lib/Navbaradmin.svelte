@@ -230,6 +230,31 @@ async function editar() {
   console.log(error)
   }
 
+
+  async function sendSMS() {
+        try {
+            const response = await fetch(
+                "https://api-nodejs-buxf.onrender.com/api/send-sms",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: "+573205158257",
+                        message:
+                            "Hola, su informacion fue cambiada, revise su cuenta",
+                    }),
+                },
+            );
+
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);
+        } catch (error) {
+            console.error("Error enviando SMS:", error);
+        }
+    }
+
 }
 
 

@@ -3,12 +3,10 @@
     import { onMount } from "svelte";
     //import twilio from 'twilio'
 
-
-
     let todos = {};
     let error = null;
-    var v_id=1
-   
+    var v_id = 1;
+
     onMount(async () => {
         let miStorage = window.localStorage;
         let v_id = JSON.parse(miStorage.getItem("usuario"));
@@ -43,55 +41,45 @@
             console.log(e);
         }
     });
-   
-        
+
     async function editar() {
-        const correov= document.getElementById("correo");
+        const correov = document.getElementById("correo");
         correov.removeAttribute("readonly");
 
-        const nombrev= document.getElementById("nombre");
+        const nombrev = document.getElementById("nombre");
         nombrev.removeAttribute("readonly");
 
-        const apellidov= document.getElementById("apellido");
+        const apellidov = document.getElementById("apellido");
         apellidov.removeAttribute("readonly");
 
-        const passwordv= document.getElementById("password");
+        const passwordv = document.getElementById("password");
         passwordv.removeAttribute("readonly");
 
-        const documentov= document.getElementById("documento");
+        const documentov = document.getElementById("documento");
         documentov.removeAttribute("readonly");
 
-        const telefonov=  document.getElementById("telefono");
+        const telefonov = document.getElementById("telefono");
         telefonov.removeAttribute("readonly");
-        henry=false
-        
+        henry = false;
     }
 
-
-
-
-
-    var henry=true
-
+    var henry = true;
 
     async function actualizar() {
-
-
-
-
         let miStorage = window.localStorage;
         let v_id = JSON.parse(miStorage.getItem("usuario"));
         v_id = v_id.id;
         console.log(v_id);
-        console.log("entra aca a actualizar"+v_id)
-       try{ let v_correo =document.getElementById("correo").value;
-        let v_nombre =document.getElementById("nombre").value;
-        let v_apellido  =document.getElementById("apellido").value;
-        let  v_password =document.getElementById("password").value;
-        let  v_documento =document.getElementById("documento").value;
-        let v_telefono  =document.getElementById("telefono").value;
-        console.log(v_password)
-        const response = await fetch("http://127.0.0.1:8000/update_adm", {
+        console.log("entra aca a actualizar" + v_id);
+        try {
+            let v_correo = document.getElementById("correo").value;
+            let v_nombre = document.getElementById("nombre").value;
+            let v_apellido = document.getElementById("apellido").value;
+            let v_password = document.getElementById("password").value;
+            let v_documento = document.getElementById("documento").value;
+            let v_telefono = document.getElementById("telefono").value;
+            console.log(v_password);
+            const response = await fetch("http://127.0.0.1:8000/update_adm", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -103,63 +91,58 @@
                     password: v_password,
                     documento: v_documento,
                     telefono: v_telefono,
-                    id: v_id
+                    id: v_id,
                 }),
             });
-            console.log("actualizado")
+            console.log("actualizado");
 
+            henry = true;
+            sendSMS();
 
-
-            
-
-
-        henry=true
-        sendSMS()
-        
-      const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          iconColor: "white",
-          color: "white",
-          background: "#00bdff",
-          title: "datos actualizado con exito",
-        });
-
-
-        
-        setTimeout(() => {
-         // location.reload();
-          }, 1000);
-    }catch(e){
-    error=e.message
-    console.log(error)
-    }
-       
-    }
-
-    
-        async function sendSMS() {
-        try {
-            const response = await fetch("https://api-nodejs-buxf.onrender.com/api/send-sms", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
                 },
-                body: JSON.stringify({
-                    phoneNumber: "+573205158257",
-                    message: "Hola, su informacion fue cambiada, revise su cuenta"
-                })
             });
+            Toast.fire({
+                icon: "success",
+                iconColor: "white",
+                color: "white",
+                background: "#00bdff",
+                title: "datos actualizado con exito",
+            });
+
+            setTimeout(() => {
+                // location.reload();
+            }, 1000);
+        } catch (e) {
+            error = e.message;
+            console.log(error);
+        }
+    }
+
+    async function sendSMS() {
+        try {
+            const response = await fetch(
+                "https://api-nodejs-buxf.onrender.com/api/send-sms",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: "+573205158257",
+                        message:
+                            "Hola, su informacion fue cambiada, revise su cuenta",
+                    }),
+                },
+            );
 
             const data = await response.json();
             console.log("Respuesta del servidor:", data);
@@ -167,9 +150,6 @@
             console.error("Error enviando SMS:", error);
         }
     }
-
-
-    
 </script>
 
 <Navbaradmin></Navbaradmin>
@@ -200,7 +180,6 @@
                     type="password"
                     readonly
                     style="border: none;"
-                   
                 />
             </div>
         </div>
@@ -223,7 +202,7 @@
                     id="apellido"
                     type="text"
                     readonly
-                    style="border: none;" 
+                    style="border: none;"
                 />
             </div>
         </div>
@@ -237,7 +216,7 @@
                     id="documento"
                     type="text"
                     readonly
-                    style="border: none;"  
+                    style="border: none;"
                 />
             </div>
         </div>
@@ -251,25 +230,27 @@
                     id="telefono"
                     type="text"
                     readonly
-                    style="border: none;" 
+                    style="border: none;"
                 />
             </div>
         </div>
     </div>
 
     <div class="card-footer">
-
         {#if henry}
-          <!-- Mostrar botón "Desactivar" si el usuario está activo -->
-          <button class="btn btn-success" on:click={() =>editar()}>
-            Editar
-          </button>
+            <!-- Mostrar botón "Desactivar" si el usuario está activo -->
+            <button class="btn btn-success" on:click={() => editar()}>
+                Editar
+            </button>
         {:else}
-          <!-- Mostrar botón "Activar" si el usuario está desactivado -->
-          <button class="btn btn-outline-info" id="sendMessage" on:click={() => actualizar()}>
-            Actualizar
-          </button>
+            <!-- Mostrar botón "Activar" si el usuario está desactivado -->
+            <button
+                class="btn btn-outline-info"
+                id="sendMessage"
+                on:click={() => actualizar()}
+            >
+                Actualizar
+            </button>
         {/if}
-        
     </div>
 </div>

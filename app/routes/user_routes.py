@@ -139,10 +139,11 @@ async def telegram_id_user(user: Buscar):
     return rpta 
 
 
-@router.get("/detener_altura")
+@router.post("/detener_altura")
 async def detener_altura():
     rpta = nuevo_usuario.detener_altura()
     return rpta 
 
-   
+
+
 #v_usuario   
