@@ -748,6 +748,27 @@ class UserController:
         detener_captura = True
         return {"mensaje": "Captura detenida"}
     
+
+
+    def ValidarIncapacidad(self, user: ValidarIncapacidad):
+        try:
+    
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""SELECT usuario FROM usuario WHERE id=%s and documento=%s""",(user.id, user.cedula,))
+            rv= cursor.fetchone()
+            if rv:
+                return {"resultado": "Correcto"}
+            else:
+                 return {"resultado": "Incorrecto"}
+                
+        except mysql.connector.Error as err:
+            if conn:
+                conn.rollback()
+            return {"error": f"Un error inesperado ocurrió: {str(err)}"}
+        finally:
+            conn.close() 
+    
     #StreamingResponse, es una clase de FastAPI que permite enviar datos como un flujo continuo, útil para video o audio.
     #Estatura_user devuelve frames JPEG uno a uno (cada imagen del video).
    # media_type="multipart/x-mixed-replace; boundary=frame": Es usado para enviar múltiples imágenes como un solo flujo. Así se simula el video en el navegador.

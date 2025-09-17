@@ -145,5 +145,11 @@ async def detener_altura():
     return rpta 
 
 
+@router.post("/ValidarIncapacidad")
+async def ValidarIncapacidad(user: ValidarIncapacidad):
+    rpta = nuevo_usuario.ValidarIncapacidad(user)
+    return rpta 
+
+
 
 #v_usuario   

@@ -12,7 +12,6 @@ aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 aws_region = os.getenv('AWS_REGION')
 
 
-
 #crea un cliente de Dynamodb
 dynamodb= boto3.client('dynamodb',
               region_name= aws_region,
@@ -49,6 +48,20 @@ class Buscar(BaseModel):
     id_usuario: int
 
 #Vista: Medico-Historial clinico--->Registrar la incapacidad
+
+def parse_fecha(fecha: str) -> datetime:
+  
+    formatos = ["%Y-%m-%d %H:%M:%S", "%d/%m/%Y"]
+    for fmt in formatos:
+        try:
+            return datetime.strptime(fecha, fmt)
+        except ValueError:
+            continue
+            
+    raise ValueError(f"Formato de fecha no reconocido: {fecha}")
+
+
+
 @router.post('/incapacidad_medica')
 async def get_incapacidad(user: Buscar):
     print ("-----------------------",user)
@@ -78,7 +91,7 @@ async def get_incapacidad(user: Buscar):
         payload.append(content)
     payload = sorted(
         payload,
-        key=lambda x: datetime.strptime(x['fecha'], "%Y-%m-%d %H:%M:%S"),
+        key=lambda x: parse_fecha(x['fecha']),
         reverse=True
     )   
     return(payload)
