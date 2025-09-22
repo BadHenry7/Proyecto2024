@@ -8,6 +8,7 @@ http://127.0.0.1:8000/docs
 
 ----creacion de entorno virtual----
 2.- python -m venv myvenv
+python3.11 -m venv myvenv311
 
 
 
@@ -65,10 +66,10 @@ ngrok http 5173
 
   
 ---->Para red neuronal
-pip install keras
-pip install tensorflow
-pip install scikit-learn
-pip install matplotlib
+    pip install keras
+    pip install tensorflow
+    pip install scikit-learn
+    pip install matplotlib
 
 
 -->Para machine learning(Random Forest)
@@ -84,6 +85,7 @@ pip install joblib
 
 pip install jwt
 pip install PyJWT
+pip install python-jose[cryptography]
 
 
 
@@ -98,7 +100,13 @@ pip install pyjwt
 
 
 
+-->Para instalar o descargar archivos de Google Drive desde un enlace compartido.
 
+pip install gdown
+
+
+-->Para google 
+npm install google-auth-library
 
 
 
@@ -119,5 +127,6 @@ aws_region = os.getenv('AWS_REGION')
 
 
 
-mediapipe:
+mediapipe:Tener instalado microsoft C++
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 py -m pip install mediapipe opencv-python
