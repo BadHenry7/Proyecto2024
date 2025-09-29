@@ -55,8 +55,15 @@ cd my-app
 
 
 Para compartir la terminar y trabajar desde la nube:
+cd C:\Users\User\Downloads\ngrok-v3-stable-windows-amd64
+.\ngrok.exe config add-authtoken TU_TOKEN_AQUI
+Ver token: https://dashboard.ngrok.com/get-started/your-authtoken
+
 ngrok http 8000   (8000 es el de la api)
 ngrok http 5173   (5173 es el de svelte)
+
+Para visua:
+
 
 
    
