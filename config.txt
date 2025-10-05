@@ -137,3 +137,8 @@ aws_region = os.getenv('AWS_REGION')
 mediapipe:Tener instalado microsoft C++
 https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 py -m pip install mediapipe opencv-python
+
+
+
+Para encriptar contraseña:
+pip install "pwdlib[argon2]"
